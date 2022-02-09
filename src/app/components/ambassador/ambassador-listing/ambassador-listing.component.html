@@ -1,0 +1,694 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="app-wrapper shop-wrapper-container">
+  <div class="app-content pt-3 p-md-3 p-lg-4">
+    <div class="row mx-0 g-3 mb-4 align-items-center justify-content-between">
+      <div class="w-100">
+        <div class="page-utilities">
+          <div
+            class="row mx-0 mb-3 g-2 justify-content-start justify-content-md-end align-items-center"
+          >
+            <div class="text-center">
+              <button
+                (click)="openModal(template)"
+                type="submit"
+                class="btn app-btn-primary theme-btn mx-auto"
+              >
+                Add New Ambassador
+              </button>
+            </div>
+          </div>
+          <!--//row-->
+          <!-- <div class="app-card app-card-orders-table shadow-sm mb-5">
+            <div class="app-card-body">
+              <div class="table-responsive">
+                <table class="table app-table-hover mb-0 text-left">
+                  <thead>
+                    <tr>
+                      <th class="cell">sr#</th>
+                      <th class="cell">username</th>
+                      <th class="cell">Role</th>
+                      <th class="cell">Active role</th>
+                      <th class="cell">Email address</th>
+                      <th class="cell">Created at</th>
+                      <th class="cell">Active</th>
+                      <th class="cell">Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of userList">
+                      <td class="cell">{{item.srNum}}</td>
+                      <td class="cell">{{item.uname}}</td>
+                      <td class="cell">{{item.role}}</td>
+                      <td class="cell">{{item.activeRole}}</td>
+                      <td class="cell">{{item.email}}</td>
+                      <td class="cell">{{item.time}}</td>
+                      <td class="cell">Active</td>
+                      <td class="cell">Delete</td>
+
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div> -->
+
+          <p-table
+            #dt2
+            [value]="ambassadorList"
+            dataKey="id"
+            [rows]="10"
+            [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10, 25, 50]"
+            [loading]="loading"
+            styleClass="p-datatable-customers"
+            [paginator]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [globalFilterFields]="[
+              'name',
+              'country.name',
+              'representative.name',
+              'status'
+            ]"
+          >
+            <ng-template pTemplate="caption">
+              <div class="d-flex justify-content-between">
+                <span class="p-input-icon-left p-ml-auto">
+                  <i class="pi pi-search"></i>
+                  <input
+                    pInputText
+                    type="text"
+                    (input)="dt2.filterGlobal($event.target.value, 'contains')"
+                    placeholder="Search keyword"
+                  />
+                </span>
+
+                <p-columnFilter
+                  field="status"
+                  matchMode="equals"
+                  [showMenu]="false"
+                >
+                  <ng-template
+                    pTemplate="filter"
+                    let-value
+                    let-filter="filterCallback"
+                  >
+                    <p-dropdown
+                      [ngModel]="value"
+                      [options]="statuses"
+                      (onChange)="filter($event.value)"
+                      placeholder="Select Role"
+                      [showClear]="true"
+                    >
+                      <ng-template let-option pTemplate="item">
+                        <span
+                          [class]="'customer-badge status-' + option.value"
+                          >{{ option.label }}</span
+                        >
+                      </ng-template>
+                    </p-dropdown>
+                  </ng-template>
+                </p-columnFilter>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th class="cell">sr#</th>
+                <th class="cell">Profile Image</th>
+                <th class="cell">Name</th>
+                <th class="cell">Tagline</th>
+                <th class="cell">Created At</th>
+                <th class="cell">Description</th>
+                <th class="cell">Active</th>
+                <th class="cell">Action</th>
+              </tr>
+              <!-- <tr>
+              <th>
+                <p-columnFilter type="text" field="name"></p-columnFilter>
+              </th>
+              <th>
+                <p-columnFilter type="text" field="country.name"></p-columnFilter>
+              </th>
+              <th>
+                <p-columnFilter field="representative" matchMode="in" [showMenu]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any"
+                      (onChange)="filter($event.value)" optionLabel="name">
+                      <ng-template let-option pTemplate="item">
+                        <div class="p-multiselect-representative-option">
+                          <span class="p-ml-1">{{option.name}}</span>
+                        </div>
+                      </ng-template>
+                    </p-multiSelect>
+                  </ng-template>
+                </p-columnFilter>
+              </th>
+              <th>
+                <p-columnFilter field="status" matchMode="equals" [showMenu]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any"
+                      [showClear]="true">
+                      <ng-template let-option pTemplate="item">
+                        <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                      </ng-template>
+                    </p-dropdown>
+                  </ng-template>
+                </p-columnFilter>
+              </th>
+              <th>
+                <p-columnFilter type="boolean" field="verified"></p-columnFilter>
+              </th>
+            </tr> -->
+            </ng-template>
+            <ng-template pTemplate="body" let-ambassadors>
+              <tr>
+                <td>
+                  {{ ambassadors.srNum }}
+                </td>
+                <td>
+                  <span class="image-text">
+                    <img src="../../../../assets/images/users/user-1.jpg" />
+                  </span>
+                </td>
+                <td>
+                  <span class="image-text">{{ ambassadors.name }}</span>
+                </td>
+                <td>
+                  <span class="customer-badge status">{{
+                    ambassadors.tagLine
+                  }}</span>
+                </td>
+                <td>
+                  <span>{{ ambassadors.createdAt }}</span>
+                </td>
+                <td>
+                  <span>{{ ambassadors.description }}</span>
+                </td>
+                <td>
+                  <span>
+                    <p-inputSwitch [(ngModel)]="checked1"></p-inputSwitch>
+                  </span>
+                </td>
+                <td>
+                  <span class="action-col">
+                    <i
+                      class="pi pi-trash"
+                      (click)="OnDeleteRecord('right')"
+                    ></i>
+                    <i
+                      class="mx-1 pi pi-pencil"
+                      (click)="openModal(edit_record)"
+                    ></i>
+                    <i class="pi pi-eye"></i>
+                  </span>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="5">No user found.</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+        <!--//table-utilities-->
+      </div>
+      <!--//col-auto-->
+    </div>
+  </div>
+
+  <!-- Add New Abbassodor  -->
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Add New Ambassador</h4>
+      <button
+        type="button"
+        class="btn-close close pull-right"
+        aria-label="Close"
+        (click)="modalRef?.hide()"
+      >
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="shop-basicForm">
+        <div class="avatar-upload">
+          <div class="avatar-edit">
+            <div class="avatar-preview">
+              <div
+                id="imagePreview"
+                [style.backgroundImage]="'url(' + imageUrl + ')'"
+              ></div>
+            </div>
+          </div>
+        </div>
+        <form [formGroup]="createAmbassador" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <label>Enter Name</label>
+                  <input
+                    type="text"
+                    formControlName="abbassadorName"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.abbassadorName.errors
+                    }"
+                    placeholder=" Enter Abbassador Name"
+                  />
+                  <div
+                    *ngIf="submitted && f.abbassadorName.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.abbassadorName.errors.required">
+                      AbbassadorName is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <label>Tag Line</label>
+                  <input
+                    type="text"
+                    formControlName="tagLine"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.tagLine.errors }"
+                    placeholder="Enter tagLine"
+                  />
+                  <div
+                    *ngIf="submitted && f.tagLine.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.tagLine.errors.required">
+                      TagLine is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <label>Instagram URl</label>
+                  <input
+                    type="url"
+                    formControlName="instagramUrl"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.instagramUrl.errors
+                    }"
+                    placeholder="Enter Instagram URL"
+                  />
+                  <div
+                    *ngIf="submitted && f.instagramUrl.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.instagramUrl.errors.required">
+                      Instagram URL is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <label>Facebook URL</label>
+                  <input
+                    type="url"
+                    formControlName="facebookUrl"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.facebookUrl.errors
+                    }"
+                    placeholder="Enter Facebook URL"
+                  />
+                  <div
+                    *ngIf="submitted && f.facebookUrl.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.facebookUrl.errors.required">
+                      Facebook URL is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <label>Youtube URL</label>
+                  <input
+                    type="text"
+                    formControlName="youtubeUrl"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.youtubeUrl.errors
+                    }"
+                    placeholder="Enter Youtube URL"
+                  />
+                  <div
+                    *ngIf="submitted && f.youtubeUrl.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.youtubeUrl.errors.required">
+                      Youtube URL is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <label>Twitter URL</label>
+                  <input
+                    type="url"
+                    formControlName="twitterUrl"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.twitterUrl.errors
+                    }"
+                    placeholder="Twitter URL"
+                  />
+                  <div
+                    *ngIf="submitted && f.twitterUrl.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.twitterUrl.errors.required">
+                      Twitter URL is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12 col-md-12">
+                  <label>Description</label>
+                  <textarea
+                    id="description"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.description.errors
+                    }"
+                    class="form-control descript"
+                    formControlName="description"
+                    rows="4"
+                    cols="50"
+                  >
+                  </textarea>
+
+                  <div
+                    *ngIf="submitted && f.description.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.description.errors.required">
+                      Description is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <label>User Profile</label>
+                  <input
+                    type="file"
+                    formControlName="userProfile"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.userProfile.errors
+                    }"
+                    id="imageUpload"
+                    accept=".png, .jpg, .jpeg"
+                    #fileInput
+                    (change)="uploadFile($event)"
+                  />
+                  <div
+                    *ngIf="submitted && f.userProfile.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.userProfile.errors.required">
+                      User Profile Image Required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group my-3 mt-4">
+            <button
+              type="submit"
+              class="btn app-btn-primary w-100 theme-btn mx-auto"
+              (click)="CreateNewUser()"
+            >
+              Submit
+            </button>
+            <!-- <button type="button" (click)="onReset()" class="btn btn-warning float-right">
+              Reset
+            </button> -->
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- Edit New Abbassodor  -->
+  <ng-template #edit_record>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Edit Ambassador</h4>
+      <button
+        type="button"
+        class="btn-close close pull-right"
+        aria-label="Close"
+        (click)="modalRef?.hide()"
+      >
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="shop-basicForm">
+        <form [formGroup]="createAmbassador" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <label>Enter Name</label>
+                  <input
+                    type="text"
+                    formControlName="abbassadorName"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.abbassadorName.errors
+                    }"
+                    placeholder=" Enter Abbassador Name"
+                  />
+                  <div
+                    *ngIf="submitted && f.abbassadorName.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.abbassadorName.errors.required">
+                      AbbassadorName is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <label>Tag Line</label>
+                  <input
+                    type="text"
+                    formControlName="tagLine"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.tagLine.errors }"
+                    placeholder="Enter tagLine"
+                  />
+                  <div
+                    *ngIf="submitted && f.tagLine.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.tagLine.errors.required">
+                      TagLine is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <label>Instagram URl</label>
+                  <input
+                    type="url"
+                    formControlName="instagramUrl"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.instagramUrl.errors
+                    }"
+                    placeholder="Enter Instagram URL"
+                  />
+                  <div
+                    *ngIf="submitted && f.instagramUrl.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.instagramUrl.errors.required">
+                      Instagram URL is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <label>Facebook URL</label>
+                  <input
+                    type="url"
+                    formControlName="facebookUrl"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.facebookUrl.errors
+                    }"
+                    placeholder="Enter Facebook URL"
+                  />
+                  <div
+                    *ngIf="submitted && f.facebookUrl.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.facebookUrl.errors.required">
+                      Facebook URL is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <label>Youtube URL</label>
+                  <input
+                    type="text"
+                    formControlName="youtubeUrl"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.youtubeUrl.errors
+                    }"
+                    placeholder="Enter Youtube URL"
+                  />
+                  <div
+                    *ngIf="submitted && f.youtubeUrl.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.youtubeUrl.errors.required">
+                      Youtube URL is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <label>Twitter URL</label>
+                  <input
+                    type="url"
+                    formControlName="twitterUrl"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.twitterUrl.errors
+                    }"
+                    placeholder="Twitter URL"
+                  />
+                  <div
+                    *ngIf="submitted && f.twitterUrl.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.twitterUrl.errors.required">
+                      Twitter URL is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12 col-md-12">
+                  <label>Description</label>
+                  <textarea
+                    id="description"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.description.errors
+                    }"
+                    class="form-control descript"
+                    formControlName="description"
+                    rows="4"
+                    cols="50"
+                  >
+                  </textarea>
+
+                  <div
+                    *ngIf="submitted && f.description.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.description.errors.required">
+                      Description is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <label>User Profile</label>
+                  <input
+                    type="file"
+                    formControlName="userProfile"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.userProfile.errors
+                    }"
+                  />
+                  <div
+                    *ngIf="submitted && f.userProfile.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.userProfile.errors.required">
+                      User Profile Image Required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group my-3 mt-4">
+            <button
+              type="submit"
+              class="btn app-btn-primary w-100 theme-btn mx-auto"
+            >
+              Submit
+            </button>
+            <!-- <button type="button" (click)="onReset()" class="btn btn-warning float-right">
+              Reset
+            </button> -->
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+  <p-confirmDialog
+    appendTo="body"
+    header="Confirmation"
+    key="deleteAlert"
+    [style]="{ width: '30vw' }"
+    [baseZIndex]="10000"
+    styleClass="dialog-filters"
+  ></p-confirmDialog>
+  <p-toast></p-toast>
+</div>

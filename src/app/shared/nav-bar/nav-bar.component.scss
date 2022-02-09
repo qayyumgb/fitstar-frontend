@@ -1,0 +1,141 @@
+.app-sidepanel {
+  position: fixed;
+  min-height: 100vh;
+  height: 100%;
+  left: 0;
+  top: 0;
+  font-size: 0.875rem;
+  border-right: 1px solid #e7e9ed;
+  left: 0;
+}
+.app-sidepanel .sidepanel-inner {
+  position: relative;
+  z-index: 10;
+  background: #191431;
+  box-shadow: rgb(0 0 0 / 5%) 0px 8px 15px;
+  width: 250px;
+  height: 100%;
+}
+.app-branding {
+  height: 70px;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  background: #15094e;
+  box-shadow: 0px 1px 5px -1px black;
+}
+.app-branding .logo-icon {
+  width: 180px;
+}
+.app-nav {
+  color: #5d6778;
+  display: block;
+  padding: 0;
+  width: 100%;
+}
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+.app-nav .nav-item {
+  display: block;
+  color: #fff;
+  background: transparent;
+}
+.app-nav .nav-link.active {
+  color: #ff1a1a;
+  background: #ffffffe6;
+  border-left: 3px solid #ff1a1a;
+  font-weight: 500;
+}
+.app-nav .nav-link {
+  display: block;
+  padding: 0.875rem 1rem;
+  color: #fff;
+  position: relative;
+  display: block;
+  padding-left: 3rem;
+  border-left: 3px solid transparent;
+}
+.app-nav .nav-icon {
+  position: absolute;
+  left: 1rem;
+  top: 0.7rem;
+}
+//top nav
+.app-header {
+  box-shadow: 0 1px 4px 0 rgb(0 0 0 / 10%);
+  border-bottom: 1px solid #e7e9ed;
+  height: 56px;
+  background: #fff;
+}
+.fixed-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+.search-input {
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  height: 2.5rem !important;
+  border-color: #e7e9ed;
+  color: #5d6778;
+}
+.app-header-inner {
+  margin-left: 250px;
+}
+.app-search-form {
+  position: relative;
+  max-width: 600px;
+}
+.app-search-form .search-input {
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+  padding-right: 3rem;
+  padding-left: 1rem;
+}
+.app-search-form .search-btn {
+  color: #828d9f;
+  background: none;
+  border: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-right: 0;
+  padding: 0.5rem 1rem;
+}
+.app-utility-item {
+  display: inline-block;
+  margin-right: 1.25rem;
+}
+.app-utility-item .dropdown-toggle {
+  position: relative;
+}
+.app-utility-item .icon {
+  font-size: 1.25rem;
+  width: 24px;
+  height: 24px;
+}
+.app-utility-item .icon-badge {
+  display: inline-block;
+  border-radius: 50%;
+  position: absolute;
+  right: -0.45rem;
+  top: -0.3rem;
+  width: 20px;
+  height: 20px;
+  font-size: 0.6rem;
+  font-weight: bold;
+  padding-top: 1px;
+  color: #fff;
+  text-align: center;
+  background: #ec776c;
+    border: 2px solid #fff;
+}
+.app-user-dropdown img {
+  width: 36px;
+  height: 36px;
+}

@@ -1,0 +1,34 @@
+.app-wrapper {
+  margin-left: 250px;
+  margin-top: 60px;
+}
+.app-card {
+  position: relative;
+  background: #fff;
+  border-radius: 0.25rem;
+}
+.app-card-stat .stats-type {
+  font-size: 0.875rem;
+  color: #828d9f;
+  text-transform: uppercase;
+}
+.app-card-stat .stats-figure {
+  font-size: 2rem;
+  color: #252930;
+}
+.app-card .app-card-header {
+  border-bottom: 1px solid #e7e9ed;
+}
+.app-card .app-card-title {
+  font-size: 1.125rem;
+  margin-bottom: 0;
+}
+.form-select.form-select-sm {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  font-size: 0.875rem;
+  margin-left: auto;
+  border-radius: 5px;
+  border-color: gainsboro;
+}

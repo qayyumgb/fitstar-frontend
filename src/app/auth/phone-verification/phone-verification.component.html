@@ -1,0 +1,75 @@
+<div class="app app-login p-0">
+  <div class="row mx-0 g-0 app-auth-wrapper">
+    <div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
+      <div class="d-flex flex-column align-content-end">
+        <div class="app-auth-body mx-auto">
+          <div class="app-auth-branding mb-4"><a class="app-logo"><img class="logo-icon me-2"
+                src="assets/images/app-logo.png" alt="logo"></a></div>
+          <h2 class="auth-heading text-center mb-5">Enter your phone number</h2>
+          <p>We will send text with a verification code</p>
+          <div class="auth-form-container text-start">
+            <form class="auth-form login-form" [formGroup]="verifyPhone" (ngSubmit)="onSubmit()">
+              <div class="email mb-3">
+                <label class="sr-only" for="signin-email">Phone</label>
+                <div class="form-group">
+                  <!-- <label>Phone number</label> -->
+                  <div class="field-input">
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                    <input type="text" formControlName="phone" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" placeholder="Phone number" />
+                    <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                      <div *ngIf="f.phone.errors.required">Phone is required</div>
+                      <div *ngIf="f.phone.errors.pattern">
+                        Phone number must follow the pattern
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- <div class="form-group">
+                  <input type="text" formControlName="role" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.role.errors }" placeholder="Role" />
+                  <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
+                    <div *ngIf="f.role.errors.required">Role is required</div>
+                  </div>
+                </div> -->
+              </div>
+
+              <!--//form-group-->
+              <div class="form-group">
+                <button type="submit" class="btn app-btn-primary w-100 theme-btn mx-auto">Proceed</button>
+              </div>
+            </form>
+
+            <div class="auth-option text-center pt-5">Already have an account? <a class="text-link"
+                routerLink="/Auth/">Log
+                in</a></div>
+          </div>
+          <!--//auth-form-container-->
+
+        </div>
+        <!--//auth-body-->
+
+      </div>
+      <!--//flex-column-->
+    </div>
+    <!--//auth-main-col-->
+    <div class="col-12 col-md-5 col-lg-6 h-100 auth-background-col p-0">
+      <div class="auth-background-holder">
+      </div>
+      <div class="auth-background-mask"></div>
+      <div class="auth-background-overlay p-3 p-lg-5">
+        <div class="d-flex flex-column align-content-end h-100">
+          <div class="h-100"></div>
+
+        </div>
+      </div>
+      <!--//auth-background-overlay-->
+    </div>
+    <!--//auth-background-col-->
+
+  </div>
+  <!--//row-->
+
+
+</div>

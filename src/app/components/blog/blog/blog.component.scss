@@ -1,0 +1,151 @@
+.app-wrapper {
+  margin-left: 250px;
+  margin-top: 60px;
+}
+td .image-text img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border-radius: 50px;
+}
+.action-col {
+  font-size: 21px;
+  color: #989898;
+  display: flex;
+  i {
+    font-size: 14px;
+    color: #fff;
+    height: 26px;
+    width: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+  .pi-trash {
+    background: #c60909;
+  }
+  .pi-pencil {
+    background-color: #4480ec;
+  }
+  .pi-eye {
+    background: #219c21;
+  }
+}
+
+.p-dialog-mask {
+  display: flex;
+  justify-content: flex-end;
+}
+.modal-content {
+  width: 850px !important;
+}
+textarea {
+  border-color: #c7c8cd !important;
+  border-radius: 14px;
+}
+.avatar-image {
+  display: flex;
+  flex-direction: row;
+}
+
+.main_bg {
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 250px;
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+  transition: 0.5s ease-in-out;
+}
+
+.main_bg:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+.profileImg {
+  display: flex;
+  justify-content: center;
+  top: -56px;
+  bottom: 0px;
+  position: relative;
+  box-shadow: 10px 10px 17px 0px rgba(255, 255, 255, 0.95);
+}
+.FeaturedImg div {
+  width: 100%;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+}
+
+.FeaturedImg {
+  display: flex;
+  justify-content: center;
+  // top: -56px;
+  // border: 1px solid red;
+  bottom: 0px;
+  position: relative;
+  box-shadow: 10px 10px 17px 0px rgba(255, 255, 255, 0.95);
+}
+.profileImg div {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+.image {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: 0.5s ease;
+  backface-visibility: hidden;
+}
+
+.bg-imageIcon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-right: 20px;
+  margin-top: 20px;
+  color: #fff;
+  transition: 0.5s ease;
+  font-size: 31px;
+}
+.bg-imageIcon:hover {
+  color: gray;
+  cursor: pointer;
+}
+
+.profile:hover .image {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.profile:hover .middle {
+  opacity: 1;
+}
+
+.hidden {
+  visibility: hidden;
+  width: 1px;
+  height: 1px;
+}
+::ng-deep {
+  .BlogListingModal {
+    .modal-content {
+      width: 700px;
+    }
+  }
+}
+.profileImg div {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.main_bg div {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}

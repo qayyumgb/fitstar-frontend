@@ -1,0 +1,39 @@
+{
+  "data": [
+    {
+      "srNum": "0",
+      "username": "James Butt",
+      "role": "Fitness Model",
+      "activeRole": "Fitness Model",
+      "email": "abc@example.com",
+      "createdAt": "2015-09-13",
+      "status": "active"
+    },
+    {
+      "srNum": "0",
+      "username": "James Butt",
+      "role": "Fitness Model",
+      "activeRole": "Fitness Model",
+      "email": "abc@example.com",
+      "createdAt": "2015-09-13",
+      "status": "active"
+    },
+    {
+      "srNum": "0",
+      "username": "James Butt",
+      "role": "Fitness Model",
+      "activeRole": "Fitness Model",
+      "email": "abc@example.com",
+      "createdAt": "2015-09-13"
+    },
+    {
+      "srNum": "0",
+      "username": "James Butt",
+      "role": "Fitness Model",
+      "activeRole": "Fitness Model",
+      "email": "abc@example.com",
+      "createdAt": "2015-09-13",
+      "status": "active"
+    }
+  ]
+}

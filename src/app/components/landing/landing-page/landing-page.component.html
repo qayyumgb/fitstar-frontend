@@ -1,0 +1,430 @@
+<app-nav-bar></app-nav-bar>
+<div class="app-wrapper">
+  <div class="app-content pt-3 p-md-3 p-lg-4">
+    <div class="">
+      <!-- <h1 class="app-page-title">Landing Page Works</h1> -->
+      <div class="tab_panel">
+        <div class="card">
+          <p-tabView styleClass="tabview-custom">
+            <p-tabPanel>
+              <ng-template pTemplate="header">
+                <i class="pi pi-images"></i>
+                <span class="mx-2">Landing Page Details</span>
+              </ng-template>
+              <div class="tab_form1">
+                <!-- tab 1 form  -->
+                <form
+                  class="form-box"
+                  [formGroup]="landingPagedetails"
+                  (ngSubmit)="onSubmit()"
+                >
+                  <div class="form-group">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                          <label>Banner Title</label>
+                          <input
+                            type="text"
+                            formControlName="bannerTitle"
+                            class="form-control"
+                            placeholder=" Enter Banner Titile"
+                            [ngClass]="{
+                              'is-invalid': submitted && f1.bannerTitle.errors
+                            }"
+                          />
+                          <div
+                            *ngIf="submitted && f1.bannerTitle.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f1.bannerTitle.errors.required">
+                              Banner Title is required
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                          <label>About us Heading</label>
+                          <input
+                            type="text"
+                            formControlName="aboutusHeading"
+                            class="form-control"
+                            placeholder="Enter AboutUs Heading"
+                            [ngClass]="{
+                              'is-invalid':
+                                submitted && f1.aboutusHeading.errors
+                            }"
+                          />
+                          <div
+                            *ngIf="submitted && f1.aboutusHeading.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f1.aboutusHeading.errors.required">
+                              Aboutus Heading is required
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                          <label>AboutUs Sub Heading</label>
+                          <input
+                            type="url"
+                            formControlName="aboutUsSubHeading"
+                            class="form-control"
+                            placeholder="Enter About us sub heading"
+                            [ngClass]="{
+                              'is-invalid':
+                                submitted && f1.aboutUsSubHeading.errors
+                            }"
+                          />
+                          <div
+                            *ngIf="submitted && f1.aboutUsSubHeading.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f1.aboutUsSubHeading.errors.required">
+                              AboutUs SubHeading is required
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                          <label>About Us Text Description </label>
+                          <textarea
+                            id="description"
+                            class="form-control descript"
+                            formControlName="aboutus_description"
+                            rows="4"
+                            cols="50"
+                            [ngClass]="{
+                              'is-invalid':
+                                submitted && f1.aboutus_description.errors
+                            }"
+                          >
+                          </textarea>
+                          <div
+                            *ngIf="submitted && f1.aboutus_description.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f1.aboutus_description.errors.required">
+                              About Us description is required
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                          <label>Footer Details</label>
+                          <textarea
+                            id="description"
+                            class="form-control descript"
+                            formControlName="footer_description"
+                            rows="4"
+                            cols="50"
+                            [ngClass]="{
+                              'is-invalid':
+                                submitted && f1.footer_description.errors
+                            }"
+                          >
+                          </textarea>
+                          <div
+                            *ngIf="submitted && f1.footer_description.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f1.footer_description.errors.required">
+                              Footer Description is required
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                          <label>Footer PhoneNumber</label>
+                          <input
+                            type="text"
+                            formControlName="footerPhoneNum"
+                            class="form-control"
+                            [ngClass]="{
+                              'is-invalid':
+                                submitted && f1.footerPhoneNum.errors
+                            }"
+                          />
+                          <div
+                            *ngIf="submitted && f1.footerPhoneNum.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f1.footerPhoneNum.errors.required">
+                              Footer Phone Number is required
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="form-group my-3 mt-4 d-flex justify-content-center"
+                  >
+                    <button
+                      type="submit"
+                      class="btn app-btn-primary w-50 theme-btn mx-auto my-3 mt-4"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </p-tabPanel>
+            <p-tabPanel header="Social Links">
+              <ng-template pTemplate="header">
+                <i class="pi pi-user"></i>
+                <span class="mx-2">Social Accounts Details</span>
+              </ng-template>
+              <div class="tab_form2">
+                <form
+                  class="form-box"
+                  [formGroup]="socialLinksDetails"
+                  (ngSubmit)="onSubmit2()"
+                >
+                  <div class="form-group">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                          <label>Instagram Link</label>
+                          <input
+                            type="text"
+                            formControlName="instagramUrl"
+                            class="form-control"
+                            placeholder=" Enter Your Instagram URL"
+                            [ngClass]="{
+                              'is-invalid': submitted && f2.instagramUrl.errors
+                            }"
+                          />
+                          <div
+                            *ngIf="submitted && f2.instagramUrl.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f2.instagramUrl.errors.required">
+                              instagram Url is required
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                          <label>Facebook Link</label>
+                          <input
+                            type="text"
+                            formControlName="facebookUrl"
+                            class="form-control"
+                            placeholder="Enter Facebook URL"
+                            [ngClass]="{
+                              'is-invalid': submitted && f2.facebookUrl.errors
+                            }"
+                          />
+                          <div
+                            *ngIf="submitted && f2.facebookUrl.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f2.facebookUrl.errors.required">
+                              Facebook Url is required
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                          <label>Youtube URl</label>
+                          <input
+                            type="url"
+                            formControlName="youtubeUrl"
+                            class="form-control"
+                            placeholder="Enter Youtube URL"
+                            [ngClass]="{
+                              'is-invalid': submitted && f2.youtubeUrl.errors
+                            }"
+                          />
+                          <div
+                            *ngIf="submitted && f2.youtubeUrl.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f2.youtubeUrl.errors.required">
+                              Youtube Url is required
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                          <label>Twitter URL</label>
+                          <input
+                            type="url"
+                            formControlName="twitterUrl"
+                            class="form-control"
+                            placeholder="Enter Twitter URL"
+                            [ngClass]="{
+                              'is-invalid': submitted && f2.twitterUrl.errors
+                            }"
+                          />
+                          <div
+                            *ngIf="submitted && f2.twitterUrl.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f2.twitterUrl.errors.required">
+                              Twitter Url is required
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                          <label>Linked In</label>
+                          <input
+                            type="text"
+                            formControlName="linkedInUrl"
+                            class="form-control"
+                            placeholder="Enter linkedIn URL"
+                            [ngClass]="{
+                              'is-invalid': submitted && f2.linkedInUrl.errors
+                            }"
+                          />
+                          <div
+                            *ngIf="submitted && f2.linkedInUrl.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f2.linkedInUrl.errors.required">
+                              linkedInUrl is required
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="form-group my-3 mt-4 d-flex justify-content-center"
+                  >
+                    <button
+                      type="submit"
+                      class="btn app-btn-primary w-50 theme-btn mx-auto justify-content-center"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </p-tabPanel>
+            <p-tabPanel header="Header III">
+              <ng-template pTemplate="header">
+                <i class="pi pi-search"></i>
+                <span class="mx-2">Terms & Conditions Details</span>
+              </ng-template>
+              <div class="form_tab3">
+                <form
+                  action=""
+                  class="form-box"
+                  [formGroup]="todDetails"
+                  (ngSubmit)="onSubmit3()"
+                >
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12">
+                        <label for="">Terms & Conditions Details</label>
+                        <textarea
+                          class="form-control descript"
+                          formControlName="todDescription"
+                          id=""
+                          cols="30"
+                          rows="10"
+                          [ngClass]="{
+                            'is-invalid': submitted && f3.todDescription.errors
+                          }"
+                        ></textarea>
+                        <div
+                          *ngIf="submitted && f3.todDescription.errors"
+                          class="invalid-feedback"
+                        >
+                          <div *ngIf="f3.todDescription.errors.required">
+                            Tod Description is required
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        type="submit"
+                        class="btn app-btn-primary w-50 theme-btn mx-auto my-3 mt-4"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </p-tabPanel>
+            <p-tabPanel header="Header IV">
+              <ng-template pTemplate="header">
+                <i class="pi pi-save"></i>
+                <span class="mx-2">Privacy Policy Details</span>
+              </ng-template>
+              <div class="form_tab3">
+                <form
+                  action=""
+                  class="form-box"
+                  [formGroup]="privacyDetails"
+                  (ngSubmit)="onSubmit4()"
+                >
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12">
+                        <label for="">Privacy Policy Details</label>
+                        <textarea
+                          class="form-control descript"
+                          formControlName="privacyDetails"
+                          id=""
+                          cols="30"
+                          rows="10"
+                          [ngClass]="{
+                            'is-invalid': submitted && f4.privacyDetails.errors
+                          }"
+                        ></textarea>
+                        <div
+                          *ngIf="submitted && f4.privacyDetails.errors"
+                          class="invalid-feedback"
+                        >
+                          <div *ngIf="f4.privacyDetails.errors.required">
+                            PrivacyDetails is required
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        type="submit"
+                        class="btn app-btn-primary w-50 theme-btn mx-auto my-3 mt-4"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </p-tabPanel>
+          </p-tabView>
+        </div>
+      </div>
+    </div>
+    <!--//container-fluid-->
+  </div>
+</div>

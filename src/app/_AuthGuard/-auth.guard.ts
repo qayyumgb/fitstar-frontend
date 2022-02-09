@@ -9,21 +9,21 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private _authService:AuthService,private router:Router,private toastr: ToastrService){}
+  constructor(private _authService: AuthService, private router: Router, private toastr: ToastrService) { }
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot){
+    state: RouterStateSnapshot) {
 
-      if (this._authService.isLoggedIn()){
-return true
+    if (this._authService.isLoggedIn()) {
+      return true
 
-      }
+    }
 
-      else {
-        this.toastr.info('Please Login to Contiune')
-        this.router.navigate([''])
-        return false
-      }
+    else {
+      this.toastr.info('Please Login to Contiune')
+      this.router.navigate([''])
+      return false
+    }
   }
 
 }

@@ -8,38 +8,21 @@
       <div class="d-flex flex-column align-content-end">
         <div class="app-auth-body mx-auto">
           <div class="app-auth-branding mb-4">
-            <a class="app-logo"
-              ><img
-                class="logo-icon me-2"
-                src="assets/images/app-logo.png"
-                alt="logo"
-            /></a>
+            <a class="app-logo"><img class="logo-icon me-2" src="assets/images/app-logo.png" alt="logo" /></a>
           </div>
           <h2 class="auth-heading text-center mb-5">Sign In</h2>
           <div class="auth-form-container text-start">
-            <form
-              class="auth-form login-form"
-              [formGroup]="LoginForm"
-              (ngSubmit)="onSubmit()"
-            >
+            <form class="auth-form login-form" [formGroup]="LoginForm" (ngSubmit)="onSubmit()">
               <div class="email mb-3">
                 <label class="sr-only" for="signin-email">Email</label>
                 <div class="form-group">
                   <!-- <label>Email</label> -->
                   <div class="field-input">
                     <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                    <input
-                      type="text"
-                      formControlName="email"
-                      class="form-control"
-                      placeholder="Email"
-                      [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
-                    />
+                    <input type="text" formControlName="email" class="form-control" placeholder="Email"
+                      [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
 
-                    <div
-                      *ngIf="submitted && f.email.errors"
-                      class="invalid-feedback"
-                    >
+                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                       <div *ngIf="f.email.errors.required">
                         Email is required
                       </div>
@@ -53,17 +36,9 @@
                 <!-- <label for="signin-password">Password</label> -->
                 <div class="field-input">
                   <i class="fa fa-unlock-alt" aria-hidden="true"></i>
-                  <input
-                    type="password"
-                    formControlName="password"
-                    class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
-                    placeholder="Password"
-                  />
-                  <div
-                    *ngIf="submitted && f.password.errors"
-                    class="invalid-feedback"
-                  >
+                  <input type="password" formControlName="password" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Password" />
+                  <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                     <div *ngIf="f.password.errors.required">
                       Password is required
                     </div>
@@ -79,12 +54,7 @@
                 <div class="extra mt-3 row justify-content-between">
                   <div class="col-6">
                     <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="RememberPassword"
-                      />
+                      <input class="form-check-input" type="checkbox" value="" id="RememberPassword" />
                       <label class="form-check-label" for="RememberPassword">
                         Remember me
                       </label>
@@ -102,10 +72,7 @@
               </div>
               <!--//form-group-->
               <div class="form-group">
-                <button
-                  type="submit"
-                  class="btn app-btn-primary w-100 theme-btn mx-auto"
-                >
+                <button type="submit" class="btn app-btn-primary w-100 theme-btn mx-auto">
                   Log In
                 </button>
               </div>

@@ -11,19 +11,19 @@ import { Table } from 'primeng/table';
 // import { MessageService } from "primeng/api";
 import { ambassadorList } from '../../../globalInterface/global.interface';
 
-import {ConfirmationService ,ConfirmEventType, MessageService} from 'primeng/api';
-import {Message} from 'primeng/api';
+import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
+import { Message } from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
-import {BlogPostService} from '../../../services/BlogPostService/blog-post.service'
+import { BlogPostService } from '../../../services/BlogPostService/blog-post.service'
 import { ToastrService } from 'ngx-toastr';
-import {TooltipModule} from 'primeng/tooltip';
+import { TooltipModule } from 'primeng/tooltip';
 
 
 @Component({
   selector: 'app-blog',
   templateUrl: './blog.component.html',
   styleUrls: ['./blog.component.scss'],
-  providers: [ConfirmationService,MessageService]
+  providers: [ConfirmationService, MessageService]
 })
 export class BlogComponent implements OnInit {
 
@@ -36,10 +36,10 @@ export class BlogComponent implements OnInit {
   catagory: any[];
   loading: boolean = false;
   position: string;
-  BlogPostData:any[]
-  BlogdataById:any[]
+  BlogPostData: any[]
+  BlogdataById: any[]
   activityValues: number[] = [0, 100];
-  constructor(private toastr: ToastrService, private cd: ChangeDetectorRef,private BlogPostService:BlogPostService, private modalService: BsModalService, private formBuilder: FormBuilder, private shopSevice: ShopService ,private confirmationService: ConfirmationService ,private messageService: MessageService,private PrimeNGConfig:PrimeNGConfig) { }
+  constructor(private toastr: ToastrService, private cd: ChangeDetectorRef, private BlogPostService: BlogPostService, private modalService: BsModalService, private formBuilder: FormBuilder, private shopSevice: ShopService, private confirmationService: ConfirmationService, private messageService: MessageService, private PrimeNGConfig: PrimeNGConfig) { }
 
 
   ngOnInit(): void {
@@ -54,9 +54,9 @@ export class BlogComponent implements OnInit {
         secoundFeaturedImage: ['', Validators.required],
         videolink: ['', Validators.required],
         typeDetail: ['', Validators.required],
-        file:[null],
-        featuredimage:[null],
-        secFeaturedImaga:[null]
+        file: [null],
+        featuredimage: [null],
+        secFeaturedImaga: [null]
 
       }
     );
@@ -80,7 +80,7 @@ export class BlogComponent implements OnInit {
     return this.createBlogPost.controls;
   }
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template,{class:"BlogListingModal"});
+    this.modalRef = this.modalService.show(template, { class: "BlogListingModal" });
   }
   submitted = false
   onSubmit(): void {
@@ -89,8 +89,9 @@ export class BlogComponent implements OnInit {
       return;
     }
     else
-    console.log(this.createBlogPost.value)
-  this.createBlogPost.reset()
+      console.log(this.createBlogPost.value)
+    // this.createBlogPost.reset()
+    this.CreateNewUser();
   }
 
 
@@ -99,25 +100,25 @@ export class BlogComponent implements OnInit {
   }
   OnDeleteRecord(position: string) {
     this.position = position;
-  console.log('delete')
+    console.log('delete')
     this.confirmationService.confirm({
-        message: 'Do you want to delete this record?',
-        header: 'Delete Confirmation',
-        icon: 'pi pi-info-circle',
-        accept: () => {
-            this.messageService.add({severity:'info', summary:'Confirmed', detail:'Record deleted'});
-        },
-        reject: (type:any) => {
-            switch(type) {
-                case ConfirmEventType.REJECT:
-                    this.messageService.add({severity:'error', summary:'Rejected', detail:'You have rejected'}),{class:"BlogListingModal"};
-                break;
-                case ConfirmEventType.CANCEL:
-                    this.messageService.add({severity:'warn', summary:'Cancelled', detail:'You have cancelled'});
-                break;
-            }
-        },
-        key: "deleteAlert"
+      message: 'Do you want to delete this record?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
+      },
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' }), { class: "BlogListingModal" };
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            break;
+        }
+      },
+      key: "deleteAlert"
     });
   }
 
@@ -126,11 +127,11 @@ export class BlogComponent implements OnInit {
   UsersRecord(): void {
     this.BlogPostService.getAllUser()
       .subscribe(
-        data=> {
+        data => {
           this.BlogPostData = data;
           console.log(data);
           console.log("Oie data ah gya ha agey kam kir hun ")
-          console.log('Getting Vaule from DB'+this.BlogPostData)
+          console.log('Getting Vaule from DB' + this.BlogPostData)
 
         },
 
@@ -139,12 +140,12 @@ export class BlogComponent implements OnInit {
         });
   }
 
-  getUserById(id?:any): void{
+  getUserById(id?: any): void {
 
     this.BlogPostService.getUserById(id)
       .subscribe(
         data => {
-          this.BlogdataById=data
+          this.BlogdataById = data
           console.log(data);
           console.log(this.BlogdataById)
         },
@@ -154,32 +155,33 @@ export class BlogComponent implements OnInit {
 
   }
 
-  CreateNewUser(){
+  CreateNewUser() {
+    debugger
     console.log("sending data to service side")
     this.BlogPostService.CreateNewUser(this.createBlogPost.value)
-        .subscribe(
-          response => {
-            console.log('data addedd')
-            this.toastr.success('Abbassador Data Added  Succesfully','',{
-              timeOut: 2000,
-            });
-            console.log(response);
-            this.submitted = true;
-            this.modalService.hide();
-            // this.createAmbassador.value.reset
-
-          },
-          error => {
-            console.log(error);
+      .subscribe(
+        response => {
+          console.log('data addedd')
+          this.toastr.success('Abbassador Data Added  Succesfully', '', {
+            timeOut: 2000,
           });
+          console.log(response);
+          this.submitted = true;
+          this.modalService.hide();
+          // this.createAmbassador.value.reset
+
+        },
+        error => {
+          console.log(error);
+        });
   }
 
-  DeleteUserById(id?:any): void{
+  DeleteUserById(id?: any): void {
 
     this.BlogPostService.deleteUser(id)
       .subscribe(
         data => {
-          this.BlogdataById=data
+          this.BlogdataById = data
           console.log(data);
           console.log(this.BlogdataById)
         },
@@ -195,7 +197,7 @@ export class BlogComponent implements OnInit {
   editProfileImg: boolean = true;
   removeProfileImg: boolean = false;
 
-  uploadProfileFile(event:any) {
+  uploadProfileFile(event: any) {
     let reader = new FileReader(); // HTML5 FileReader API
     let file = event.target.files[0];
     if (event.target.files && event.target.files[0]) {
@@ -233,7 +235,7 @@ export class BlogComponent implements OnInit {
   editFeaturedImg: boolean = true;
   removeFeaturedImg: boolean = false;
 
-  uploadFeauterdFile(event:any) {
+  uploadFeauterdFile(event: any) {
     let reader = new FileReader(); // HTML5 FileReader API
     let file = event.target.files[0];
     if (event.target.files && event.target.files[0]) {
@@ -266,29 +268,29 @@ export class BlogComponent implements OnInit {
 
 
 
-///////******** Secoundary Featured Image******/
+  ///////******** Secoundary Featured Image******/
 
-@ViewChild('SecFeaturedImg') secFeaturedImaga: ElementRef;
+  @ViewChild('SecFeaturedImg') secFeaturedImaga: ElementRef;
 
 
-uploadSecFeauterdFile(event:any) {
-  let reader = new FileReader(); // HTML5 FileReader API
-  let file = event.target.files[0];
-  if (event.target.files && event.target.files[0]) {
-    reader.readAsDataURL(file);
+  uploadSecFeauterdFile(event: any) {
+    let reader = new FileReader(); // HTML5 FileReader API
+    let file = event.target.files[0];
+    if (event.target.files && event.target.files[0]) {
+      reader.readAsDataURL(file);
 
-    // When file uploads set it to file formcontrol
-    reader.onload = () => {
-      this.createBlogPost.patchValue({
-        secFeaturedImaga: reader.result
+      // When file uploads set it to file formcontrol
+      reader.onload = () => {
+        this.createBlogPost.patchValue({
+          secFeaturedImaga: reader.result
 
-      });
+        });
+      }
+      debugger
+      // ChangeDetectorRef since file is loading outside the zone
+      this.cd.markForCheck();
     }
-    debugger
-    // ChangeDetectorRef since file is loading outside the zone
-    this.cd.markForCheck();
   }
-}
 
 
 
@@ -301,7 +303,7 @@ uploadSecFeauterdFile(event:any) {
 
 
 
-  @ViewChild('uploadfile',{static: true}) ele: ElementRef;
+  @ViewChild('uploadfile', { static: true }) ele: ElementRef;
 
   handleClick() {
     // document.getElementById('upload-file').click();

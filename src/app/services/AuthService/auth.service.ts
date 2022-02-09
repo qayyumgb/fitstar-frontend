@@ -54,26 +54,28 @@ export class AuthService {
   }
 
 
-getToken() {
-  return localStorage.getItem('token')
-}
+  getToken() {
+    return localStorage.getItem('token')
+  }
 
-isLoggedIn():any {
+  isLoggedIn(): any {
+    debugger
 
-    if (this.getToken()!==null || this.getToken()!==undefined) {
+    if (this.getToken() !== null || this.getToken() !== undefined) {
       return this.getToken() !== null;
     }
     else {
       console.log('logic pass gi')
+      return true
     }
 
 
   }
 
 
-logout() {
+  logout() {
     localStorage.removeItem('token');
-   this.router.navigate(['login']);
+    this.router.navigate(['login']);
   }
 
 }

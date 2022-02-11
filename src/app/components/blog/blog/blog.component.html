@@ -255,18 +255,18 @@
                   <label>Blog Title</label>
                   <input
                     type="text"
-                    formControlName="blogTitile"
+                    formControlName="title"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.blogTitile.errors
+                      'is-invalid': submitted && f.title.errors
                     }"
                     placeholder="Enter Blog Titile"
                   />
                   <div
-                    *ngIf="submitted && f.blogTitile.errors"
+                    *ngIf="submitted && f.title.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.blogTitile.errors.required">
+                    <div *ngIf="f.title.errors.required">
                       Blog Titile is required
                     </div>
                   </div>
@@ -276,19 +276,19 @@
                   <textarea
                     id="shortdescription"
                     [ngClass]="{
-                      'is-invalid': submitted && f.shortdescription.errors
+                      'is-invalid': submitted && f.description.errors
                     }"
                     class="form-control descript"
-                    formControlName="shortdescription"
+                    formControlName="description"
                     rows="3"
                     cols="20"
                   >
                   </textarea>
                   <div
-                    *ngIf="submitted && f.shortdescription.errors"
+                    *ngIf="submitted && f.description.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.shortdescription.errors.required">
+                    <div *ngIf="f.description.errors.required">
                       Short Description is required
                     </div>
                   </div>
@@ -330,18 +330,18 @@
                     [showClear]="true"
                     [style]="{ width: '253px' }"
                     (onChange)="($event.value)"
-                    formControlName="catagory"
+                    formControlName="category"
                     [ngClass]="{
-                      'is-invalid': submitted && f.catagory.errors
+                      'is-invalid': submitted && f.category.errors
                     }"
                   >
                   </p-dropdown>
 
                   <div
-                    *ngIf="submitted && f.catagory.errors"
+                    *ngIf="submitted && f.category.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.catagory.errors.required">
+                    <div *ngIf="f.category.errors.required">
                       Select Catagory is required
                     </div>
                   </div>
@@ -362,7 +362,6 @@
                     name="uploadfile"
                     #featuredImage
                     ngf-max-size="2MB"
-                    (change)="addAttachment($event)"
                     formControlName="featuredImage"
                     class="form-control"
                     [ngClass]="{
@@ -385,10 +384,10 @@
                   <label>Author Image</label>
                   <input
                     type="file"
-                    formControlName="authorImage"
+                    formControlName="authorProfile"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.authorImage.errors
+                      'is-invalid': submitted && f.authorProfile.errors
                     }"
                     id="imageUpload"
                     accept=".png, .jpg, .jpeg"
@@ -396,10 +395,10 @@
                     (change)="uploadProfileFile($event)"
                   />
                   <div
-                    *ngIf="submitted && f.authorImage.errors"
+                    *ngIf="submitted && f.authorProfile.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.authorImage.errors.required">
+                    <div *ngIf="f.authorProfile.errors.required">
                       Author Image is required
                     </div>
                   </div>
@@ -420,6 +419,10 @@
                     [ngClass]="{
                       'is-invalid': submitted && f.secoundFeaturedImage.errors
                     }"
+                    id="imageUpload"
+                    accept=".png, .jpg, .jpeg"
+                    #SecFeaturedImg
+                    (change)="uploadSecFeauterdFile($event)"
                   />
                   <div
                     *ngIf="submitted && f.secoundFeaturedImage.errors"
@@ -434,18 +437,18 @@
                   <label>Video Link </label>
                   <input
                     type="text"
-                    formControlName="videolink"
+                    formControlName="videoLink"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.videolink.errors
+                      'is-invalid': submitted && f.videoLink.errors
                     }"
                     placeholder="Enter Video embedded Link"
                   />
                   <div
-                    *ngIf="submitted && f.videolink.errors"
+                    *ngIf="submitted && f.videoLink.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.videolink.errors.required">
+                    <div *ngIf="f.videoLink.errors.required">
                       Video Link is required
                     </div>
                   </div>
@@ -460,21 +463,21 @@
                 <div class="col-sm-12 col-md-12">
                   <label>Blog Details</label>
                   <textarea
-                    id="typeDetail"
+                    id="details"
                     [ngClass]="{
-                      'is-invalid': submitted && f.typeDetail.errors
+                      'is-invalid': submitted && f.details.errors
                     }"
                     class="form-control descript"
-                    formControlName="typeDetail"
+                    formControlName="details"
                     rows="5"
                     cols="50"
                   >
                   </textarea>
                   <div
-                    *ngIf="submitted && f.typeDetail.errors"
+                    *ngIf="submitted && f.details.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.typeDetail.errors.required">
+                    <div *ngIf="f.details.errors.required">
                       Type Details is required
                     </div>
                   </div>
@@ -523,18 +526,18 @@
                   <label>Blog Title</label>
                   <input
                     type="text"
-                    formControlName="blogTitile"
+                    formControlName="title"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.blogTitile.errors
+                      'is-invalid': submitted && f.title.errors
                     }"
                     placeholder="Enter Blog Titile"
                   />
                   <div
-                    *ngIf="submitted && f.blogTitile.errors"
+                    *ngIf="submitted && f.title.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.blogTitile.errors.required">
+                    <div *ngIf="f.title.errors.required">
                       Blog Titile is required
                     </div>
                   </div>
@@ -544,19 +547,19 @@
                   <textarea
                     id="shortdescription"
                     [ngClass]="{
-                      'is-invalid': submitted && f.shortdescription.errors
+                      'is-invalid': submitted && f.description.errors
                     }"
                     class="form-control descript"
-                    formControlName="shortdescription"
+                    formControlName="description"
                     rows="3"
                     cols="20"
                   >
                   </textarea>
                   <div
-                    *ngIf="submitted && f.shortdescription.errors"
+                    *ngIf="submitted && f.description.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.shortdescription.errors.required">
+                    <div *ngIf="f.description.errors.required">
                       Short Description is required
                     </div>
                   </div>
@@ -598,19 +601,19 @@
                     [showClear]="true"
                     [style]="{ width: '253px' }"
                     (onChange)="($event.value)"
-                    formControlName="catagory"
+                    formControlName="category"
                     [ngClass]="{
-                      'is-invalid': submitted && f.catagory.errors
+                      'is-invalid': submitted && f.category.errors
                     }"
                   >
                   </p-dropdown>
 
                   <div
-                    *ngIf="submitted && f.catagory.errors"
+                    *ngIf="submitted && f.category.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.catagory.errors.required">
-                      Select Catagory is required
+                    <div *ngIf="f.category.errors.required">
+                      Select category is required
                     </div>
                   </div>
                 </div>
@@ -633,6 +636,7 @@
                     id="imageUpload"
                     accept=".png, .jpg, .jpeg"
                     #fileInput
+                    (change)="uploadFeauterdFile($event)"
                   />
                   <div
                     *ngIf="submitted && f.featuredImage.errors"
@@ -647,20 +651,21 @@
                   <label>Author Image</label>
                   <input
                     type="file"
-                    formControlName="authorImage"
+                    formControlName="authorProfile"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.authorImage.errors
+                      'is-invalid': submitted && f.authorProfile.errors
                     }"
                     id="imageUpload"
                     accept=".png, .jpg, .jpeg"
                     #fileInput
+                    (change)="uploadProfileFile($event)"
                   />
                   <div
-                    *ngIf="submitted && f.authorImage.errors"
+                    *ngIf="submitted && f.authorProfile.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.authorImage.errors.required">
+                    <div *ngIf="f.authorProfile.errors.required">
                       Author Image is required
                     </div>
                   </div>
@@ -684,6 +689,7 @@
                     id="imageUpload"
                     accept=".png, .jpg, .jpeg"
                     #SecFeaturedImg
+                    (change)="uploadSecFeauterdFile($event)"
                   />
                   <div
                     *ngIf="submitted && f.secoundFeaturedImage.errors"
@@ -698,18 +704,18 @@
                   <label>Video Link </label>
                   <input
                     type="text"
-                    formControlName="videolink"
+                    formControlName="videoLink"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.videolink.errors
+                      'is-invalid': submitted && f.videoLink.errors
                     }"
                     placeholder="Enter Video embedded Link"
                   />
                   <div
-                    *ngIf="submitted && f.videolink.errors"
+                    *ngIf="submitted && f.videoLink.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.videolink.errors.required">
+                    <div *ngIf="f.videoLink.errors.required">
                       Video Link is required
                     </div>
                   </div>
@@ -724,21 +730,21 @@
                 <div class="col-sm-12 col-md-12">
                   <label>Blog Details</label>
                   <textarea
-                    id="typeDetail"
+                    id="details"
                     [ngClass]="{
-                      'is-invalid': submitted && f.typeDetail.errors
+                      'is-invalid': submitted && f.details.errors
                     }"
                     class="form-control descript"
-                    formControlName="typeDetail"
+                    formControlName="details"
                     rows="5"
                     cols="50"
                   >
                   </textarea>
                   <div
-                    *ngIf="submitted && f.typeDetail.errors"
+                    *ngIf="submitted && f.details.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.typeDetail.errors.required">
+                    <div *ngIf="f.details.errors.required">
                       Type Details is required
                     </div>
                   </div>

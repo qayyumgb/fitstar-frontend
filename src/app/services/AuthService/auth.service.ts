@@ -59,7 +59,7 @@ export class AuthService {
   }
 
   isLoggedIn(): any {
-    debugger
+
 
     if (this.getToken() !== null || this.getToken() !== undefined) {
       return this.getToken() !== null;

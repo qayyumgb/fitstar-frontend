@@ -19,8 +19,7 @@ export class addUsers {
     userProfile:string=''
   }
   export class Sponser {
-    file:string='';
-    userProfile:string=''
+    image:string='';
   }
   export class Collaborators {
     file:string='';

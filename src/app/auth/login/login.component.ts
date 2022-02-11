@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
 
 
   loginUser() {
-    debugger
+
     this.loginService.LoginUser(this.LoginForm.value)
       .subscribe({
         next: (res) => {

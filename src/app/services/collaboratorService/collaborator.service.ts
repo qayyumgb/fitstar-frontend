@@ -10,12 +10,12 @@ import {Collaborators} from '../../Models/models'
 })
 export class CollaboratorService {
 
-  private _url="http://localhost:4000/collaborators/api/v1/";
+  private createUrl="https://fitstar-backend.herokuapp.com/app/v1/collaborators/create";
 
   constructor(private http:HttpClient) { }
 
   CreateNewUser(CollaboratorsData:any){
-    return this.http.post <any[]>(this._url,CollaboratorsData).pipe(map((res:any)=>{
+    return this.http.post <any[]>(this.createUrl,CollaboratorsData).pipe(map((res:any)=>{
       return res
     }),retry(1),
     catchError(this.handleError))
@@ -24,27 +24,27 @@ export class CollaboratorService {
 
   //getting User  data
 getAllUser(): Observable<Collaborators[]> {
-  return this.http.get<Collaborators[]>(this._url);
+  return this.http.get<Collaborators[]>(this.createUrl);
 }
 
 //getting User data of Specfic Id
 getUserById(_id: any): Observable<Collaborators[]> {
-  return this.http.get<Collaborators[]>(`${this._url}/${_id}`);
+  return this.http.get<Collaborators[]>(`${this.createUrl}/${_id}`);
 }
 
 //getting User data of Specfic Id
 deleteUser(_id: any): Observable<Collaborators[]> {
-  return this.http.delete<Collaborators[]>(`${this._url}/${_id}`);
+  return this.http.delete<Collaborators[]>(`${this.createUrl}/${_id}`);
 }
 
 //Update User data
 // UpdateUser(_id: any): Observable<addUsers[]> {
-//   return this.http.put<addUsers[]>(`${this._url}/${_id}`);
+//   return this.http.put<addUsers[]>(`${this.createUrl}/${_id}`);
 // }
 
 
 UpdateUser(_id: any, data: any): Observable<any> {
-  return this.http.put<Collaborators[]>(`${this._url}/${_id}`, data);
+  return this.http.put<Collaborators[]>(`${this.createUrl}/${_id}`, data);
 }
 
 

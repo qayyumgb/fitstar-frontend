@@ -6,6 +6,7 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
+import { AddCollaborator } from 'src/app/AuthInterface/auth.interface';
 import { ShopService } from 'src/app/services/shopService/shop.service';
 import { Table } from 'primeng/table';
 // import { MessageService } from "primeng/api";
@@ -45,13 +46,13 @@ export class CollaboratorListingComponent implements OnInit {
       {
 
         title: ['', Validators.required],
-        subtitle: ['', Validators.required],
-        instagramUrl: ['', Validators.required],
-        facebookUrl: ['', Validators.required],
-        youtubeUrl: ['', Validators.required],
-        twitterUrl: ['', Validators.required],
+        subTitle: ['', Validators.required],
+        instagram: ['', Validators.required],
+        facebook: ['', Validators.required],
+        youtube: ['', Validators.required],
+        tiwtter: ['', Validators.required],
         collaborattorImage:['',Validators.required],
-        file:[null]
+        picture:[null]
       }
     );
 
@@ -86,8 +87,7 @@ export class CollaboratorListingComponent implements OnInit {
       return;
     }
     else
-    console.log(this.createcollaborator.value)
-  // this.createcollaborator.reset()
+   this.CreateNewUser();
    this.modalService.hide();
   }
 
@@ -155,9 +155,22 @@ getUserById(id?:any): void{
 
 }
 
+
+
+
+
+
+
+
+
+
+
 CreateNewUser(){
-  console.log("sending data to service side")
-  this.CollaboratorService.CreateNewUser(this.createcollaborator.value)
+
+  const formData= this.createcollaborator.value;
+delete formData.collaborattorImage
+  console.log(formData)
+  this.CollaboratorService.CreateNewUser(formData)
       .subscribe(
         response => {
           console.log('data addedd')
@@ -206,7 +219,7 @@ DeleteUserById(id?:any): void{
      reader.onload = () => {
        this.imageUrl = reader.result;
        this.createcollaborator.patchValue({
-         file: reader.result
+        picture: reader.result
        });
        this.editFile = false;
        this.removeUpload = true;

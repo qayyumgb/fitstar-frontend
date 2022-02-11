@@ -45,18 +45,18 @@ export class BlogComponent implements OnInit {
   ngOnInit(): void {
     this.createBlogPost = this.formBuilder.group(
       {
-        blogTitile: ['', Validators.required],
-        shortdescription: ['', Validators.required],
+        title: ['', Validators.required],
+        description: ['', Validators.required],
         authorName: ['', Validators.required],
-        catagory: ['', Validators.required],
+        category: ['', Validators.required],
         featuredImage: ['', Validators.required],
-        authorImage: ['', Validators.required],
+        authorProfile: ['', Validators.required],
         secoundFeaturedImage: ['', Validators.required],
-        videolink: ['', Validators.required],
-        typeDetail: ['', Validators.required],
-        file: [null],
-        featuredimage: [null],
-        secFeaturedImaga: [null]
+        videoLink: ['', Validators.required],
+        details: ['', Validators.required],
+        authorImage: [null],
+        featuredImageOne: [null],
+        featuredImageTwo: [null]
 
       }
     );
@@ -67,13 +67,13 @@ export class BlogComponent implements OnInit {
     });
 
     this.catagory = [
-      { label: "Nutrition", value: "nutrition" },
-      { label: "Recipies", value: "recipies" },
-      { label: "Workouts", value: "workouts" },
-      { label: "Reviews", value: "reviews" },
-      { label: "Podcasts", value: "podcasts" },
-      { label: "Music", value: "music" },
-      { label: "News", value: "news" }
+      { label: "Nutrition", value: "Nutrition" },
+      { label: "Recipies", value: "Recipies" },
+      { label: "Workouts", value: "Workouts" },
+      { label: "Reviews", value: "Reviews" },
+      { label: "Podcasts", value: "Podcasts" },
+      { label: "Music", value: "Music" },
+      { label: "News", value: "News" }
     ];
   }
   get f(): { [key: string]: AbstractControl } {
@@ -156,9 +156,14 @@ export class BlogComponent implements OnInit {
   }
 
   CreateNewUser() {
-    debugger
+    const formdata =this.createBlogPost.value
+      delete formdata.featuredImage
+      delete formdata.authorProfile
+      delete formdata.secoundFeaturedImage
+      console.log(formdata)
+
     console.log("sending data to service side")
-    this.BlogPostService.CreateNewUser(this.createBlogPost.value)
+    this.BlogPostService.CreateNewUser(formdata)
       .subscribe(
         response => {
           console.log('data addedd')
@@ -166,7 +171,7 @@ export class BlogComponent implements OnInit {
             timeOut: 2000,
           });
           console.log(response);
-          this.submitted = true;
+          this.submitted= true;
           this.modalService.hide();
           // this.createAmbassador.value.reset
 
@@ -207,7 +212,7 @@ export class BlogComponent implements OnInit {
       reader.onload = () => {
         this.ProfileimageUrl = reader.result;
         this.createBlogPost.patchValue({
-          file: reader.result
+          authorImage: reader.result
         });
         this.editProfileImg = false;
         this.removeProfileImg = true;
@@ -224,7 +229,7 @@ export class BlogComponent implements OnInit {
     this.editProfileImg = true;
     this.removeProfileImg = false;
     this.createBlogPost.patchValue({
-      file: [null]
+      authorImage: [null]
     });
   }
 
@@ -245,7 +250,7 @@ export class BlogComponent implements OnInit {
       reader.onload = () => {
         this.FeaturedImageUrl = reader.result;
         this.createBlogPost.patchValue({
-          featuredimage: reader.result
+          featuredImageOne: reader.result
         });
         this.editFeaturedImg = false;
         this.removeFeaturedImg = true;
@@ -262,7 +267,7 @@ export class BlogComponent implements OnInit {
     this.editFeaturedImg = true;
     this.removeFeaturedImg = false;
     this.createBlogPost.patchValue({
-      featuredimage: [null]
+      featuredImageOne: [null]
     });
   }
 
@@ -274,22 +279,22 @@ export class BlogComponent implements OnInit {
 
 
   uploadSecFeauterdFile(event: any) {
-    let reader = new FileReader(); // HTML5 FileReader API
-    let file = event.target.files[0];
-    if (event.target.files && event.target.files[0]) {
-      reader.readAsDataURL(file);
+    const reader = new FileReader();
 
-      // When file uploads set it to file formcontrol
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
       reader.onload = () => {
         this.createBlogPost.patchValue({
-          secFeaturedImaga: reader.result
-
+          featuredImageTwo: reader.result
         });
-      }
-      debugger
-      // ChangeDetectorRef since file is loading outside the zone
-      this.cd.markForCheck();
+
+
+        // need to run CD since file load runs outside of zone
+        this.cd.markForCheck();
+      };
     }
+
   }
 
 
@@ -303,17 +308,6 @@ export class BlogComponent implements OnInit {
 
 
 
-  @ViewChild('uploadfile', { static: true }) ele: ElementRef;
 
-  handleClick() {
-    // document.getElementById('upload-file').click();
-    this.ele.nativeElement.click();
-    console.log('clicking event fire')
-  }
-
-  addAttachment(fileInput: any) {
-    const fileReaded = fileInput.target.files[0];
-    //  handle the rest
-  }
 
 }

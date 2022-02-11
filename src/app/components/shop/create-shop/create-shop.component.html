@@ -115,7 +115,7 @@
             </ng-template>
 
             <!-- User Table  -->
-            <ng-template pTemplate="header" [responsive]="true">
+            <ng-template pTemplate="header">
               <tr>
                 <th class="cell">sr#</th>
                 <th class="cell">username</th>
@@ -167,7 +167,7 @@
 
             <!-- Users Records sec  -->
 
-            <ng-template pTemplate="body" let-user [responsive]="true">
+            <ng-template pTemplate="body" let-user>
               <tr>
                 <td>
                   {{ user.srNum }}
@@ -412,7 +412,6 @@
             <button
               type="submit"
               class="btn app-btn-primary w-100 theme-btn mx-auto"
-              (click)="CreateNewUser()"
             >
               Continue
             </button>

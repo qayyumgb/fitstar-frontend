@@ -6,6 +6,7 @@ import {
   Validators
 } from '@angular/forms';
 import { Table } from 'primeng/table';
+import {LandinpPageService} from '../../../services/LandingPageService/landinp-page.service'
 
 @Component({
   selector: 'app-landing-page',
@@ -17,9 +18,13 @@ export class LandingPageComponent implements OnInit {
   socialLinksDetails: FormGroup;
   todDetails: FormGroup;
   privacyDetails: FormGroup;
-  submitted = false
+  submitted1 = false
+  submitted2 = false
+  submitted3 = false
+  submitted4= false
+  loginpagedata:any;
 
-  constructor(private formBuilder:FormBuilder) { }
+  constructor(private formBuilder:FormBuilder,private LandinpPageService:LandinpPageService) { }
 
   ngOnInit(): void {
     this.landingPagedetails = this.formBuilder.group(
@@ -74,7 +79,7 @@ export class LandingPageComponent implements OnInit {
 
 
   onSubmit(): void {
-    this.submitted = true;
+    this.submitted1 = true;
     if (this.landingPagedetails.invalid) {
       return;
     }
@@ -83,7 +88,7 @@ export class LandingPageComponent implements OnInit {
 
   }
   onSubmit2(): void {
-    this.submitted = true;
+    this.submitted2 = true;
     if (this.socialLinksDetails.invalid) {
       return;
     }
@@ -92,7 +97,7 @@ export class LandingPageComponent implements OnInit {
   this.socialLinksDetails.reset()
   }
   onSubmit3(): void {
-    this.submitted = true;
+    this.submitted3 = true;
     if (this.todDetails.invalid) {
       return;
     }
@@ -101,7 +106,7 @@ export class LandingPageComponent implements OnInit {
   this.todDetails.reset()
   }
   onSubmit4(): void {
-    this.submitted = true;
+    this.submitted4 = true;
     if (this.privacyDetails.invalid) {
       return;
     }
@@ -109,8 +114,81 @@ export class LandingPageComponent implements OnInit {
     console.log(this.privacyDetails.value)
   this.privacyDetails.reset()
   }
-
   clear(table: Table) {
     table.clear();
   }
+
+
+
+  ContentlandingPage1() {
+    const formdata =this.landingPagedetails.value
+    console.log("sending data to service side")
+    this.LandinpPageService.CreateNewUser(formdata)
+      .subscribe(
+        response => {
+          console.log('data addedd')
+          console.log(response);
+          this.submitted1 = true;
+          // this.modalService.hide();
+          // this.createAmbassador.value.reset
+        },
+        error => {
+          console.log(error);
+        });
+  }
+  ContentlandingPage2() {
+    const formdata =this.socialLinksDetails.value
+    console.log("sending data to service side")
+    this.LandinpPageService.CreateNewUser(formdata)
+      .subscribe(
+        response => {
+          console.log('data addedd')
+          console.log(response);
+          this.submitted1 = true;
+          // this.modalService.hide();
+          // this.createAmbassador.value.reset
+
+        },
+        error => {
+          console.log(error);
+        });
+  }
+  ContentlandingPage3() {
+    const formdata =this.todDetails.value
+    console.log("sending data to service side")
+    this.LandinpPageService.CreateNewUser(formdata)
+      .subscribe(
+        response => {
+          console.log('data addedd')
+
+          console.log(response);
+          this.submitted1 = true;
+          // this.modalService.hide();
+          // this.createAmbassador.value.reset
+
+        },
+        error => {
+          console.log(error);
+        });
+  }
+  ContentlandingPage4() {
+    const formdata =this.privacyDetails.value
+    console.log("sending data to service side")
+    this.LandinpPageService.CreateNewUser(formdata)
+      .subscribe(
+        response => {
+          console.log('data addedd')
+
+          console.log(response);
+          this.submitted1 = true;
+          // this.modalService.hide();
+          // this.createAmbassador.value.reset
+
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+
 }

@@ -10,6 +10,16 @@ export interface basicInfo {
   role:{};
   location:string;
 }
+
+export interface AddCollaborator {
+  title: string;
+  subTitle: string;
+  instagram: string;
+  facebook: string;
+  youtube: string;
+  tiwtter: string;
+  picture:string;
+}
 export interface login {
   email: string;
   password:string

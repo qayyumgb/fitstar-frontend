@@ -157,19 +157,23 @@
               </th>
             </tr> -->
             </ng-template>
-            <ng-template pTemplate="body" let-ambassadors>
+            <ng-template
+              pTemplate="body"
+              let-ambassadors
+              *ngFor="let data of SponserData; index as i"
+            >
               <tr>
                 <td>
-                  {{ ambassadors.srNum }}
+                  {{ i + 1 }}
                 </td>
                 <td>
                   <span class="image-text">
-                    <img src="../../../../assets/images/users/user-1.jpg" />
+                    <img src="data.image " />
                   </span>
                 </td>
 
                 <td>
-                  <span>{{ ambassadors.createdAt }}</span>
+                  <span>data.createdAt </span>
                 </td>
 
                 <td>
@@ -264,7 +268,6 @@
             <button
               type="submit"
               class="btn app-btn-primary w-100 theme-btn mx-auto"
-              (click)="CreateNewUser()"
             >
               Submit
             </button>

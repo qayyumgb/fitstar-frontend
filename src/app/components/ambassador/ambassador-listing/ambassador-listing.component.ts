@@ -44,15 +44,15 @@ export class AmbassadorListingComponent implements OnInit {
   ngOnInit(): void {
     this.createAmbassador = this.formBuilder.group(
       {
-        abbassadorName: ['', Validators.required],
+        name: ['', Validators.required],
         tagLine: ['', Validators.required],
-        instagramUrl: ['', Validators.required],
-        facebookUrl: ['', Validators.required],
-        youtubeUrl: ['', Validators.required],
-        twitterUrl: ['', Validators.required],
+        instagram: ['', Validators.required],
+        facebook: ['', Validators.required],
+        youtube: ['', Validators.required],
+        tiwtter: ['', Validators.required],
         description:['',Validators.required],
         userProfile:['',Validators.required],
-        file: [null],
+        picture:  [null],
       }
     );
 
@@ -88,7 +88,7 @@ export class AmbassadorListingComponent implements OnInit {
     }
     else
     console.log(this.createAmbassador.value)
-  this.createAmbassador.reset()
+    this.CreateNewUser();
   }
 
 
@@ -155,8 +155,11 @@ getUserById(id?:any): void{
 }
 
 CreateNewUser(){
+  const formData =this.createAmbassador.value
+  delete formData.userProfile
+  console.log(formData)
   console.log("sending data to service side")
-  this.AbbassadorService.CreateNewUser(this.createAmbassador.value)
+  this.AbbassadorService.CreateNewUser(formData)
       .subscribe(
         response => {
           console.log('data addedd')
@@ -207,7 +210,7 @@ DeleteUserById(id?:any): void{
       reader.onload = () => {
         this.imageUrl = reader.result;
         this.createAmbassador.patchValue({
-          file: reader.result
+          picture:reader.result
         });
         this.editFile = false;
         this.removeUpload = true;
@@ -224,7 +227,7 @@ DeleteUserById(id?:any): void{
     this.editFile = true;
     this.removeUpload = false;
     this.createAmbassador.patchValue({
-      file: [null]
+      picture: [null]
     });
   }
 

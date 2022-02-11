@@ -35,7 +35,8 @@ export class SponsorListingComponent implements OnInit {
   loading: boolean = false;
   msgs: Message[] = [];
   position: string;
-SponserData:any[];
+SponserData:any=[];
+// data:{};
 SponerdataById:any[];
   activityValues: number[] = [0, 100];
   constructor(private cd: ChangeDetectorRef,private toastr: ToastrService,private SponserService :SponserService,private modalService: BsModalService, private formBuilder: FormBuilder, private shopSevice: ShopService ,private confirmationService: ConfirmationService ,private messageService: MessageService,private PrimeNGConfig:PrimeNGConfig) { }
@@ -45,7 +46,7 @@ SponerdataById:any[];
     this.createsponsor= this.formBuilder.group(
       {
         userProfile:['',Validators.required],
-        file:[null]
+        image:[null]
       }
     );
 
@@ -63,6 +64,7 @@ SponerdataById:any[];
       { label: "Proposal", value: "proposal" }
     ];
     this.PrimeNGConfig.ripple = true;
+    this.UsersRecord();
   }
   get f(): { [key: string]: AbstractControl } {
     return this.createsponsor.controls;
@@ -80,8 +82,9 @@ SponerdataById:any[];
       return;
     }
     else
+    this.CreateNewUser()
     console.log(this.createsponsor.value)
-  this.createsponsor.reset()
+
   }
 
 
@@ -116,13 +119,15 @@ console.log('delete')
   });
 }
 
+
+// Getting All Sponsors Records
 UsersRecord(): void {
   this.SponserService.getAllUser()
     .subscribe(
       data=> {
         this.SponserData = data;
-        console.log(data);
-        console.log("Oie data ah gya ha agey kam kir hun ")
+        console.log(data)
+        // console.log(data);
         console.log('Getting Vaule from DB'+this.SponserData)
 
       },
@@ -148,8 +153,11 @@ getUserById(id?:any): void{
 }
 
 CreateNewUser(){
+  const formData =this.createsponsor.value;
+  delete formData.userProfile;
+  console.log(formData)
   console.log("sending data to service side")
-  this.SponserService.CreateNewUser(this.createsponsor.value)
+  this.SponserService.CreateNewUser(formData)
       .subscribe(
         response => {
           console.log('data addedd')
@@ -198,7 +206,7 @@ DeleteUserById(id?:any): void{
      reader.onload = () => {
        this.imageUrl = reader.result;
        this.createsponsor.patchValue({
-         file: reader.result
+         image: reader.result
        });
        this.editFile = false;
        this.removeUpload = true;

@@ -241,6 +241,217 @@
                     formControlName="collaborattorImage"
                     class="form-control"
                     [ngClass]="{
+                      'is-invalid': submitted && f.picture.errors
+                    }"
+                    id="imageUpload"
+                    accept=".png, .jpg, .jpeg"
+                    #fileInput
+                    (change)="uploadFile($event)"
+                  />
+                  <div
+                    *ngIf="submitted && f.picture.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.picture.errors.required">
+                      Collaborattor Image is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <label>Title</label>
+                  <input
+                    type="text"
+                    formControlName="title"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.title.errors }"
+                    placeholder="Enter Title"
+                  />
+                  <div
+                    *ngIf="submitted && f.title.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.title.errors.required">Title is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <label>Sub Titile</label>
+                  <input
+                    type="text"
+                    formControlName="subTitle"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.subTitle.errors
+                    }"
+                    placeholder="Enter Subtitle"
+                  />
+                  <div
+                    *ngIf="submitted && f.subTitle.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.subTitle.errors.required">
+                      subTitle is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <label>Instagram URL</label>
+                  <input
+                    type="url"
+                    formControlName="instagram"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.instagram.errors
+                    }"
+                    placeholder="Enter Instagram URL"
+                  />
+                  <div
+                    *ngIf="submitted && f.instagram.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.instagram.errors.required">
+                      Instagram URL is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <label>Facebook URL</label>
+                  <input
+                    type="text"
+                    formControlName="facebook"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.facebook.errors
+                    }"
+                    placeholder="Enter Facebook URL"
+                  />
+                  <div
+                    *ngIf="submitted && f.facebook.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.facebook.errors.required">
+                      FaceBook URL is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <label>Youtube URL</label>
+                  <input
+                    type="url"
+                    formControlName="youtube"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.youtube.errors
+                    }"
+                    placeholder="Youtube URL"
+                  />
+                  <div
+                    *ngIf="submitted && f.youtube.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.youtube.errors.required">
+                      Youtube URL is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12 col-md-12">
+                  <label>Twitter</label>
+                  <input
+                    type="url"
+                    formControlName="tiwtter"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.tiwtter.errors
+                    }"
+                    placeholder="TwitterUrl URL"
+                  />
+
+                  <div
+                    *ngIf="submitted && f.tiwtter.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.tiwtter.errors.required">
+                      Twitter Url is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group my-3 mt-4">
+            <button
+              type="submit"
+              class="btn app-btn-primary w-100 theme-btn mx-auto"
+              (click)="CreateNewUser()"
+            >
+              Submit
+            </button>
+            <!-- <button type="button" (click)="onReset()" class="btn btn-warning float-right">
+              Reset
+            </button> -->
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- Edit Blog Post  -->
+  <ng-template #edit_record>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Add New Collaborator</h4>
+      <button
+        type="button"
+        class="btn-close close pull-right"
+        aria-label="Close"
+        (click)="modalRef?.hide()"
+      >
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="shop-basicForm">
+        <div class="avatar-upload">
+          <div class="avatar-edit">
+            <div class="avatar-preview">
+              <div
+                id="imagePreview"
+                [style.backgroundImage]="'url(' + imageUrl + ')'"
+              ></div>
+            </div>
+          </div>
+        </div>
+        <form [formGroup]="createcollaborator" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <label>Select Image</label>
+                  <input
+                    type="file"
+                    formControlName="collaborattorImage"
+                    class="form-control"
+                    [ngClass]="{
                       'is-invalid': submitted && f.collaborattorImage.errors
                     }"
                     id="imageUpload"
@@ -284,19 +495,19 @@
                   <label>Sub Titile</label>
                   <input
                     type="text"
-                    formControlName="subtitle"
+                    formControlName="subTitle"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.subtitle.errors
+                      'is-invalid': submitted && f.subTitle.errors
                     }"
                     placeholder="Enter Subtitle"
                   />
                   <div
-                    *ngIf="submitted && f.subtitle.errors"
+                    *ngIf="submitted && f.subTitle.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.subtitle.errors.required">
-                      Subtitle is required
+                    <div *ngIf="f.subTitle.errors.required">
+                      subTitle is required
                     </div>
                   </div>
                 </div>
@@ -304,18 +515,18 @@
                   <label>Instagram URL</label>
                   <input
                     type="url"
-                    formControlName="instagramUrl"
+                    formControlName="instagram"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.instagramUrl.errors
+                      'is-invalid': submitted && f.instagram.errors
                     }"
                     placeholder="Enter Instagram URL"
                   />
                   <div
-                    *ngIf="submitted && f.instagramUrl.errors"
+                    *ngIf="submitted && f.instagram.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.instagramUrl.errors.required">
+                    <div *ngIf="f.instagram.errors.required">
                       Instagram URL is required
                     </div>
                   </div>
@@ -331,18 +542,18 @@
                   <label>Facebook URL</label>
                   <input
                     type="text"
-                    formControlName="facebookUrl"
+                    formControlName="facebook"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.facebookUrl.errors
+                      'is-invalid': submitted && f.facebook.errors
                     }"
                     placeholder="Enter Facebook URL"
                   />
                   <div
-                    *ngIf="submitted && f.facebookUrl.errors"
+                    *ngIf="submitted && f.facebook.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.facebookUrl.errors.required">
+                    <div *ngIf="f.facebook.errors.required">
                       FaceBook URL is required
                     </div>
                   </div>
@@ -351,18 +562,18 @@
                   <label>Youtube URL</label>
                   <input
                     type="url"
-                    formControlName="youtubeUrl"
+                    formControlName="youtube"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.youtubeUrl.errors
+                      'is-invalid': submitted && f.youtube.errors
                     }"
                     placeholder="Youtube URL"
                   />
                   <div
-                    *ngIf="submitted && f.youtubeUrl.errors"
+                    *ngIf="submitted && f.youtube.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.youtubeUrl.errors.required">
+                    <div *ngIf="f.youtube.errors.required">
                       Youtube URL is required
                     </div>
                   </div>
@@ -378,217 +589,19 @@
                   <label>Twitter</label>
                   <input
                     type="url"
-                    formControlName="twitterUrl"
+                    formControlName="twitter"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.twitterUrl.errors
+                      'is-invalid': submitted && f.twitter.errors
                     }"
                     placeholder="TwitterUrl URL"
                   />
 
                   <div
-                    *ngIf="submitted && f.twitterUrl.errors"
+                    *ngIf="submitted && f.twitter.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.twitterUrl.errors.required">
-                      Twitter Url is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group my-3 mt-4">
-            <button
-              type="submit"
-              class="btn app-btn-primary w-100 theme-btn mx-auto"
-              (click)="CreateNewUser()"
-            >
-              Submit
-            </button>
-            <!-- <button type="button" (click)="onReset()" class="btn btn-warning float-right">
-              Reset
-            </button> -->
-          </div>
-        </form>
-      </div>
-    </div>
-  </ng-template>
-
-  <!-- Edit Blog Post  -->
-  <ng-template #edit_record>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Edit Collaborator</h4>
-      <button
-        type="button"
-        class="btn-close close pull-right"
-        aria-label="Close"
-        (click)="modalRef?.hide()"
-      >
-        <span aria-hidden="true" class="visually-hidden">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="shop-basicForm">
-        <form [formGroup]="createcollaborator" (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-12 col-md-6">
-                  <label>Select Image</label>
-                  <input
-                    type="file"
-                    formControlName="collaborattorImage"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.collaborattorImage.errors
-                    }"
-                    placeholder=" Enter Abbassador Name"
-                  />
-                  <div
-                    *ngIf="submitted && f.collaborattorImage.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.collaborattorImage.errors.required">
-                      Collaborattor Image is required
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                  <label>Title</label>
-                  <input
-                    type="text"
-                    formControlName="title"
-                    class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.title.errors }"
-                    placeholder="Enter Title"
-                  />
-                  <div
-                    *ngIf="submitted && f.title.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.title.errors.required">Title is required</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-12 col-md-6">
-                  <label>Sub Titile</label>
-                  <input
-                    type="text"
-                    formControlName="subtitle"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.subtitle.errors
-                    }"
-                    placeholder="Enter Subtitle"
-                  />
-                  <div
-                    *ngIf="submitted && f.subtitle.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.subtitle.errors.required">
-                      Subtitle is required
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                  <label>Instagram URL</label>
-                  <input
-                    type="url"
-                    formControlName="instagramUrl"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.instagramUrl.errors
-                    }"
-                    placeholder="Enter Instagram URL"
-                  />
-                  <div
-                    *ngIf="submitted && f.instagramUrl.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.instagramUrl.errors.required">
-                      Instagram URL is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-12 col-md-6">
-                  <label>Facebook URL</label>
-                  <input
-                    type="text"
-                    formControlName="facebookUrl"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.facebookUrl.errors
-                    }"
-                    placeholder="Enter Facebook URL"
-                  />
-                  <div
-                    *ngIf="submitted && f.facebookUrl.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.facebookUrl.errors.required">
-                      FaceBook URL is required
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                  <label>Youtube URL</label>
-                  <input
-                    type="url"
-                    formControlName="youtubeUrl"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.youtubeUrl.errors
-                    }"
-                    placeholder="Youtube URL"
-                  />
-                  <div
-                    *ngIf="submitted && f.youtubeUrl.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.youtubeUrl.errors.required">
-                      Youtube URL is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-12 col-md-12">
-                  <label>Twitter</label>
-                  <input
-                    type="url"
-                    formControlName="twitterUrl"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.twitterUrl.errors
-                    }"
-                    placeholder="TwitterUrl URL"
-                  />
-
-                  <div
-                    *ngIf="submitted && f.twitterUrl.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.twitterUrl.errors.required">
+                    <div *ngIf="f.twitter.errors.required">
                       Twitter Url is required
                     </div>
                   </div>

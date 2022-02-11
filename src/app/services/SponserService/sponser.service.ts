@@ -25,14 +25,15 @@ var headers_object = new HttpHeaders({
 
 export class SponserService {
 
-  private _url="http://localhost:3000/app/v1/sponsors/create";
+  private _CreateUrl="https://fitstar-backend.herokuapp.com/app/v1/sponsors/create";
+  private _gettAllSponsors="https://fitstar-backend.herokuapp.com/app/v1/sponsors/get";
 
 
 
   constructor(private http:HttpClient) { }
 
   CreateNewUser(SponserData:any){
-    return this.http.post <any[]>(this._url,SponserData,httpOptions).pipe(map((res:any)=>{
+    return this.http.post <any[]>(this._CreateUrl,SponserData).pipe(map((res:any)=>{
       return res
     }),retry(1),
     catchError(this.handleError))
@@ -40,28 +41,28 @@ export class SponserService {
   }
 
   //getting User  data
-getAllUser(): Observable<Sponser[]> {
-  return this.http.get<Sponser[]>(this._url);
+getAllUser(): Observable<any> {
+  return this.http.get<any>(this._gettAllSponsors);
 }
 
 //getting User data of Specfic Id
 getUserById(_id: any): Observable<Sponser[]> {
-  return this.http.get<Sponser[]>(`${this._url}/${_id}`);
+  return this.http.get<Sponser[]>(`${this._CreateUrl}/${_id}`);
 }
 
 //getting User data of Specfic Id
 deleteUser(_id: any): Observable<Sponser[]> {
-  return this.http.delete<Sponser[]>(`${this._url}/${_id}`);
+  return this.http.delete<Sponser[]>(`${this._CreateUrl}/${_id}`);
 }
 
 //Update User data
 // UpdateUser(_id: any): Observable<addUsers[]> {
-//   return this.http.put<addUsers[]>(`${this._url}/${_id}`);
+//   return this.http.put<addUsers[]>(`${this._CreateUrl}/${_id}`);
 // }
 
 
 UpdateUser(_id: any, data: any): Observable<any> {
-  return this.http.put<Sponser[]>(`${this._url}/${_id}`, data);
+  return this.http.put<Sponser[]>(`${this._CreateUrl}/${_id}`, data);
 }
 
 

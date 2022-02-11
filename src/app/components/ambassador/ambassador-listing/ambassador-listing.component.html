@@ -251,20 +251,18 @@
                   <label>Enter Name</label>
                   <input
                     type="text"
-                    formControlName="abbassadorName"
+                    formControlName="name"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.abbassadorName.errors
+                      'is-invalid': submitted && f.name.errors
                     }"
                     placeholder=" Enter Abbassador Name"
                   />
                   <div
-                    *ngIf="submitted && f.abbassadorName.errors"
+                    *ngIf="submitted && f.name.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.abbassadorName.errors.required">
-                      AbbassadorName is required
-                    </div>
+                    <div *ngIf="f.name.errors.required">name is required</div>
                   </div>
                 </div>
                 <div class="col-sm-12 col-md-6">
@@ -296,18 +294,18 @@
                   <label>Instagram URl</label>
                   <input
                     type="url"
-                    formControlName="instagramUrl"
+                    formControlName="instagram"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.instagramUrl.errors
+                      'is-invalid': submitted && f.instagram.errors
                     }"
                     placeholder="Enter Instagram URL"
                   />
                   <div
-                    *ngIf="submitted && f.instagramUrl.errors"
+                    *ngIf="submitted && f.instagram.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.instagramUrl.errors.required">
+                    <div *ngIf="f.instagram.errors.required">
                       Instagram URL is required
                     </div>
                   </div>
@@ -316,18 +314,18 @@
                   <label>Facebook URL</label>
                   <input
                     type="url"
-                    formControlName="facebookUrl"
+                    formControlName="facebook"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.facebookUrl.errors
+                      'is-invalid': submitted && f.facebook.errors
                     }"
                     placeholder="Enter Facebook URL"
                   />
                   <div
-                    *ngIf="submitted && f.facebookUrl.errors"
+                    *ngIf="submitted && f.facebook.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.facebookUrl.errors.required">
+                    <div *ngIf="f.facebook.errors.required">
                       Facebook URL is required
                     </div>
                   </div>
@@ -343,18 +341,18 @@
                   <label>Youtube URL</label>
                   <input
                     type="text"
-                    formControlName="youtubeUrl"
+                    formControlName="youtube"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.youtubeUrl.errors
+                      'is-invalid': submitted && f.youtube.errors
                     }"
                     placeholder="Enter Youtube URL"
                   />
                   <div
-                    *ngIf="submitted && f.youtubeUrl.errors"
+                    *ngIf="submitted && f.youtube.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.youtubeUrl.errors.required">
+                    <div *ngIf="f.youtube.errors.required">
                       Youtube URL is required
                     </div>
                   </div>
@@ -363,18 +361,18 @@
                   <label>Twitter URL</label>
                   <input
                     type="url"
-                    formControlName="twitterUrl"
+                    formControlName="tiwtter"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.twitterUrl.errors
+                      'is-invalid': submitted && f.tiwtter.errors
                     }"
                     placeholder="Twitter URL"
                   />
                   <div
-                    *ngIf="submitted && f.twitterUrl.errors"
+                    *ngIf="submitted && f.tiwtter.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.twitterUrl.errors.required">
+                    <div *ngIf="f.tiwtter.errors.required">
                       Twitter URL is required
                     </div>
                   </div>
@@ -445,7 +443,6 @@
             <button
               type="submit"
               class="btn app-btn-primary w-100 theme-btn mx-auto"
-              (click)="CreateNewUser()"
             >
               Submit
             </button>
@@ -481,20 +478,18 @@
                   <label>Enter Name</label>
                   <input
                     type="text"
-                    formControlName="abbassadorName"
+                    formControlName="name"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.abbassadorName.errors
+                      'is-invalid': submitted && f.name.errors
                     }"
                     placeholder=" Enter Abbassador Name"
                   />
                   <div
-                    *ngIf="submitted && f.abbassadorName.errors"
+                    *ngIf="submitted && f.name.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.abbassadorName.errors.required">
-                      AbbassadorName is required
-                    </div>
+                    <div *ngIf="f.name.errors.required">name is required</div>
                   </div>
                 </div>
                 <div class="col-sm-12 col-md-6">
@@ -526,18 +521,18 @@
                   <label>Instagram URl</label>
                   <input
                     type="url"
-                    formControlName="instagramUrl"
+                    formControlName="instagram"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.instagramUrl.errors
+                      'is-invalid': submitted && f.instagram.errors
                     }"
                     placeholder="Enter Instagram URL"
                   />
                   <div
-                    *ngIf="submitted && f.instagramUrl.errors"
+                    *ngIf="submitted && f.instagram.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.instagramUrl.errors.required">
+                    <div *ngIf="f.instagram.errors.required">
                       Instagram URL is required
                     </div>
                   </div>
@@ -546,18 +541,18 @@
                   <label>Facebook URL</label>
                   <input
                     type="url"
-                    formControlName="facebookUrl"
+                    formControlName="facebook"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.facebookUrl.errors
+                      'is-invalid': submitted && f.facebook.errors
                     }"
                     placeholder="Enter Facebook URL"
                   />
                   <div
-                    *ngIf="submitted && f.facebookUrl.errors"
+                    *ngIf="submitted && f.facebook.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.facebookUrl.errors.required">
+                    <div *ngIf="f.facebook.errors.required">
                       Facebook URL is required
                     </div>
                   </div>
@@ -573,18 +568,18 @@
                   <label>Youtube URL</label>
                   <input
                     type="text"
-                    formControlName="youtubeUrl"
+                    formControlName="youtube"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.youtubeUrl.errors
+                      'is-invalid': submitted && f.youtube.errors
                     }"
                     placeholder="Enter Youtube URL"
                   />
                   <div
-                    *ngIf="submitted && f.youtubeUrl.errors"
+                    *ngIf="submitted && f.youtube.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.youtubeUrl.errors.required">
+                    <div *ngIf="f.youtube.errors.required">
                       Youtube URL is required
                     </div>
                   </div>
@@ -593,18 +588,18 @@
                   <label>Twitter URL</label>
                   <input
                     type="url"
-                    formControlName="twitterUrl"
+                    formControlName="tiwtter"
                     class="form-control"
                     [ngClass]="{
-                      'is-invalid': submitted && f.twitterUrl.errors
+                      'is-invalid': submitted && f.tiwtter.errors
                     }"
                     placeholder="Twitter URL"
                   />
                   <div
-                    *ngIf="submitted && f.twitterUrl.errors"
+                    *ngIf="submitted && f.tiwtter.errors"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="f.twitterUrl.errors.required">
+                    <div *ngIf="f.tiwtter.errors.required">
                       Twitter URL is required
                     </div>
                   </div>

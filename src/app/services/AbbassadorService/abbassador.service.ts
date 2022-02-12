@@ -8,8 +8,7 @@ import { Abbassador } from '../../Models/models';
   providedIn: 'root',
 })
 export class AbbassadorService {
-  private _url =
-    'https://fitstar-backend.herokuapp.com/app/v1/abbassadors/create';
+  private _url ='https://fitstar-backend.herokuapp.com/app/v1/ambassadors/create';
 
   constructor(private http: HttpClient) {}
 

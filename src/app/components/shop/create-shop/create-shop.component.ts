@@ -66,7 +66,7 @@ export class CreateShopComponent implements OnInit {
         location: ['', Validators.required],
         role: ['', Validators.required],
         ProfileImage:['',Validators.required],
-        Imagefile: [null],
+        file: [null],
       },{
         validator: MustMatch('password', 'cpassword')
 
@@ -187,6 +187,10 @@ export class CreateShopComponent implements OnInit {
   CreateNewUser(){
     const formData =this.createUser.value;
     delete formData.ProfileImage
+    delete formData.cpassword
+
+   formData.role=formData.role.code
+
     console.log(formData)
     console.log("sending data to service side")
     this.userService.CreateNewUser(formData)

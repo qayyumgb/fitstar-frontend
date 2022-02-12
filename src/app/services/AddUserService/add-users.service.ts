@@ -9,8 +9,9 @@ import {addUsers} from '../../Models/models'
 })
 export class AddUsersService {
 
-  private _url="https://fitstar-backend.herokuapp.com/adduser/app/v1/get";
-  private _CreateUrl="https://fitstar-backend.herokuapp.com/adduser/app/v1/create";
+  private _url="https://fitstar-backend.herokuapp.com/app/v1/users/get";
+  private _CreateUrl="https://fitstar-backend.herokuapp.com/app/v1/users/create";
+
 
 
   constructor(private http:HttpClient) { }

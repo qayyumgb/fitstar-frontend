@@ -95,15 +95,27 @@ SponerdataById:any[];
 // Delete Record Confirm Popup
 
 
-OnDeleteRecord(position: string) {
-  this.position = position;
+OnDeleteRecord(id:any) {
+
 console.log('delete')
   this.confirmationService.confirm({
       message: 'Do you want to delete this record?',
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-          this.messageService.add({severity:'info', summary:'Confirmed', detail:'Record deleted'});
+        this.SponserService.deleteUser(id)
+        .subscribe(
+          data => {
+
+            this.toastr.success('User Deleted Succesfully', 'Deleting User!',{
+              timeOut: 4000,
+            });
+            this.UsersRecord();
+
+          },
+          error => {
+            console.log(error);
+          });
       },
       reject: (type:any) => {
           switch(type) {
@@ -124,12 +136,9 @@ console.log('delete')
 UsersRecord(): void {
   this.SponserService.getAllUser()
     .subscribe(
-      data=> {
-        this.SponserData = data;
-        console.log(data)
-        // console.log(data);
-        console.log('Getting Vaule from DB'+this.SponserData)
-
+      (data:any)=> {
+        this.SponserData=data.sponsors
+        console.log(this.SponserData)
       },
 
       error => {
@@ -175,20 +184,7 @@ CreateNewUser(){
         });
 }
 
-DeleteUserById(id?:any): void{
 
-  this.SponserService.deleteUser(id)
-    .subscribe(
-      data => {
-        this.SponerdataById=data
-        console.log(data);
-        console.log(this.SponerdataById)
-      },
-      error => {
-        console.log(error);
-      });
-
-}
 
  /*########################## File Upload ########################*/
  @ViewChild('fileInput') el: ElementRef;

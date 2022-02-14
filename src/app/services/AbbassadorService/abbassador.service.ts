@@ -1,19 +1,26 @@
-import { HttpClient } from '@angular/common/http';
+
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 import { Abbassador } from '../../Models/models';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root',
 })
 export class AbbassadorService {
-  private _url ='https://fitstar-backend.herokuapp.com/app/v1/ambassadors/create';
+  private createAbbassador =
+    'https://fitstar-backend.herokuapp.com/app/v1/ambassadors/create';
+    private deleteAbbassador =
+    'https://fitstar-backend.herokuapp.com/app/v1/ambassadors/delete';
+    private GetAllAbbassador =
+    'https://fitstar-backend.herokuapp.com/app/v1/ambassadors/get';
+    private UpdateAbbassador =
+    'https://fitstar-backend.herokuapp.com/app/v1/ambassadors/update';
 
   constructor(private http: HttpClient) {}
 
   CreateNewUser(AbbassadorData: any) {
-    return this.http.post<any[]>(this._url, AbbassadorData).pipe(
+    return this.http.post<any[]>(this.createAbbassador, AbbassadorData).pipe(
       map((res: any) => {
         return res;
       }),
@@ -23,18 +30,15 @@ export class AbbassadorService {
   }
 
   //getting User  data
-  getAllUser(): Observable<Abbassador[]> {
-    return this.http.get<Abbassador[]>(this._url);
+  getAllUser(): Observable<any> {
+    return this.http.get<any>(this.GetAllAbbassador);
   }
 
-  //getting User data of Specfic Id
-  getUserById(_id: any): Observable<Abbassador[]> {
-    return this.http.get<Abbassador[]>(`${this._url}/${_id}`);
-  }
+
 
   //getting User data of Specfic Id
   deleteUser(_id: any): Observable<Abbassador[]> {
-    return this.http.delete<Abbassador[]>(`${this._url}/${_id}`);
+    return this.http.delete<Abbassador[]>(`${this.deleteAbbassador}/${_id}`);
   }
 
   //Update User data
@@ -43,7 +47,15 @@ export class AbbassadorService {
   // }
 
   UpdateUser(_id: any, data: any): Observable<any> {
-    return this.http.put<Abbassador[]>(`${this._url}/${_id}`, data);
+    return this.http.put<any[]>(`${this.UpdateAbbassador}/${_id}`, data);
+  }
+
+  update(id:any, post:any): Observable<any> {
+
+    return this.http.put(this.UpdateAbbassador + id, JSON.stringify(post))
+    .pipe(
+      catchError(this.handleError)
+    )
   }
 
   // Error Handling Funcation

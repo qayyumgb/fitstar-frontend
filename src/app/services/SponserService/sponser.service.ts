@@ -27,6 +27,7 @@ export class SponserService {
 
   private _CreateUrl="https://fitstar-backend.herokuapp.com/app/v1/sponsors/create";
   private _gettAllSponsors="https://fitstar-backend.herokuapp.com/app/v1/sponsors/get";
+  private deleteSponsor="https://fitstar-backend.herokuapp.com/app/v1/sponsors/delete";
 
 
 
@@ -47,12 +48,12 @@ getAllUser(): Observable<any> {
 
 //getting User data of Specfic Id
 getUserById(_id: any): Observable<Sponser[]> {
-  return this.http.get<Sponser[]>(`${this._CreateUrl}/${_id}`);
+  return this.http.get<Sponser[]>(`${this.deleteSponsor}/${_id}`);
 }
 
 //getting User data of Specfic Id
-deleteUser(_id: any): Observable<Sponser[]> {
-  return this.http.delete<Sponser[]>(`${this._CreateUrl}/${_id}`);
+deleteUser(_id: any): Observable<any> {
+  return this.http.delete<any>(`${this.deleteSponsor}/${_id}`);
 }
 
 //Update User data

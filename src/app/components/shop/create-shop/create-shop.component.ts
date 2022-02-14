@@ -44,7 +44,7 @@ export class CreateShopComponent implements OnInit {
 
   activityValues: number[] = [0, 100];
 
-  UsersData:any[]=[];
+  UsersData:any=[];;
   userdataById:any[]
   NewUserData:any[]
 
@@ -67,6 +67,7 @@ export class CreateShopComponent implements OnInit {
         role: ['', Validators.required],
         ProfileImage:['',Validators.required],
         file: [null],
+        image: [null],
       },{
         validator: MustMatch('password', 'cpassword')
 
@@ -128,15 +129,26 @@ export class CreateShopComponent implements OnInit {
     table.clear();
   }
 
-  OnDeleteRecord(position: string) {
-    this.position = position;
+  OnDeleteRecord(id:any) {
   console.log('delete')
     this.confirmationService.confirm({
         message: 'Do you want to delete this record?',
         header: 'Delete Confirmation',
         icon: 'pi pi-info-circle',
         accept: () => {
-            this.messageService.add({severity:'info', summary:'Confirmed', detail:'Record deleted'});
+          this.userService.deleteUser(id)
+          .subscribe(
+            data => {
+
+              this.toastr.success('User Deleted Succesfully', 'Deleting User!',{
+                timeOut: 4000,
+              });
+              this.UsersRecord();
+
+            },
+            error => {
+              console.log(error);
+            });
         },
         reject: (type:any) => {
             switch(type) {
@@ -156,11 +168,10 @@ export class CreateShopComponent implements OnInit {
   UsersRecord(): void {
     this.userService.getAllUser()
       .subscribe(
-        data=> {
-          this.UsersData = data;
-          console.log(data);
-          console.log("Oie data ah gya ha agey kam kir hun ")
-          console.log('Getting Vaule from DB'+this.UsersData)
+        (data:any)=> {
+         console.log(data)
+         this.UsersData=data.users
+         console.log(this.UsersData)
 
         },
 
@@ -189,8 +200,7 @@ export class CreateShopComponent implements OnInit {
     delete formData.ProfileImage
     delete formData.cpassword
 
-   formData.role=formData.role.code
-
+    formData.role=formData.role.code
     console.log(formData)
     console.log("sending data to service side")
     this.userService.CreateNewUser(formData)
@@ -211,20 +221,7 @@ export class CreateShopComponent implements OnInit {
           });
   }
 
-  DeleteUserById(id?:any): void{
 
-    this.userService.deleteUser(id)
-      .subscribe(
-        data => {
-          this.userdataById=data
-          console.log(data);
-          console.log(this.userdataById)
-        },
-        error => {
-          console.log(error);
-        });
-
-  }
 
 
   /*########################## File Upload ########################*/
@@ -243,7 +240,7 @@ uploadFile(event:any) {
     reader.onload = () => {
       this.imageUrl = reader.result;
       this.createUser.patchValue({
-        file: reader.result
+        image: reader.result
       });
       this.editFile = false;
       this.removeUpload = true;
@@ -260,7 +257,7 @@ removeUploadedFile() {
   this.editFile = true;
   this.removeUpload = false;
   this.createUser.patchValue({
-    file: [null]
+    image: [null]
   });
 }
 

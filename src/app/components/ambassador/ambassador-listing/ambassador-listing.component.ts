@@ -70,6 +70,7 @@ export class AmbassadorListingComponent implements OnInit {
       { label: "Proposal", value: "proposal" }
     ];
     this.PrimeNGConfig.ripple = true;
+    this.UsersRecord();
   }
   get f(): { [key: string]: AbstractControl } {
     return this.createAmbassador.controls;
@@ -98,16 +99,23 @@ export class AmbassadorListingComponent implements OnInit {
 
 // Delete Record Confirm Popup
 
+OnDeleteRecord(_id:any) {
 
-OnDeleteRecord(position: string) {
-  this.position = position;
-console.log('delete')
   this.confirmationService.confirm({
       message: 'Do you want to delete this record?',
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-          this.messageService.add({severity:'info', summary:'Confirmed', detail:'Record deleted'});
+        this.AbbassadorService.deleteUser(_id)
+        .subscribe(
+          (data:any) => {
+            this.toastr.success(data.message);
+            this.UsersRecord();
+
+          },
+          error => {
+            console.log(error);
+          });
       },
       reject: (type:any) => {
           switch(type) {
@@ -126,9 +134,9 @@ console.log('delete')
 UsersRecord(): void {
   this.AbbassadorService.getAllUser()
     .subscribe(
-      data=> {
-        this.AbbassadorData = data;
-        console.log(data);
+      (data:any)=> {
+        this.AbbassadorData = data.ambassador;
+        console.log(data.ambassador);
         console.log("Oie data ah gya ha agey kam kir hun ")
         console.log('Getting Vaule from DB'+this.AbbassadorData)
 
@@ -139,20 +147,6 @@ UsersRecord(): void {
       });
 }
 
-getUserById(id?:any): void{
-
-  this.AbbassadorService.getUserById(id)
-    .subscribe(
-      data => {
-        this.AbbassodordataById=data
-        console.log(data);
-        console.log(this.AbbassodordataById)
-      },
-      error => {
-        console.log(error);
-      });
-
-}
 
 CreateNewUser(){
   const formData =this.createAmbassador.value
@@ -177,20 +171,23 @@ CreateNewUser(){
         });
 }
 
-DeleteUserById(id?:any): void{
 
-  this.AbbassadorService.deleteUser(id)
+updateAmbassador(id:any): void {
+  this.AbbassadorService.update(id,this.AbbassadorData.ambassador)
     .subscribe(
-      data => {
-        this.AbbassodordataById=data
-        console.log(data);
-        console.log(this.AbbassodordataById)
+      response => {
+        console.log(response);
+        console.log(this.AbbassadorData._id)
+        console.log(this.AbbassadorData.ambassador)
+
+        this.toastr.success(response.message);
       },
       error => {
         console.log(error);
       });
-
 }
+
+
 
 
 

@@ -35,13 +35,14 @@ export class CollaboratorListingComponent implements OnInit {
   loading: boolean = false;
   msgs: Message[] = [];
   position: string;
-  CollaboratorData:any[];
+  CollaboratorData:any=[];
   CollaboratordataById:any[];
 
   activityValues: number[] = [0, 100];
   constructor(private cd: ChangeDetectorRef,private toastr: ToastrService,private CollaboratorService:CollaboratorService, private modalService: BsModalService, private formBuilder: FormBuilder, private shopSevice: ShopService ,private confirmationService: ConfirmationService ,private messageService: MessageService,private PrimeNGConfig:PrimeNGConfig) { }
 
   ngOnInit(): void {
+    this.UsersRecord()
     this.createcollaborator = this.formBuilder.group(
       {
 
@@ -99,15 +100,23 @@ export class CollaboratorListingComponent implements OnInit {
   // Delete Record Confirm Popup
 
 
-OnDeleteRecord(position: string) {
-  this.position = position;
-console.log('delete')
+OnDeleteRecord(_id:any) {
+  console.log('delete')
   this.confirmationService.confirm({
       message: 'Do you want to delete this record?',
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-          this.messageService.add({severity:'info', summary:'Confirmed', detail:'Record deleted'});
+        this.CollaboratorService.deleteUser(_id)
+        .subscribe(
+          (data:any) => {
+            this.toastr.success(data.message);
+            this.UsersRecord();
+
+          },
+          error => {
+            console.log(error);
+          });
       },
       reject: (type:any) => {
           switch(type) {
@@ -127,11 +136,13 @@ console.log('delete')
 UsersRecord(): void {
   this.CollaboratorService.getAllUser()
     .subscribe(
-      data=> {
-        this.CollaboratorData = data;
-        console.log(data);
-        console.log("Oie data ah gya ha agey kam kir hun ")
-        console.log('Getting Vaule from DB'+this.CollaboratorData)
+      (data :any)=> {
+
+        console.log(data.collaborators);
+        this.CollaboratorData = data.collaborators;
+        console.log( `Getting data from ${this.CollaboratorData}`);
+
+
 
       },
 

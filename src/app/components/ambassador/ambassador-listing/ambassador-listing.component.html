@@ -162,28 +162,28 @@
             </tr> -->
             </ng-template>
             <ng-template pTemplate="body" let-ambassadors>
-              <tr>
+              <tr *ngFor="let ambassadorsData of AbbassadorData; index as i">
                 <td>
-                  {{ ambassadors.srNum }}
+                  {{ i + 1 }}
                 </td>
                 <td>
                   <span class="image-text">
-                    <img src="../../../../assets/images/users/user-1.jpg" />
+                    <img src="{{ ambassadorsData.picture }}" />
                   </span>
                 </td>
                 <td>
-                  <span class="image-text">{{ ambassadors.name }}</span>
+                  <span class="image-text">{{ ambassadorsData.name }}</span>
                 </td>
                 <td>
                   <span class="customer-badge status">{{
-                    ambassadors.tagLine
+                    ambassadorsData.tagLine
                   }}</span>
                 </td>
                 <td>
-                  <span>{{ ambassadors.createdAt }}</span>
+                  <span>{{ ambassadorsData.createdAt }}</span>
                 </td>
                 <td>
-                  <span>{{ ambassadors.description }}</span>
+                  <span>{{ ambassadorsData.description }}</span>
                 </td>
                 <td>
                   <span>
@@ -194,12 +194,14 @@
                   <span class="action-col">
                     <i
                       class="pi pi-trash"
-                      (click)="OnDeleteRecord('right')"
+                      (click)="OnDeleteRecord(ambassadorsData._id)"
                     ></i>
                     <i
                       class="mx-1 pi pi-pencil"
                       (click)="openModal(edit_record)"
-                    ></i>
+                      routerLink="update/{{ ambassadorsData._id }}"
+                    >
+                    </i>
                     <i class="pi pi-eye"></i>
                   </span>
                 </td>
@@ -469,7 +471,7 @@
       </button>
     </div>
     <div class="modal-body">
-      <div class="shop-basicForm">
+      <div class="shop-basicForm" *ngIf="AbbassadorData">
         <form [formGroup]="createAmbassador" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <div class="container">
@@ -484,6 +486,7 @@
                       'is-invalid': submitted && f.name.errors
                     }"
                     placeholder=" Enter Abbassador Name"
+                    [(ngModel)]="AbbassadorData.name"
                   />
                   <div
                     *ngIf="submitted && f.name.errors"
@@ -500,6 +503,7 @@
                     class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.tagLine.errors }"
                     placeholder="Enter tagLine"
+                    [(ngModel)]="AbbassadorData.tagLine"
                   />
                   <div
                     *ngIf="submitted && f.tagLine.errors"
@@ -527,6 +531,7 @@
                       'is-invalid': submitted && f.instagram.errors
                     }"
                     placeholder="Enter Instagram URL"
+                    [(ngModel)]="AbbassadorData.instagram"
                   />
                   <div
                     *ngIf="submitted && f.instagram.errors"
@@ -547,6 +552,7 @@
                       'is-invalid': submitted && f.facebook.errors
                     }"
                     placeholder="Enter Facebook URL"
+                    [(ngModel)]="AbbassadorData.facebook"
                   />
                   <div
                     *ngIf="submitted && f.facebook.errors"
@@ -574,6 +580,7 @@
                       'is-invalid': submitted && f.youtube.errors
                     }"
                     placeholder="Enter Youtube URL"
+                    [(ngModel)]="AbbassadorData.youtube"
                   />
                   <div
                     *ngIf="submitted && f.youtube.errors"
@@ -594,6 +601,7 @@
                       'is-invalid': submitted && f.tiwtter.errors
                     }"
                     placeholder="Twitter URL"
+                    [(ngModel)]="AbbassadorData.tiwtter"
                   />
                   <div
                     *ngIf="submitted && f.tiwtter.errors"
@@ -622,6 +630,7 @@
                     formControlName="description"
                     rows="4"
                     cols="50"
+                    [(ngModel)]="AbbassadorData.description"
                   >
                   </textarea>
 
@@ -649,6 +658,7 @@
                     [ngClass]="{
                       'is-invalid': submitted && f.userProfile.errors
                     }"
+                    [(ngModel)]="AbbassadorData.userProfile"
                   />
                   <div
                     *ngIf="submitted && f.userProfile.errors"

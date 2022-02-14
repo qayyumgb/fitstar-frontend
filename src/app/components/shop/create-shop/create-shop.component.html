@@ -167,27 +167,27 @@
 
             <!-- Users Records sec  -->
 
-            <ng-template pTemplate="body" let-user>
-              <tr>
+            <ng-template pTemplate="body">
+              <tr *ngFor="let data of UsersData; index as i">
                 <td>
-                  {{ user.srNum }}
+                  {{ i + 1 }}
                 </td>
                 <td>
-                  <span class="image-text">{{ user.username }}</span>
+                  <span class="image-text">{{ data.fullName }}</span>
                 </td>
                 <td>
-                  <span class="image-text">{{ user.role }}</span>
+                  <span class="image-text">{{ data.role }}</span>
                 </td>
                 <td>
-                  <span class="customer-badge status">{{
-                    user.activeRole
-                  }}</span>
+                  <span class="customer-badge status">
+                    {{ data.activeRole }}</span
+                  >
                 </td>
                 <td>
-                  <span>{{ user.email }}</span>
+                  <span>{{ data.email }}</span>
                 </td>
                 <td>
-                  <span>{{ user.createdAt }}</span>
+                  <span>{{ data.createdAt }}</span>
                 </td>
                 <td>
                   <span>
@@ -198,7 +198,7 @@
                   <span class="action-col">
                     <i
                       class="pi pi-trash"
-                      (click)="OnDeleteRecord('right')"
+                      (click)="OnDeleteRecord(data._id)"
                     ></i>
                   </span>
                 </td>

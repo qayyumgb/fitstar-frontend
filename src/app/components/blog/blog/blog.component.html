@@ -160,25 +160,25 @@
             </tr> -->
             </ng-template>
             <ng-template pTemplate="body" let-ambassadors>
-              <tr>
+              <tr *ngFor="let BlogData of BlogPostData; index as i">
                 <td>
-                  {{ ambassadors.srNum }}
+                  {{ i + 1 }}
                 </td>
                 <td>
                   <span class="image-text">
-                    <img src="../../../../assets/images/users/user-1.jpg" />
+                    <img src="{{ BlogData.authorImage }}" alt="" srcset="" />
                   </span>
                 </td>
                 <td>
-                  <span class="image-text">{{ ambassadors.name }}</span>
+                  <span class="image-text">{{ BlogData.authorName }}</span>
                 </td>
                 <td>
-                  <span class="customer-badge status">{{
-                    ambassadors.tagLine
-                  }}</span>
+                  <span class="customer-badge status">
+                    {{ BlogData.description }}
+                  </span>
                 </td>
                 <td>
-                  <span>{{ ambassadors.createdAt }}</span>
+                  <span>{{ BlogData.createdAt }}</span>
                 </td>
 
                 <td>
@@ -190,7 +190,7 @@
                   <span class="action-col">
                     <i
                       class="pi pi-trash"
-                      (click)="OnDeleteRecord('right')"
+                      (click)="OnDeleteRecord(BlogData._id)"
                     ></i>
                     <i
                       class="mx-1 pi pi-pencil"

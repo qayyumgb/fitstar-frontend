@@ -4,7 +4,7 @@ import { ShopRoutingModule } from './shop-routing.module';
 import { CreateShopComponent } from './create-shop/create-shop.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
-
+import { BrowserModule } from '@angular/platform-browser'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';

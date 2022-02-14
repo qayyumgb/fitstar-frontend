@@ -43,6 +43,7 @@ export class BlogComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.UsersRecord()
     this.createBlogPost = this.formBuilder.group(
       {
         title: ['', Validators.required],
@@ -98,38 +99,16 @@ export class BlogComponent implements OnInit {
   clear(table: Table) {
     table.clear();
   }
-  OnDeleteRecord(position: string) {
-    this.position = position;
-    console.log('delete')
-    this.confirmationService.confirm({
-      message: 'Do you want to delete this record?',
-      header: 'Delete Confirmation',
-      icon: 'pi pi-info-circle',
-      accept: () => {
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
-      },
-      reject: (type: any) => {
-        switch (type) {
-          case ConfirmEventType.REJECT:
-            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' }), { class: "BlogListingModal" };
-            break;
-          case ConfirmEventType.CANCEL:
-            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
-            break;
-        }
-      },
-      key: "deleteAlert"
-    });
-  }
+
 
 
 
   UsersRecord(): void {
     this.BlogPostService.getAllUser()
       .subscribe(
-        data => {
-          this.BlogPostData = data;
-          console.log(data);
+        (data:any) => {
+          this.BlogPostData = data.blogs;
+          console.log(data.blogs);
           console.log("Oie data ah gya ha agey kam kir hun ")
           console.log('Getting Vaule from DB' + this.BlogPostData)
 
@@ -140,20 +119,7 @@ export class BlogComponent implements OnInit {
         });
   }
 
-  getUserById(id?: any): void {
 
-    this.BlogPostService.getUserById(id)
-      .subscribe(
-        data => {
-          this.BlogdataById = data
-          console.log(data);
-          console.log(this.BlogdataById)
-        },
-        error => {
-          console.log(error);
-        });
-
-  }
 
   CreateNewUser() {
     const formdata =this.createBlogPost.value
@@ -167,12 +133,11 @@ export class BlogComponent implements OnInit {
       .subscribe(
         response => {
           console.log('data addedd')
-          this.toastr.success('Abbassador Data Added  Succesfully', '', {
-            timeOut: 2000,
-          });
+          this.toastr.success(response.message);
           console.log(response);
           this.submitted= true;
           this.modalService.hide();
+          this.UsersRecord();
           // this.createAmbassador.value.reset
 
         },
@@ -181,20 +146,39 @@ export class BlogComponent implements OnInit {
         });
   }
 
-  DeleteUserById(id?: any): void {
 
-    this.BlogPostService.deleteUser(id)
-      .subscribe(
-        data => {
-          this.BlogdataById = data
-          console.log(data);
-          console.log(this.BlogdataById)
-        },
-        error => {
-          console.log(error);
-        });
+OnDeleteRecord(_id:any) {
 
-  }
+  this.confirmationService.confirm({
+      message: 'Do you want to delete this record?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.BlogPostService.deleteUser(_id)
+        .subscribe(
+          (data:any) => {
+            this.toastr.success(data.message);
+            this.UsersRecord();
+
+          },
+          error => {
+            console.log(error);
+          });
+      },
+      reject: (type:any) => {
+          switch(type) {
+              case ConfirmEventType.REJECT:
+                  this.messageService.add({severity:'error', summary:'Rejected', detail:'You have rejected'});
+              break;
+              case ConfirmEventType.CANCEL:
+                  this.messageService.add({severity:'warn', summary:'Cancelled', detail:'You have cancelled'});
+              break;
+          }
+      },
+      key: "deleteAlert"
+  });
+}
+
 
   /*########################## Profile Image Upload ########################*/
   @ViewChild('profileImage') profileImg: ElementRef;

@@ -13,6 +13,8 @@ import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 
 import { ToastrModule } from 'ngx-toastr';
+import {InterceptorService} from './services/InterceptorService/interceptor.service'
+
 
 @NgModule({
   declarations: [
@@ -34,6 +36,11 @@ import { ToastrModule } from 'ngx-toastr';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
       multi: true,
     },
   ],

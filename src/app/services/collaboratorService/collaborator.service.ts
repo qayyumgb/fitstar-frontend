@@ -9,8 +9,9 @@ import {Collaborators} from '../../Models/models'
   providedIn: 'root'
 })
 export class CollaboratorService {
-
+  private getAllData="https://fitstar-backend.herokuapp.com/app/v1/collaborators/get";
   private createUrl="https://fitstar-backend.herokuapp.com/app/v1/collaborators/create";
+  private deleteCollaborator="https://fitstar-backend.herokuapp.com/app/v1/collaborators/delete";
 
   constructor(private http:HttpClient) { }
 
@@ -24,7 +25,7 @@ export class CollaboratorService {
 
   //getting User  data
 getAllUser(): Observable<Collaborators[]> {
-  return this.http.get<Collaborators[]>(this.createUrl);
+  return this.http.get<Collaborators[]>(this.getAllData);
 }
 
 //getting User data of Specfic Id
@@ -33,8 +34,8 @@ getUserById(_id: any): Observable<Collaborators[]> {
 }
 
 //getting User data of Specfic Id
-deleteUser(_id: any): Observable<Collaborators[]> {
-  return this.http.delete<Collaborators[]>(`${this.createUrl}/${_id}`);
+deleteUser(_id: any): Observable<any[]> {
+  return this.http.delete<any[]>(`${this.deleteCollaborator}/${_id}`);
 }
 
 //Update User data

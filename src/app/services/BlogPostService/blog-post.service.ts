@@ -9,12 +9,15 @@ import { BlogPost } from '../../Models/models'
 })
 export class BlogPostService {
 
-  private _url = "https://fitstar-backend.herokuapp.com/app/v1/blogs/create";
+  private createBlog = "https://fitstar-backend.herokuapp.com/app/v1/blogs/create";
+  private getAllBlogs = "https://fitstar-backend.herokuapp.com/app/v1/blogs/get";
+  private deleteblogs = "https://fitstar-backend.herokuapp.com/app/v1/blogs/delete";
+  private updateBlog = "https://fitstar-backend.herokuapp.com/app/v1/blogs/update";
 
   constructor(private http: HttpClient) { }
 
   CreateNewUser(BlogPost: any) {
-    return this.http.post<any[]>(this._url, BlogPost).pipe(map((res: any) => {
+    return this.http.post<any[]>(this.createBlog, BlogPost).pipe(map((res: any) => {
       return res
     }), retry(1),
       catchError(this.handleError))
@@ -22,18 +25,18 @@ export class BlogPostService {
   }
 
   //getting User  data
-  getAllUser(): Observable<BlogPost[]> {
-    return this.http.get<BlogPost[]>(this._url);
+  getAllUser(): Observable<any[]> {
+    return this.http.get<any[]>(this.getAllBlogs);
   }
 
   //getting User data of Specfic Id
-  getUserById(_id: any): Observable<BlogPost[]> {
-    return this.http.get<BlogPost[]>(`${this._url}/${_id}`);
-  }
+  // getUserById(_id: any): Observable<BlogPost[]> {
+  //   return this.http.get<BlogPost[]>(`${this._url}/${_id}`);
+  // }
 
   //getting User data of Specfic Id
-  deleteUser(_id: any): Observable<BlogPost[]> {
-    return this.http.delete<BlogPost[]>(`${this._url}/${_id}`);
+  deleteUser(_id: any): Observable<any[]> {
+    return this.http.delete<any[]>(`${this.deleteblogs}/${_id}`);
   }
 
   //Update User data
@@ -43,7 +46,7 @@ export class BlogPostService {
 
 
   UpdateUser(_id: any, data: any): Observable<any> {
-    return this.http.put<BlogPost[]>(`${this._url}/${_id}`, data);
+    return this.http.put<any>(`${this.updateBlog}/${_id}`, data);
   }
 
 

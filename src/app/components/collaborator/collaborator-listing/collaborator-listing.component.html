@@ -158,18 +158,18 @@
             </tr> -->
             </ng-template>
             <ng-template pTemplate="body" let-ambassadors>
-              <tr>
+              <tr *ngFor="let CollaboratorData of CollaboratorData; index as i">
                 <td>
-                  {{ ambassadors.srNum }}
+                  {{ i + 1 }}
                 </td>
                 <td>
                   <span class="image-text">
-                    <img src="../../../../assets/images/users/user-1.jpg" />
+                    <img src="{{ CollaboratorData.picture }}" />
                   </span>
                 </td>
 
                 <td>
-                  <span>{{ ambassadors.createdAt }}</span>
+                  <span>{{ CollaboratorData.createdAt }}</span>
                 </td>
 
                 <td>
@@ -181,7 +181,7 @@
                   <span class="action-col">
                     <i
                       class="pi pi-trash"
-                      (click)="OnDeleteRecord('right')"
+                      (click)="OnDeleteRecord(CollaboratorData._id)"
                     ></i>
                     <i
                       class="mx-1 pi pi-pencil"

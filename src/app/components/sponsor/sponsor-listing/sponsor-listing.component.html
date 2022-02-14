@@ -157,23 +157,17 @@
               </th>
             </tr> -->
             </ng-template>
-            <ng-template
-              pTemplate="body"
-              let-ambassadors
-              *ngFor="let data of SponserData; index as i"
-            >
-              <tr>
-                <td>
-                  {{ i + 1 }}
-                </td>
+            <ng-template pTemplate="body">
+              <tr *ngFor="let SponserData of SponserData; index as i">
+                <td>{{ i + 1 }}</td>
                 <td>
                   <span class="image-text">
-                    <img src="data.image " />
+                    <img src="{{ SponserData.image }}" />
                   </span>
                 </td>
 
                 <td>
-                  <span>data.createdAt </span>
+                  <span>{{ SponserData.createdAt }} </span>
                 </td>
 
                 <td>
@@ -185,7 +179,7 @@
                   <span class="action-col">
                     <i
                       class="pi pi-trash"
-                      (click)="OnDeleteRecord('right')"
+                      (click)="OnDeleteRecord(SponserData._id)"
                     ></i>
                     <i
                       class="mx-1 pi pi-pencil"
@@ -196,6 +190,7 @@
                 </td>
               </tr>
             </ng-template>
+
             <ng-template pTemplate="emptymessage">
               <tr>
                 <td colspan="5">No user found.</td>

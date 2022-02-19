@@ -4,9 +4,13 @@ import { AmbassadorListingComponent } from './ambassador-listing/ambassador-list
 
 const routes: Routes = [
   {
-    path: 'create',
+    path: '',
     component: AmbassadorListingComponent
   },
+  {
+    path:"update/:id",
+    component:AmbassadorListingComponent
+  }
 ];
 
 @NgModule({

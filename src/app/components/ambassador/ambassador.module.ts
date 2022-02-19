@@ -19,7 +19,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-
+import { NgxSpinnerModule } from "ngx-spinner";
 import {HttpClientModule} from '@angular/common/http';
 
 
@@ -43,6 +43,7 @@ import {HttpClientModule} from '@angular/common/http';
     ButtonModule,
     DropdownModule,
     ProgressBarModule,
+    NgxSpinnerModule,
     InputTextModule,
     FormsModule,
     InputSwitchModule,

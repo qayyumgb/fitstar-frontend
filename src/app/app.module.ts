@@ -14,6 +14,7 @@ import { ToastModule } from 'primeng/toast';
 
 import { ToastrModule } from 'ngx-toastr';
 import {InterceptorService} from './services/InterceptorService/interceptor.service'
+// import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import {InterceptorService} from './services/InterceptorService/interceptor.serv
     MessagesModule,
     MessageModule,
     ToastModule,
+
     ToastrModule.forRoot(), // ToastrModule added
   ],
   providers: [

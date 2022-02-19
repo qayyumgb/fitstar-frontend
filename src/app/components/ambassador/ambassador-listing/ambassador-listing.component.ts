@@ -16,7 +16,11 @@ import {Message} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
 import {AbbassadorService} from '../../../services/AbbassadorService/abbassador.service'
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from "ngx-spinner";
+import { Router, ActivatedRoute } from '@angular/router';
+import { first } from 'rxjs/operators';
 
+// import { UserService, AlertService } from '@app/_services';
 
 @Component({
   selector: 'app-ambassador-listing',
@@ -31,17 +35,19 @@ export class AmbassadorListingComponent implements OnInit {
   // representatives: Representative[];
   checked1: boolean = false;
   statuses: any[]
-  loading: boolean = false;
+  // loading: boolean = false;
   msgs: Message[] = [];
   position: string;
   AbbassadorData:any=[];
-  AbbassodordataById:any=[]
-
+  AbbassodordataById:any=[];
+  loading = true;
+  id!: string;
   activityValues: number[] = [0, 100];
-  constructor(private cd: ChangeDetectorRef, private AbbassadorService:AbbassadorService, private toastr: ToastrService ,private modalService: BsModalService, private formBuilder: FormBuilder, private shopSevice: ShopService ,private confirmationService: ConfirmationService ,private messageService: MessageService,private PrimeNGConfig:PrimeNGConfig) { }
+  constructor(  private router: Router,private route: ActivatedRoute,private spinner: NgxSpinnerService, private cd: ChangeDetectorRef, private AbbassadorService:AbbassadorService, private toastr: ToastrService ,private modalService: BsModalService, private formBuilder: FormBuilder, private shopSevice: ShopService ,private confirmationService: ConfirmationService ,private messageService: MessageService,private PrimeNGConfig:PrimeNGConfig) { }
 
 
   ngOnInit(): void {
+    this.id = this.route.snapshot.params['id'];
     this.createAmbassador = this.formBuilder.group(
       {
         name: ['', Validators.required],
@@ -132,10 +138,13 @@ OnDeleteRecord(_id:any) {
 }
 
 UsersRecord(): void {
+
   this.AbbassadorService.getAllUser()
     .subscribe(
       (data:any)=> {
+        this.spinner.show();
         this.AbbassadorData = data.ambassador;
+        this.spinner.hide();
         console.log(data.ambassador);
         console.log("Oie data ah gya ha agey kam kir hun ")
         console.log('Getting Vaule from DB'+this.AbbassadorData)
@@ -180,13 +189,29 @@ updateAmbassador(id:any): void {
         console.log(this.AbbassadorData._id)
         console.log(this.AbbassadorData.ambassador)
 
-        this.toastr.success(response.message);
+        // this.toastr.success(response.message);
       },
       error => {
         console.log(error);
       });
 }
 
+private updateUser() {
+  this.AbbassadorService.update(this.id, this.AbbassadorData.ambassador)
+      .pipe(first())
+      .subscribe(
+        response => {
+          console.log(response);
+          console.log(this.AbbassadorData._id)
+          console.log(this.AbbassadorData.ambassador)
+
+          // this.toastr.success(response.message);
+        },
+        error => {
+          console.log(error);
+        });
+
+}
 
 
 

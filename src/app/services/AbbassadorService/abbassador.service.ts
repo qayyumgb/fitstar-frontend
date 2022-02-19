@@ -50,13 +50,18 @@ export class AbbassadorService {
     return this.http.put<any[]>(`${this.UpdateAbbassador}/${_id}`, data);
   }
 
-  update(id:any, post:any): Observable<any> {
+  // update(id:any, post:any): Observable<any> {
 
-    return this.http.put(this.UpdateAbbassador + id, JSON.stringify(post))
-    .pipe(
-      catchError(this.handleError)
-    )
-  }
+  //   return this.http.put(this.UpdateAbbassador + id, JSON.stringify(post))
+  //   .pipe(
+  //     catchError(this.handleError)
+  //   )
+  // }
+
+
+  update(id: string, params: any) {
+    return this.http.put(`${this.UpdateAbbassador}/${id}`, params);
+}
 
   // Error Handling Funcation
   handleError(error: any) {

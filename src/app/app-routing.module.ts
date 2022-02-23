@@ -42,6 +42,11 @@ const routes: Routes = [
     path: 'sponsor',
     canActivate:[AuthGuard],
     loadChildren: () => import('../app/components/sponsor/sponsor.module').then(m => m.SponsorModule)
+  },
+  {
+    path: 'users',
+    canActivate:[AuthGuard],
+    loadChildren: () => import('../app/components/users/users.module').then(m => m.UsersModule)
   }
 ];
 

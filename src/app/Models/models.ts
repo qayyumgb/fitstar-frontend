@@ -1,9 +1,15 @@
 export class addUsers {
   fullName: string='';
+  location: string='';
+  tokenStatus: Boolean=false;
+  isDeleted: Boolean=false;
+  status: string= 'active';
+  _id: string = '';
   email: string='';
   password:string='';
-  location: string='';
   role: string='';
+  createdAt: Date;
+  updatedAt: Date;
   ProfileImage:string='';
 
   }

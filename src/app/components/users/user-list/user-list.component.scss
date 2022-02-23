@@ -1,0 +1,48 @@
+.app-wrapper {
+    margin-left: 250px;
+    margin-top: 60px;
+  }
+  td .image-text img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    border-radius: 50px;
+  }
+  .action-col {
+    font-size: 21px;
+    color: #989898;
+    display: flex;
+    i {
+      font-size: 14px;
+      color: #fff;
+      height: 26px;
+      width: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50px;
+      cursor: pointer;
+    }
+    .pi-trash {
+      background: #c60909;
+    }
+    .pi-pencil {
+      background-color: #4480ec;
+    }
+    .pi-eye {
+      background: #219c21;
+    }
+  }
+  
+  .p-dialog-mask {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .modal-content {
+    width: 850px !important;
+  }
+  textarea {
+    border-color: #c7c8cd !important;
+    border-radius: 14px;
+  }
+  

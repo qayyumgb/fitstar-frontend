@@ -16,12 +16,7 @@ import {ConfirmationService ,ConfirmEventType, MessageService} from 'primeng/api
 // import {Message} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
 import { ToastrService } from 'ngx-toastr';
-import {AddUsersService} from '../../../services/AddUserService/add-users.service'
-
-
-
-
-
+import {UsersService} from '../../../services/UserService/users.service';
 
 @Component({
   selector: 'app-create-shop',
@@ -51,7 +46,7 @@ export class CreateShopComponent implements OnInit {
 
 
 
-  constructor(private userService:AddUsersService,private messageService: MessageService,private toastr: ToastrService, private modalService: BsModalService, private formBuilder: FormBuilder,private cd: ChangeDetectorRef, private shopSevice: ShopService,private confirmationService: ConfirmationService ,private PrimeNGConfig:PrimeNGConfig) { }
+  constructor(private userService:UsersService,private messageService: MessageService,private toastr: ToastrService, private modalService: BsModalService, private formBuilder: FormBuilder,private cd: ChangeDetectorRef, private shopSevice: ShopService,private confirmationService: ConfirmationService ,private PrimeNGConfig:PrimeNGConfig) { }
 
   ngOnInit(): void {
     this.UsersRecord();
@@ -154,13 +149,15 @@ export class CreateShopComponent implements OnInit {
 
 
   UsersRecord(): void {
-    this.userService.getAllUser()
+    let limit = 5;
+    let offset = 1;
+    this.userService.getAllUser(limit,offset)
       .subscribe(
         data=> {
-          this.UsersData = data;
+          // this.UsersData = data;
           console.log(data);
           console.log("Oie data ah gya ha agey kam kir hun ")
-          console.log('Getting Vaule from DB'+this.UsersData)
+          // console.log('Getting Vaule from DB'+this.UsersData)
 
         },
 

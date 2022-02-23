@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
-import {addUsers} from '../../Models/models'
+import {addUsers} from '../../Models/models';
+import { API_ENDPOINTS } from 'src/app/_util/global';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AddUsersService {
+export class UsersService {
 
   private _url="https://fitstar-backend.herokuapp.com/adduser/app/v1/get";
   private _CreateUrl="https://fitstar-backend.herokuapp.com/adduser/app/v1/create";
@@ -25,8 +26,10 @@ export class AddUsersService {
   }
 
   //getting User  data
-getAllUser(): Observable<addUsers[]> {
-  return this.http.get<addUsers[]>(this._url);
+getAllUser(limit:number,offset:number): Observable<any> {
+  console.log("Global Links::", API_ENDPOINTS.userList);
+  
+  return this.http.get<any>(API_ENDPOINTS.userList+`${limit}/${offset}`);
 }
 
 //getting User data of Specfic Id

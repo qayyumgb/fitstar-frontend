@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // api_url: '192.168.8.101:3000/',
-  api_url: 'https://kwk-authservive.herokuapp.com/',
+  api_url: 'http://localhost:3000/app/v1/',
+  // api_url: 'https://fitstar-backend.herokuapp.com/app/v1/',
 };
 
 /*

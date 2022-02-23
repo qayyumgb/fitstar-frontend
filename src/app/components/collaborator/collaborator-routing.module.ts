@@ -5,7 +5,7 @@ import { CollaboratorListingComponent } from './collaborator-listing/collaborato
 const routes: Routes = [  {
   path: 'create',
   component: CollaboratorListingComponent,
-},];
+}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

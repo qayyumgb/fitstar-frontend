@@ -6,6 +6,7 @@
       <div class="tab_panel">
         <div class="card">
           <p-tabView styleClass="tabview-custom">
+            <!-- 1st Tab  -->
             <p-tabPanel>
               <ng-template pTemplate="header">
                 <i class="pi pi-images"></i>
@@ -18,47 +19,150 @@
                   [formGroup]="landingPagedetails"
                   (ngSubmit)="onSubmit()"
                 >
-                  <div class="form-group">
-                    <div class="container">
-                      <div class="row">
-                        <div class="col-sm-12 col-md-6">
-                          <label>Banner Title</label>
-                          <input
-                            type="text"
-                            formControlName="bannerTitle"
-                            class="form-control"
-                            placeholder=" Enter Banner Titile"
-                            [ngClass]="{
-                              'is-invalid': submitted1 && f1.bannerTitle.errors
-                            }"
-                          />
-                          <div
-                            *ngIf="submitted1 && f1.bannerTitle.errors"
-                            class="invalid-feedback"
-                          >
-                            <div *ngIf="f1.bannerTitle.errors.required">
-                              Banner Title is required
+                  <div class="bannerDetails">
+                    <h4 class="bottom-border">Banner Details</h4>
+                    <div class="form-group content-sec">
+                      <div class="container">
+                        <div class="row py-3">
+                          <div class="col-sm-12 col-md-12">
+                            <label>Banner Title</label>
+                            <input
+                              type="text"
+                              formControlName="bannerTitle"
+                              class="form-control"
+                              placeholder=" Enter Banner Titile"
+                              [ngClass]="{
+                                'is-invalid':
+                                  submitted1 && f1.bannerTitle.errors
+                              }"
+                            />
+                            <div
+                              *ngIf="submitted1 && f1.bannerTitle.errors"
+                              class="invalid-feedback"
+                            >
+                              <div *ngIf="f1.bannerTitle.errors.required">
+                                Banner Title is required
+                              </div>
                             </div>
                           </div>
                         </div>
-                        <div class="col-sm-12 col-md-6">
-                          <label>About us Heading</label>
-                          <input
-                            type="text"
-                            formControlName="aboutusHeading"
-                            class="form-control"
-                            placeholder="Enter AboutUs Heading"
-                            [ngClass]="{
-                              'is-invalid':
-                                submitted1 && f1.aboutusHeading.errors
-                            }"
-                          />
-                          <div
-                            *ngIf="submitted1 && f1.aboutusHeading.errors"
-                            class="invalid-feedback"
-                          >
-                            <div *ngIf="f1.aboutusHeading.errors.required">
-                              Aboutus Heading is required
+                        <div class="row">
+                          <div class="form-group">
+                            <div class="container">
+                              <div class="row">
+                                <div class="col-sm-12 col-md-6 py-1 my-2">
+                                  <div class="SliderImage1View">
+                                    <div class="avatar-upload">
+                                      <div class="avatar-edit">
+                                        <div class="avatar-preview">
+                                          <div
+                                            id="imagePreview"
+                                            [style.backgroundImage]="
+                                              'url(' + imageUrl + ')'
+                                            "
+                                          ></div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="SliderImage1">
+                                    <label for="">Slider Image 1</label>
+                                    <div class="custom-file">
+                                      <input
+                                        type="file"
+                                        class="custom-file-input"
+                                        id="validatedCustomFile"
+                                        placeholder="Select Silder First Image  "
+                                        id="imageUpload"
+                                        accept=".png, .jpg, .jpeg"
+                                        #SilderImage1
+                                        (change)="uploadFile($event)"
+                                        required
+                                      />
+
+                                      <label
+                                        class="custom-file-label"
+                                        for="validatedCustomFile"
+                                        >Browse...</label
+                                      >
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 py-1 my-2">
+                                  <div class="SliderImage2View">
+                                    <div class="avatar-upload">
+                                      <div class="avatar-edit">
+                                        <div class="avatar-preview">
+                                          <div
+                                            id="imagePreview"
+                                            [style.backgroundImage]="
+                                              'url(' + Silder2ImageUrl + ')'
+                                            "
+                                          ></div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="SliderImage2">
+                                    <label for="">Slider Image 2</label>
+                                    <div class="custom-file">
+                                      <input
+                                        type="file"
+                                        class="custom-file-input"
+                                        id="validatedCustomFile"
+                                        placeholder="Select Silder Secound Image  "
+                                        accept=".png, .jpg, .jpeg"
+                                        #silderimage2
+                                        (change)="uploadSilder2File($event)"
+                                        required
+                                      />
+                                      <label
+                                        class="custom-file-label"
+                                        for="validatedCustomFile"
+                                        >Browse...</label
+                                      >
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-12 col-md-6 py-1 my-2">
+                            <div class="SliderImage3View">
+                              <div class="avatar-upload">
+                                <div class="avatar-edit">
+                                  <div class="avatar-preview">
+                                    <div
+                                      id="imagePreview"
+                                      [style.backgroundImage]="
+                                        'url(' + Silder3ImageUrl + ')'
+                                      "
+                                    ></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="SliderImage3">
+                              <label for="">Slider Image 3</label>
+                              <div class="custom-file">
+                                <input
+                                  type="file"
+                                  class="custom-file-input"
+                                  id="validatedCustomFile"
+                                  placeholder="Select Silder Third Image  "
+                                  accept=".png, .jpg, .jpeg"
+                                  #silderimage3
+                                  (change)="uploadSilder3File($event)"
+                                />
+
+                                <label
+                                  class="custom-file-label"
+                                  for="validatedCustomFile"
+                                  >Browse...</label
+                                >
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -66,50 +170,119 @@
                     </div>
                   </div>
 
-                  <div class="form-group">
-                    <div class="container">
-                      <div class="row">
-                        <div class="col-sm-12 col-md-6">
-                          <label>AboutUs Sub Heading</label>
-                          <input
-                            type="url"
-                            formControlName="aboutUsSubHeading"
-                            class="form-control"
-                            placeholder="Enter About us sub heading"
-                            [ngClass]="{
-                              'is-invalid':
-                                submitted1 && f1.aboutUsSubHeading.errors
-                            }"
-                          />
-                          <div
-                            *ngIf="submitted1 && f1.aboutUsSubHeading.errors"
-                            class="invalid-feedback"
-                          >
-                            <div *ngIf="f1.aboutUsSubHeading.errors.required">
-                              AboutUs SubHeading is required
+                  <div class="AboutUsDetails">
+                    <h4 class="bottom-border">About Page Details</h4>
+
+                    <div class="form-group content-sec">
+                      <div class="container">
+                        <div class="row py-3">
+                          <div class="col-sm-12 col-md-12">
+                            <label>About us Heading</label>
+                            <input
+                              type="text"
+                              formControlName="aboutusHeading"
+                              class="form-control"
+                              placeholder="Enter AboutUs Heading"
+                              [ngClass]="{
+                                'is-invalid':
+                                  submitted1 && f1.aboutusHeading.errors
+                              }"
+                            />
+                            <div
+                              *ngIf="submitted1 && f1.aboutusHeading.errors"
+                              class="invalid-feedback"
+                            >
+                              <div *ngIf="f1.aboutusHeading.errors.required">
+                                Aboutus Heading is required
+                              </div>
                             </div>
                           </div>
                         </div>
-                        <div class="col-sm-12 col-md-6">
-                          <label>About Us Text Description </label>
-                          <textarea
-                            id="description"
-                            class="form-control descript"
-                            formControlName="aboutus_description"
-                            rows="4"
-                            cols="50"
-                            [ngClass]="{
-                              'is-invalid':
+                        <div class="row py-3">
+                          <div class="col-sm-12 col-md-6">
+                            <label>AboutUs Sub Heading</label>
+                            <input
+                              type="url"
+                              formControlName="aboutUsSubHeading"
+                              class="form-control"
+                              placeholder="Enter About us sub heading"
+                              [ngClass]="{
+                                'is-invalid':
+                                  submitted1 && f1.aboutUsSubHeading.errors
+                              }"
+                            />
+                            <div
+                              *ngIf="submitted1 && f1.aboutUsSubHeading.errors"
+                              class="invalid-feedback"
+                            >
+                              <div *ngIf="f1.aboutUsSubHeading.errors.required">
+                                AboutUs SubHeading is required
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-12 col-md-6">
+                            <label>About Us Text Description </label>
+                            <textarea
+                              id="description"
+                              class="form-control descript"
+                              formControlName="aboutus_description"
+                              rows="4"
+                              cols="50"
+                              [ngClass]="{
+                                'is-invalid':
+                                  submitted1 && f1.aboutus_description.errors
+                              }"
+                            >
+                            </textarea>
+                            <div
+                              *ngIf="
                                 submitted1 && f1.aboutus_description.errors
-                            }"
-                          >
-                          </textarea>
-                          <div
-                            *ngIf="submitted1 && f1.aboutus_description.errors"
-                            class="invalid-feedback"
-                          >
-                            <div *ngIf="f1.aboutus_description.errors.required">
-                              About Us description is required
+                              "
+                              class="invalid-feedback"
+                            >
+                              <div
+                                *ngIf="f1.aboutus_description.errors.required"
+                              >
+                                About Us description is required
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-12 col-md-6 py-1 my-2">
+                            <div class="AboutImageView">
+                              <div class="avatar-upload">
+                                <div class="avatar-edit">
+                                  <div class="avatar-preview">
+                                    <div
+                                      id="imagePreview"
+                                      [style.backgroundImage]="
+                                        'url(' + AboutImageUrl + ')'
+                                      "
+                                    ></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="SliderImage3">
+                              <label for="">About Image </label>
+                              <div class="custom-file">
+                                <input
+                                  type="file"
+                                  class="custom-file-input"
+                                  id="validatedCustomFile"
+                                  placeholder="Select Silder Third Image  "
+                                  accept=".png, .jpg, .jpeg"
+                                  #aboutImage
+                                  (change)="uploadaboutImage($event)"
+                                />
+
+                                <label
+                                  class="custom-file-label"
+                                  for="validatedCustomFile"
+                                  >Browse...</label
+                                >
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -117,61 +290,64 @@
                     </div>
                   </div>
 
-                  <div class="form-group">
-                    <div class="container">
-                      <div class="row">
-                        <div class="col-sm-12 col-md-12">
-                          <label>Footer Details</label>
-                          <textarea
-                            id="description"
-                            class="form-control descript"
-                            formControlName="footer_description"
-                            rows="4"
-                            cols="50"
-                            [ngClass]="{
-                              'is-invalid':
-                                submitted1 && f1.footer_description.errors
-                            }"
-                          >
-                          </textarea>
-                          <div
-                            *ngIf="submitted1 && f1.footer_description.errors"
-                            class="invalid-feedback"
-                          >
-                            <div *ngIf="f1.footer_description.errors.required">
-                              Footer Description is required
+                  <div class="FooterSectionDetails">
+                    <h4 class="bottom-border">Footer Section Details</h4>
+
+                    <div class="form-group content-sec">
+                      <div class="container">
+                        <div class="row py-3">
+                          <div class="col-sm-12 col-md-12">
+                            <label>Footer Details</label>
+                            <textarea
+                              id="description"
+                              class="form-control descript"
+                              formControlName="footer_description"
+                              rows="4"
+                              cols="50"
+                              [ngClass]="{
+                                'is-invalid':
+                                  submitted1 && f1.footer_description.errors
+                              }"
+                            >
+                            </textarea>
+                            <div
+                              *ngIf="submitted1 && f1.footer_description.errors"
+                              class="invalid-feedback"
+                            >
+                              <div
+                                *ngIf="f1.footer_description.errors.required"
+                              >
+                                Footer Description is required
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row pb-3">
+                          <div class="col-sm-12 col-md-6">
+                            <label>Footer PhoneNumber</label>
+                            <input
+                              type="text"
+                              formControlName="footerPhoneNum"
+                              class="form-control"
+                              [ngClass]="{
+                                'is-invalid':
+                                  submitted1 && f1.footerPhoneNum.errors
+                              }"
+                            />
+                            <div
+                              *ngIf="submitted1 && f1.footerPhoneNum.errors"
+                              class="invalid-feedback"
+                            >
+                              <div *ngIf="f1.footerPhoneNum.errors.required">
+                                Footer Phone Number is required
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <div class="container">
-                      <div class="row">
-                        <div class="col-sm-12 col-md-6">
-                          <label>Footer PhoneNumber</label>
-                          <input
-                            type="text"
-                            formControlName="footerPhoneNum"
-                            class="form-control"
-                            [ngClass]="{
-                              'is-invalid':
-                                submitted1 && f1.footerPhoneNum.errors
-                            }"
-                          />
-                          <div
-                            *ngIf="submitted1 && f1.footerPhoneNum.errors"
-                            class="invalid-feedback"
-                          >
-                            <div *ngIf="f1.footerPhoneNum.errors.required">
-                              Footer Phone Number is required
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+
                   <div
                     class="form-group my-3 mt-4 d-flex justify-content-center"
                   >
@@ -185,6 +361,7 @@
                 </form>
               </div>
             </p-tabPanel>
+            <!-- 2nd Tab  -->
             <p-tabPanel header="Social Links">
               <ng-template pTemplate="header">
                 <i class="pi pi-user"></i>
@@ -329,6 +506,7 @@
                 </form>
               </div>
             </p-tabPanel>
+            <!-- 3rd Tab  -->
             <p-tabPanel header="Header III">
               <ng-template pTemplate="header">
                 <i class="pi pi-search"></i>
@@ -375,6 +553,7 @@
                 </form>
               </div>
             </p-tabPanel>
+            <!-- 4rd Tab  -->
             <p-tabPanel header="Header IV">
               <ng-template pTemplate="header">
                 <i class="pi pi-save"></i>

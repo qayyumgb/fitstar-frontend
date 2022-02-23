@@ -89,7 +89,7 @@ export class CreateShopComponent implements OnInit {
     ];
 
     this.userRole = [
-      {name: 'Admin', code: 'admin'},
+
       {name: 'Fitness Center', code: 'center'},
       {name: 'Fitness Model', code: 'model'},
       {name: 'Fitness Professional', code: 'pro'},

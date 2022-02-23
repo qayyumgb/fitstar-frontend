@@ -43,3 +43,33 @@ a:hover {
   border-radius: 5px;
   box-shadow: 0 0 10px rgb(151, 151, 151);
 }
+
+.custom-file-input:lang(en) ~ .custom-file-label::after {
+  content: "Browse";
+  background-color: #ff1a1a;
+  color: #fff;
+  font-size: 1.3vw;
+  font-weight: 600;
+}
+input:read-only {
+  cursor: no-drop;
+}
+
+.border-have {
+  border: 1 px solid red;
+}
+.border-none {
+  border: 2px solid yellow;
+}
+
+.bottom-border {
+  border-bottom: 1px solid gray;
+  padding-top: 10px;
+  margin: 20px 0px;
+}
+
+.content-sec {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 10px;
+}

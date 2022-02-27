@@ -39,6 +39,16 @@ SponserData:any=[];
 // data:{};
 SponerdataById:any[];
   activityValues: number[] = [0, 100];
+
+
+  dtConfig: any = {
+    id: 'sponsors',
+    itemsPerPage: 10,
+    currentPage: 1,
+    totalItems: 0
+  };
+
+
   constructor(private cd: ChangeDetectorRef,private toastr: ToastrService,private SponserService :SponserService,private modalService: BsModalService, private formBuilder: FormBuilder, private shopSevice: ShopService ,private confirmationService: ConfirmationService ,private messageService: MessageService,private PrimeNGConfig:PrimeNGConfig) { }
 
 
@@ -134,11 +144,17 @@ console.log('delete')
 
 // Getting All Sponsors Records
 UsersRecord(): void {
-  this.SponserService.getAllUser()
+  let limit= this.dtConfig.itemsPerPage;
+  let offset= this.dtConfig.currentPage;
+  this.SponserService.getAllSponser(limit,offset)
     .subscribe(
       (data:any)=> {
         this.SponserData=data.sponsors
         console.log(this.SponserData)
+        console.log("Total Items::", this.dtConfig.totalItems);
+        console.log(data.sponsors);
+        console.log("Oie data ah gya ha agey kam kir hun ")
+        console.log('Getting Vaule from DB :::::'+this.SponserData)
       },
 
       error => {
@@ -177,7 +193,7 @@ CreateNewUser(){
           this.submitted = true;
           // this.createAmbassador.value.reset
           this.modalService.hide();
-
+          this.UsersRecord();
         },
         error => {
           console.log(error);
@@ -223,6 +239,15 @@ CreateNewUser(){
    });
  }
 
+ limitChanged(value:any) {
+  this.dtConfig.itemsPerPage = value;
+  this.dtConfig.currentPage = 1;
+  this.UsersRecord();
+}
 
+pageChanged(event:any) {
+  this.dtConfig.currentPage = event;
+  this.UsersRecord();
+}
 
 }

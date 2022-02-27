@@ -37,22 +37,13 @@ a:hover {
 }
 
 .form-box {
-  background-color: rgba(216, 216, 216, 0.5);
   margin: auto auto;
-  padding: 40px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgb(151, 151, 151);
+  padding: 10px;
 }
 
-.custom-file-input:lang(en) ~ .custom-file-label::after {
-  content: "Browse";
-  background-color: #ff1a1a;
-  color: #fff;
-  font-size: 1.3vw;
-  font-weight: 600;
-}
-input:read-only {
-  cursor: no-drop;
+
+.custom-file > input{
+  cursor: pointer;
 }
 
 .border-have {
@@ -72,4 +63,51 @@ input:read-only {
   background-color: #fff;
   border-radius: 15px;
   padding: 10px;
+}
+.landingpage-wrapper{
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(350px,1fr));
+  grid-gap: 22px;
+
+  .landing-item{
+    padding: 10px;
+    box-shadow: 0 0 10px -3px grey;
+    > label:not(.banner-title) {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .avatar-edit-landing{
+      width: 100%;
+      .avatar-preview-landing{
+        width: 100%;
+        height: 210px;
+        #imagePreview{
+          background-image: url(https://i.pinimg.com/236x/d6/27/d9/d627d9c…--man--iron-man.jpg);
+          height: 100%;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
+        }
+      }
+    }
+    label.banner-title {
+      font-weight: 600;
+      margin-top: 12px;
+  }
+  }
+}
+.avatar-edit-about {
+  width: 100%;
+  height: 268px;
+  .avatar-preview-about {
+    width: 100%;
+    height: 100%;
+    #imagePreview{
+      height: 100%;
+      width: 100%;
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+}
 }

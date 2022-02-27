@@ -22,6 +22,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { NgxPaginationModule } from 'ngx-pagination';
+
 @NgModule({
   declarations: [
     SponsorListingComponent
@@ -42,6 +44,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ButtonModule,
     DropdownModule,
     ProgressBarModule,
+    NgxPaginationModule,
     InputTextModule,
     FormsModule,
     InputSwitchModule,

@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 import { BlogPost } from '../../Models/models'
+import { API_ENDPOINTS } from 'src/app/_util/global';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,17 +19,18 @@ export class BlogPostService {
   constructor(private http: HttpClient) { }
 
   CreateNewUser(BlogPost: any) {
-    return this.http.post<any[]>(this.createBlog, BlogPost).pipe(map((res: any) => {
+    return this.http.post<any[]>(API_ENDPOINTS.blogCreate, BlogPost).pipe(map((res: any) => {
       return res
     }), retry(1),
       catchError(this.handleError))
 
   }
 
-  //getting User  data
-  getAllUser(): Observable<any[]> {
-    return this.http.get<any[]>(this.getAllBlogs);
-  }
+//getting all data
+getAllBlog(limit:number,offset:number): Observable<any[]> {
+  console.log(API_ENDPOINTS.ambassadorList)
+  return this.http.get<any[]>(API_ENDPOINTS.blogList+`${limit}/${offset}`);
+}
 
   //getting User data of Specfic Id
   // getUserById(_id: any): Observable<BlogPost[]> {

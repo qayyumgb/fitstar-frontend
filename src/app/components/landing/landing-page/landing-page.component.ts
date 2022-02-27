@@ -30,6 +30,8 @@ export class LandingPageComponent implements OnInit {
     this.landingPagedetails = this.formBuilder.group(
       {
         bannerTitle: ['', Validators.required],
+        bannerTitle2: ['', Validators.required],
+        bannerTitle3: ['', Validators.required],
         aboutusHeading: ['', Validators.required],
         aboutUsSubHeading: ['', Validators.required],
         aboutus_description:['',Validators.required],

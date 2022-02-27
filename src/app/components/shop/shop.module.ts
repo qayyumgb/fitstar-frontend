@@ -24,6 +24,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import {FileUploadModule} from 'primeng/fileupload';
 import {HttpClientModule} from '@angular/common/http';
+import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   declarations: [
     CreateShopComponent
@@ -50,7 +51,8 @@ import {HttpClientModule} from '@angular/common/http';
     MessagesModule,
     ConfirmDialogModule,
     FileUploadModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPaginationModule
   ]
 })
 export class ShopModule { }

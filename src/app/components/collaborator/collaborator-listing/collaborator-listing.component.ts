@@ -39,6 +39,15 @@ export class CollaboratorListingComponent implements OnInit {
   CollaboratordataById:any[];
 
   activityValues: number[] = [0, 100];
+
+  dtConfig: any = {
+    id: 'collaborators',
+    itemsPerPage: 10,
+    currentPage: 1,
+    totalItems: 0
+  };
+
+
   constructor(private cd: ChangeDetectorRef,private toastr: ToastrService,private CollaboratorService:CollaboratorService, private modalService: BsModalService, private formBuilder: FormBuilder, private shopSevice: ShopService ,private confirmationService: ConfirmationService ,private messageService: MessageService,private PrimeNGConfig:PrimeNGConfig) { }
 
   ngOnInit(): void {
@@ -134,7 +143,9 @@ OnDeleteRecord(_id:any) {
 
 
 UsersRecord(): void {
-  this.CollaboratorService.getAllUser()
+  let limit= this.dtConfig.itemsPerPage;
+  let offset= this.dtConfig.currentPage;
+  this.CollaboratorService.getAllCollaborator(limit,offset)
     .subscribe(
       (data :any)=> {
 
@@ -142,7 +153,10 @@ UsersRecord(): void {
         this.CollaboratorData = data.collaborators;
         console.log( `Getting data from ${this.CollaboratorData}`);
 
-
+        console.log("Total Items::", this.dtConfig.totalItems);
+        console.log(data.collaborators);
+        console.log("Oie data ah gya ha agey kam kir hun ")
+        console.log('Getting Vaule from DB :::::'+this.CollaboratorData)
 
       },
 
@@ -151,20 +165,20 @@ UsersRecord(): void {
       });
 }
 
-getUserById(id?:any): void{
+// getUserById(id?:any): void{
 
-  this.CollaboratorService.getUserById(id)
-    .subscribe(
-      data => {
-        this.CollaboratordataById=data
-        console.log(data);
-        console.log(this.CollaboratordataById)
-      },
-      error => {
-        console.log(error);
-      });
+//   this.CollaboratorService.getUserById(id)
+//     .subscribe(
+//       data => {
+//         this.CollaboratordataById=data
+//         console.log(data);
+//         console.log(this.CollaboratordataById)
+//       },
+//       error => {
+//         console.log(error);
+//       });
 
-}
+// }
 
 
 
@@ -192,6 +206,7 @@ delete formData.collaborattorImage
           this.submitted = true;
           // this.createAmbassador.value.reset
           this.modalService.hide();
+          this.UsersRecord()
 
         },
         error => {
@@ -250,4 +265,15 @@ DeleteUserById(id?:any): void{
      file: [null]
    });
  }
+
+ limitChanged(value:any) {
+  this.dtConfig.itemsPerPage = value;
+  this.dtConfig.currentPage = 1;
+  this.UsersRecord();
+}
+
+pageChanged(event:any) {
+  this.dtConfig.currentPage = event;
+  this.UsersRecord();
+}
 }

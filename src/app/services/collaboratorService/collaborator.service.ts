@@ -4,6 +4,8 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 
 import {Collaborators} from '../../Models/models'
+import { API_ENDPOINTS } from 'src/app/_util/global';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,22 +18,23 @@ export class CollaboratorService {
   constructor(private http:HttpClient) { }
 
   CreateNewUser(CollaboratorsData:any){
-    return this.http.post <any[]>(this.createUrl,CollaboratorsData).pipe(map((res:any)=>{
+    return this.http.post <any[]>(API_ENDPOINTS.collaboratorsCreate,CollaboratorsData).pipe(map((res:any)=>{
       return res
     }),retry(1),
     catchError(this.handleError))
 
   }
 
-  //getting User  data
-getAllUser(): Observable<Collaborators[]> {
-  return this.http.get<Collaborators[]>(this.getAllData);
-}
 
-//getting User data of Specfic Id
-getUserById(_id: any): Observable<Collaborators[]> {
-  return this.http.get<Collaborators[]>(`${this.createUrl}/${_id}`);
+ //getting all data
+ getAllCollaborator(limit:number,offset:number): Observable<any[]> {
+  console.log(API_ENDPOINTS.collaboratorsList)
+  return this.http.get<any[]>(API_ENDPOINTS.collaboratorsList+`${limit}/${offset}`);
 }
+//getting User data of Specfic Id
+// getUserById(_id: any): Observable<Collaborators[]> {
+//   return this.http.get<Collaborators[]>(`${this.createUrl}/${_id}`);
+// }
 
 //getting User data of Specfic Id
 deleteUser(_id: any): Observable<any[]> {
@@ -44,9 +47,9 @@ deleteUser(_id: any): Observable<any[]> {
 // }
 
 
-UpdateUser(_id: any, data: any): Observable<any> {
-  return this.http.put<Collaborators[]>(`${this.createUrl}/${_id}`, data);
-}
+// UpdateUser(_id: any, data: any): Observable<any> {
+//   return this.http.put<Collaborators[]>(`${this.createUrl}/${_id}`, data);
+// }
 
 
 

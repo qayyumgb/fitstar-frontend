@@ -21,7 +21,7 @@ import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { NgxSpinnerModule } from "ngx-spinner";
 import {HttpClientModule} from '@angular/common/http';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -49,7 +49,8 @@ import {HttpClientModule} from '@angular/common/http';
     InputSwitchModule,
     ConfirmDialogModule,
     MessagesModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPaginationModule
   ]
 })
 export class AmbassadorModule { }

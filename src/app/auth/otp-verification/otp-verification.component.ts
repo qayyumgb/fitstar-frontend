@@ -46,7 +46,7 @@ otpVerifcation:any[]
   }
   test: FormGroup;
   phoneNum=""
-  onSubmit(){debugger
+  onSubmit(){
     this.verificationCode = this.otp
     this.authService.getPhoneNumber$
     .subscribe(sharedData => this.phoneNum = sharedData);
@@ -58,7 +58,7 @@ otpVerifcation:any[]
     this.getCodeone()
 
   }
-  getCodeone(){debugger
+  getCodeone(){
     this.authService.verifyOTP(this.test.value).subscribe(res => {
       this.router.navigate(['Auth/signup'],{ state: { sendPhoneNum:this.phoneNum } });
     });

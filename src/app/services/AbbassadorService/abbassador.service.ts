@@ -4,6 +4,8 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 import { Abbassador } from '../../Models/models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { API_ENDPOINTS } from 'src/app/_util/global';
 @Injectable({
   providedIn: 'root',
 })
@@ -20,7 +22,7 @@ export class AbbassadorService {
   constructor(private http: HttpClient) {}
 
   CreateNewUser(AbbassadorData: any) {
-    return this.http.post<any[]>(this.createAbbassador, AbbassadorData).pipe(
+    return this.http.post<any[]>(API_ENDPOINTS.ambassadorCreate, AbbassadorData).pipe(
       map((res: any) => {
         return res;
       }),
@@ -29,11 +31,11 @@ export class AbbassadorService {
     );
   }
 
-  //getting User  data
-  getAllUser(): Observable<any> {
-    return this.http.get<any>(this.GetAllAbbassador);
+  //getting all data
+  getAllAmbassador(limit:number,offset:number): Observable<Abbassador[]> {
+    console.log(API_ENDPOINTS.ambassadorList)
+    return this.http.get<Abbassador[]>(API_ENDPOINTS.ambassadorList+`${limit}/${offset}`);
   }
-
 
 
   //getting User data of Specfic Id

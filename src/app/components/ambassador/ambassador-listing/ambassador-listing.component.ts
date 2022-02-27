@@ -43,6 +43,14 @@ export class AmbassadorListingComponent implements OnInit {
   loading = true;
   id!: string;
   activityValues: number[] = [0, 100];
+
+
+  dtConfig: any = {
+    id: 'ambassadors',
+    itemsPerPage: 10,
+    currentPage: 1,
+    totalItems: 0
+  };
   constructor(  private router: Router,private route: ActivatedRoute,private spinner: NgxSpinnerService, private cd: ChangeDetectorRef, private AbbassadorService:AbbassadorService, private toastr: ToastrService ,private modalService: BsModalService, private formBuilder: FormBuilder, private shopSevice: ShopService ,private confirmationService: ConfirmationService ,private messageService: MessageService,private PrimeNGConfig:PrimeNGConfig) { }
 
 
@@ -76,6 +84,7 @@ export class AmbassadorListingComponent implements OnInit {
       { label: "Proposal", value: "proposal" }
     ];
     this.PrimeNGConfig.ripple = true;
+
     this.UsersRecord();
   }
   get f(): { [key: string]: AbstractControl } {
@@ -138,16 +147,17 @@ OnDeleteRecord(_id:any) {
 }
 
 UsersRecord(): void {
-
-  this.AbbassadorService.getAllUser()
+  let limit= this.dtConfig.itemsPerPage;
+  let offset= this.dtConfig.currentPage;
+  this.AbbassadorService.getAllAmbassador(limit,offset)
     .subscribe(
       (data:any)=> {
-        this.spinner.show();
+        this.dtConfig.totalItems = data.totalRecord;
         this.AbbassadorData = data.ambassador;
-        this.spinner.hide();
+        console.log("Total Items::", this.dtConfig.totalItems);
         console.log(data.ambassador);
         console.log("Oie data ah gya ha agey kam kir hun ")
-        console.log('Getting Vaule from DB'+this.AbbassadorData)
+        console.log('Getting Vaule from DB :::::'+this.AbbassadorData)
 
       },
 
@@ -173,7 +183,7 @@ CreateNewUser(){
           this.submitted = true;
           this.modalService.hide();
           // this.createAmbassador.value.reset
-
+this.UsersRecord();
         },
         error => {
           console.log(error);
@@ -253,5 +263,14 @@ private updateUser() {
     });
   }
 
+  limitChanged(value:any) {
+    this.dtConfig.itemsPerPage = value;
+    this.dtConfig.currentPage = 1;
+    this.UsersRecord();
+  }
 
+  pageChanged(event:any) {
+    this.dtConfig.currentPage = event;
+    this.UsersRecord();
+  }
 }

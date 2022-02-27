@@ -39,6 +39,14 @@ export class BlogComponent implements OnInit {
   BlogPostData: any[]
   BlogdataById: any[]
   activityValues: number[] = [0, 100];
+
+  dtConfig: any = {
+    id: 'blogs',
+    itemsPerPage: 10,
+    currentPage: 1,
+    totalItems: 0
+  };
+
   constructor(private toastr: ToastrService, private cd: ChangeDetectorRef, private BlogPostService: BlogPostService, private modalService: BsModalService, private formBuilder: FormBuilder, private shopSevice: ShopService, private confirmationService: ConfirmationService, private messageService: MessageService, private PrimeNGConfig: PrimeNGConfig) { }
 
 
@@ -104,14 +112,19 @@ export class BlogComponent implements OnInit {
 
 
   UsersRecord(): void {
-    this.BlogPostService.getAllUser()
+    let limit= this.dtConfig.itemsPerPage;
+    let offset= this.dtConfig.currentPage;
+    this.BlogPostService.getAllBlog(limit,offset)
       .subscribe(
         (data:any) => {
           this.BlogPostData = data.blogs;
           console.log(data.blogs);
           console.log("Oie data ah gya ha agey kam kir hun ")
           console.log('Getting Vaule from DB' + this.BlogPostData)
-
+          console.log("Total Items::", this.dtConfig.totalItems);
+          console.log(data.blogs);
+          console.log("Oie data ah gya ha agey kam kir hun ")
+          console.log('Getting Vaule from DB :::::'+this.BlogPostData)
         },
 
         error => {
@@ -285,7 +298,16 @@ OnDeleteRecord(_id:any) {
 
 
 
+  limitChanged(value:any) {
+    this.dtConfig.itemsPerPage = value;
+    this.dtConfig.currentPage = 1;
+    this.UsersRecord();
+  }
 
+  pageChanged(event:any) {
+    this.dtConfig.currentPage = event;
+    this.UsersRecord();
+  }
 
 
 

@@ -4,6 +4,9 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 
 import {Sponser} from '../../Models/models'
+import { API_ENDPOINTS } from 'src/app/_util/global';
+
+
 
 var token =localStorage.token;
 var headers_object = new HttpHeaders({
@@ -34,7 +37,7 @@ export class SponserService {
   constructor(private http:HttpClient) { }
 
   CreateNewUser(SponserData:any){
-    return this.http.post <any[]>(this._CreateUrl,SponserData).pipe(map((res:any)=>{
+    return this.http.post <any[]>(API_ENDPOINTS.sponsorCreate,SponserData).pipe(map((res:any)=>{
       return res
     }),retry(1),
     catchError(this.handleError))
@@ -42,8 +45,9 @@ export class SponserService {
   }
 
   //getting User  data
-getAllUser(): Observable<any> {
-  return this.http.get<any>(this._gettAllSponsors);
+getAllSponser(limit:number,offset:number): Observable<any> {
+  console.log(API_ENDPOINTS.sponsorList)
+  return this.http.get<any>(API_ENDPOINTS.sponsorList+`${limit}/${offset}`);
 }
 
 //getting User data of Specfic Id

@@ -36,7 +36,7 @@ export class PhoneVerificationComponent implements OnInit {
   get f(): { [key: string]: AbstractControl } {
     return this.verifyPhone.controls;
   }
-  onSubmit(): void {debugger
+  onSubmit(): void {
     this.submitted = true;
     if (this.verifyPhone.invalid) {
       return;

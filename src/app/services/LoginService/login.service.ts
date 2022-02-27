@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http'
 import { map } from 'rxjs/operators'
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { API_ENDPOINTS } from 'src/app/_util/global';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,8 @@ export class LoginService {
 
 
   LoginUser(UserData: any) {
-    let _loginUrl = "https://fitstar-backend.herokuapp.com/app/v1/auth/signin"
-    return this.http.post<any>(_loginUrl, UserData).pipe(map((res: any) => {
+    // let _loginUrl = "https://fitstar-backend.herokuapp.com/app/v1/auth/signin"
+    return this.http.post<any>(API_ENDPOINTS.loginUser, UserData).pipe(map((res: any) => {
       return res
     }), retry(3),
       catchError(this.handleError))

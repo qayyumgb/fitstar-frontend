@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "KWKPortal": {
+    "FitstarPortal": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/KWKPortal",
+            "outputPath": "dist/FitstarPortal",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -80,10 +80,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "KWKPortal:build:production"
+              "browserTarget": "FitstarPortal:build:production"
             },
             "development": {
-              "browserTarget": "KWKPortal:build:development"
+              "browserTarget": "FitstarPortal:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -91,7 +91,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "KWKPortal:build"
+            "browserTarget": "FitstarPortal:build"
           }
         },
         "test": {
@@ -116,5 +116,5 @@
       }
     }
   },
-  "defaultProject": "KWKPortal"
+  "defaultProject": "FitstarPortal"
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
@@ -13,11 +13,10 @@ import { LandingPageService } from './../../../services/LandingPageService/landi
 export class TermsConditionsDetailsComponent implements OnInit {
   LandingPageItemList: [];
   submitted: boolean = false;
-  termSubscription: Subscription = null as any;
   todDetails: FormGroup = new FormGroup({
     termsAndConditions: new FormControl('', Validators.required),
   });
-  landingPageApiData: Data
+  @Input() landingPageApiData: Data
 
   constructor(private landingPageService: LandingPageService, private toastr: ToastrService) { }
 
@@ -27,12 +26,15 @@ export class TermsConditionsDetailsComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
-    this.termSubscription = this.landingPageService.getLandingPage().subscribe((response: ILandingPage) => {
-      this.todDetails.patchValue(response.data.termConditions);
-      this.landingPageApiData = response.data;
+  ngOnInit(): void { }
 
-    })
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    if (changes) {
+      this.todDetails.patchValue(this.landingPageApiData?.termConditions);
+    }
+
   }
 
   onSubmit(): void {
@@ -50,9 +52,5 @@ export class TermsConditionsDetailsComponent implements OnInit {
       });
     }
   }
-  ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
-    this.termSubscription?.unsubscribe();
-  }
+
 }

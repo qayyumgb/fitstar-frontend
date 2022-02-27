@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
@@ -15,17 +15,21 @@ export class PrivacyPolicyComponent implements OnInit {
     privacyPolicy: new FormControl('', Validators.required)
   });
   submitted: boolean = false;
-  policySubscription: Subscription = null as any;
-  landingPageApiData: Data;
+  @Input() landingPageApiData: Data;
 
 
   constructor(private landingPageService: LandingPageService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.policySubscription = this.landingPageService.getLandingPage().subscribe((response: ILandingPage) => {
-      this.privacyDetails.patchValue(response.data.privacyDetails);
-      this.landingPageApiData = response.data
-    })
+
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    if (changes) {
+      this.privacyDetails.patchValue(this.landingPageApiData?.privacyDetails);
+    }
+
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -48,10 +52,6 @@ export class PrivacyPolicyComponent implements OnInit {
       });
     }
   }
-  ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
-    this.policySubscription?.unsubscribe();
-  }
+
 
 }

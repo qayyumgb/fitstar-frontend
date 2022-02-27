@@ -5,9 +5,9 @@
       <!-- <h1 class="app-page-title">Landing Page Works</h1> -->
       <div class="tab_panel">
         <div class="card">
-          <p-tabView styleClass="tabview-custom">
+          <p-tabView styleClass="tabview-custom" (onChange)="tabViewChange($event)">
             <!-- 1st Tab  -->
-            <p-tabPanel>
+            <p-tabPanel [cache]="false">
               <ng-template pTemplate="header">
                 <i class="pi pi-images"></i>
                 <span class="mx-2">Landing Page Details</span>
@@ -206,28 +206,28 @@
               </div>
             </p-tabPanel>
             <!-- 2nd Tab  -->
-            <p-tabPanel header="Social Links">
+            <p-tabPanel header="Social Links" [cache]="false">
               <ng-template pTemplate="header">
                 <i class="pi pi-user"></i>
                 <span class="mx-2">Social Accounts Details</span>
               </ng-template>
-              <app-social-account-details></app-social-account-details>
+              <app-social-account-details [landingPageApiData]="landingPageApiData"></app-social-account-details>
             </p-tabPanel>
             <!-- 3rd Tab  -->
-            <p-tabPanel header="Header III">
+            <p-tabPanel header="Header III" [cache]="false">
               <ng-template pTemplate="header">
                 <i class="pi pi-search"></i>
                 <span class="mx-2">Terms & Conditions Details</span>
               </ng-template>
-              <app-terms-conditions-details></app-terms-conditions-details>
+              <app-terms-conditions-details [landingPageApiData]="landingPageApiData"></app-terms-conditions-details>
             </p-tabPanel>
             <!-- 4rd Tab  -->
-            <p-tabPanel header="Header IV">
+            <p-tabPanel header="Header IV" [cache]="false">
               <ng-template pTemplate="header">
                 <i class="pi pi-save"></i>
                 <span class="mx-2">Privacy Policy Details</span>
               </ng-template>
-              <app-privacy-policy></app-privacy-policy>
+              <app-privacy-policy [landingPageApiData]="landingPageApiData"></app-privacy-policy>
             </p-tabPanel>
           </p-tabView>
         </div>

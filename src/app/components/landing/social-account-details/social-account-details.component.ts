@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
@@ -21,17 +21,19 @@ export class SocialAccountDetailsComponent implements OnInit {
   });
 
   submitted: boolean = false
-  socialAccountSubscription: Subscription = null as any;
-  landingPageApiData: Data;
+  @Input() landingPageApiData: Data;
   constructor(private landingPageService: LandingPageService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.socialAccountSubscription = this.landingPageService.getLandingPage().subscribe((response: ILandingPage) => {
-      this.socialLinksDetails.patchValue(response.data.socialAccountDetails);
-      this.landingPageApiData = response.data;
-      console.log(this.landingPageApiData);
 
-    })
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    if (changes) {
+      this.socialLinksDetails.patchValue(this.landingPageApiData?.socialAccountDetails);
+
+    }
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -55,9 +57,5 @@ export class SocialAccountDetailsComponent implements OnInit {
     }
   }
 
-  ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
-    this.socialAccountSubscription?.unsubscribe();
-  }
+
 }

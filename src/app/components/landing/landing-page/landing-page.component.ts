@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -9,7 +9,8 @@ import {
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Table } from 'primeng/table';
-import { Subscription } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
+import { exhaustMap } from 'rxjs/operators';
 import { LandingPage, ILandingPage, Data } from 'src/app/shared/interface/landingPage.interface';
 import { LandingPageService } from '../../../services/LandingPageService/landing-page.service'
 
@@ -40,7 +41,6 @@ export class LandingPageComponent implements OnInit {
 
   constructor(private landingPageService: LandingPageService, private toastr: ToastrService) { }
 
-
   landingPageFormControls(data?: any) {
 
     return new FormGroup({
@@ -70,7 +70,18 @@ export class LandingPageComponent implements OnInit {
   }
 
 
+  tabViewChange(event: any) {
+    this.bannerSubscription = this.landingPageService.getLandingPage().subscribe((response: ILandingPage) => {
+      this.landingPageApiData = response.data;
+    })
+  }
 
+
+  getDataFromApi() {
+    this.bannerSubscription = this.landingPageService.getLandingPage().subscribe((response: ILandingPage) => {
+      this.landingPageApiData = response.data;
+    })
+  }
 
 
   clear(table: Table) {
@@ -115,7 +126,7 @@ export class LandingPageComponent implements OnInit {
     }
   }
 
-  onSubmit(): void {
+  onSubmit() {
     this.submitted = true;
     if (this.landingPageDetails.invalid) {
       return;

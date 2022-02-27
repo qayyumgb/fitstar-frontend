@@ -22,7 +22,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { NgxPaginationModule } from 'ngx-pagination';
+// import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -44,7 +44,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ButtonModule,
     DropdownModule,
     ProgressBarModule,
-    NgxPaginationModule,
+    // NgxPaginationModule,
     InputTextModule,
     FormsModule,
     InputSwitchModule,

@@ -20,7 +20,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CollaboratorListingComponent } from './collaborator-listing/collaborator-listing.component';
-import { NgxPaginationModule } from 'ngx-pagination';
+// import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   declarations: [
     CollaboratorListingComponent
@@ -46,7 +46,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     InputSwitchModule,
     ConfirmDialogModule,
     MessagesModule,
-    NgxPaginationModule
+    // NgxPaginationModule
   ]
 })
 export class CollaboratorModule { }

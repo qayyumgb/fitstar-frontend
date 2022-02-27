@@ -1,0 +1,23 @@
+<div class="form_tab3">
+    <form action="" class="form-box" [formGroup]="privacyDetails" (ngSubmit)="onSubmit()">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <label for="">Privacy Policy Details</label>
+                    <textarea class="form-control descript" formControlName="privacyPolicy" id="" cols="30" rows="10"
+                        [ngClass]="{
+                'is-invalid': submitted && f.privacyPolicy.errors
+              }"></textarea>
+                    <div *ngIf="submitted && f.privacyPolicy.errors" class="invalid-feedback">
+                        <div *ngIf="f.privacyPolicy.errors.required">
+                            PrivacyDetails is required
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn app-btn-primary w-50 theme-btn mx-auto my-3 mt-4">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

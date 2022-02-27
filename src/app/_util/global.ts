@@ -15,11 +15,11 @@ export const API_ENDPOINTS = {
   userUpdate: `${API_URL}users/update`,
   userDelete: `${API_URL}users/delete`,
 
- /**Ambassador links */
- ambassadorList: `${API_URL}ambassadors/get/`,
- ambassadorCreate: `${API_URL}ambassadors/create`,
- ambassadorUpdate: `${API_URL}ambassadors/update`,
- ambassadorDelete: `${API_URL}ambassadors/delete`,
+  /**Ambassador links */
+  ambassadorList: `${API_URL}ambassadors/get/`,
+  ambassadorCreate: `${API_URL}ambassadors/create`,
+  ambassadorUpdate: `${API_URL}ambassadors/update`,
+  ambassadorDelete: `${API_URL}ambassadors/delete`,
 
   /**blogs links */
   blogList: `${API_URL}blogs/get/`,
@@ -34,10 +34,15 @@ export const API_ENDPOINTS = {
   sponsorDelete: `${API_URL}sponsors/delete`,
 
 
-    /*Collabotors links */
-    collaboratorsList: `${API_URL}collaborators/get/`,
-    collaboratorsCreate: `${API_URL}collaborators/create`,
-    collaboratorsUpdate: `${API_URL}collaborators/update`,
-    collaboratorsDelete: `${API_URL}collaborators/delete`,
+  /*Collabotors links */
+  collaboratorsList: `${API_URL}collaborators/get/`,
+  collaboratorsCreate: `${API_URL}collaborators/create`,
+  collaboratorsUpdate: `${API_URL}collaborators/update`,
+  collaboratorsDelete: `${API_URL}collaborators/delete`,
+
+  // Landing 
+  getLandingPage: `${API_URL}landing/get/`,
+  updateLandingPAge: `${API_URL}landing/update/`,
+
 
 };

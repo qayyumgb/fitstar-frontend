@@ -6,9 +6,16 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TabViewModule } from 'primeng/tabview';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SocialAccountDetailsComponent } from './social-account-details/social-account-details.component';
+import { TermsConditionsDetailsComponent } from './terms-conditions-details/terms-conditions-details.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { ToastModule } from 'primeng/toast';
 @NgModule({
   declarations: [
-    LandingPageComponent
+    LandingPageComponent,
+    SocialAccountDetailsComponent,
+    TermsConditionsDetailsComponent,
+    PrivacyPolicyComponent
   ],
   imports: [
     CommonModule,
@@ -16,7 +23,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SharedModule,
     TabViewModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    ToastModule,
+
   ]
 })
 export class LandingModule { }

@@ -20,8 +20,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { NgxSpinnerModule } from "ngx-spinner";
-import {HttpClientModule} from '@angular/common/http';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { HttpClientModule } from '@angular/common/http';
+// import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -50,7 +50,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ConfirmDialogModule,
     MessagesModule,
     HttpClientModule,
-    NgxPaginationModule
+    // NgxPaginationModule
   ]
 })
 export class AmbassadorModule { }

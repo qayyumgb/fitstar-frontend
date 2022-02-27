@@ -112,11 +112,11 @@ export class BlogComponent implements OnInit {
 
 
   UsersRecord(): void {
-    let limit= this.dtConfig.itemsPerPage;
-    let offset= this.dtConfig.currentPage;
-    this.BlogPostService.getAllBlog(limit,offset)
+    let limit = this.dtConfig.itemsPerPage;
+    let offset = this.dtConfig.currentPage;
+    this.BlogPostService.getAllBlog(limit, offset)
       .subscribe(
-        (data:any) => {
+        (data: any) => {
           this.BlogPostData = data.blogs;
           console.log(data.blogs);
           console.log("Oie data ah gya ha agey kam kir hun ")
@@ -124,7 +124,7 @@ export class BlogComponent implements OnInit {
           console.log("Total Items::", this.dtConfig.totalItems);
           console.log(data.blogs);
           console.log("Oie data ah gya ha agey kam kir hun ")
-          console.log('Getting Vaule from DB :::::'+this.BlogPostData)
+          console.log('Getting Vaule from DB :::::' + this.BlogPostData)
         },
 
         error => {
@@ -135,11 +135,11 @@ export class BlogComponent implements OnInit {
 
 
   CreateNewUser() {
-    const formdata =this.createBlogPost.value
-      delete formdata.featuredImage
-      delete formdata.authorProfile
-      delete formdata.secoundFeaturedImage
-      console.log(formdata)
+    const formdata = this.createBlogPost.value
+    delete formdata.featuredImage
+    delete formdata.authorProfile
+    delete formdata.secoundFeaturedImage
+    console.log(formdata)
 
     console.log("sending data to service side")
     this.BlogPostService.CreateNewUser(formdata)
@@ -148,7 +148,7 @@ export class BlogComponent implements OnInit {
           console.log('data addedd')
           this.toastr.success(response.message);
           console.log(response);
-          this.submitted= true;
+          this.submitted = true;
           this.modalService.hide();
           this.UsersRecord();
           // this.createAmbassador.value.reset
@@ -160,37 +160,37 @@ export class BlogComponent implements OnInit {
   }
 
 
-OnDeleteRecord(_id:any) {
+  OnDeleteRecord(_id: any) {
 
-  this.confirmationService.confirm({
+    this.confirmationService.confirm({
       message: 'Do you want to delete this record?',
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
         this.BlogPostService.deleteUser(_id)
-        .subscribe(
-          (data:any) => {
-            this.toastr.success(data.message);
-            this.UsersRecord();
+          .subscribe(
+            (data: any) => {
+              this.toastr.success(data.message);
+              this.UsersRecord();
 
-          },
-          error => {
-            console.log(error);
-          });
+            },
+            error => {
+              console.log(error);
+            });
       },
-      reject: (type:any) => {
-          switch(type) {
-              case ConfirmEventType.REJECT:
-                  this.messageService.add({severity:'error', summary:'Rejected', detail:'You have rejected'});
-              break;
-              case ConfirmEventType.CANCEL:
-                  this.messageService.add({severity:'warn', summary:'Cancelled', detail:'You have cancelled'});
-              break;
-          }
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            break;
+        }
       },
       key: "deleteAlert"
-  });
-}
+    });
+  }
 
 
   /*########################## Profile Image Upload ########################*/
@@ -298,13 +298,13 @@ OnDeleteRecord(_id:any) {
 
 
 
-  limitChanged(value:any) {
+  limitChanged(value: any) {
     this.dtConfig.itemsPerPage = value;
     this.dtConfig.currentPage = 1;
     this.UsersRecord();
   }
 
-  pageChanged(event:any) {
+  pageChanged(event: any) {
     this.dtConfig.currentPage = event;
     this.UsersRecord();
   }

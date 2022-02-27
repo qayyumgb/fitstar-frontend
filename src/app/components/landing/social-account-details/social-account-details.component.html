@@ -1,0 +1,89 @@
+<div class="tab_form2">
+    <form class="form-box" [formGroup]="socialLinksDetails" (ngSubmit)="onSubmitForm()">
+        <div class="form-group">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <label>Instagram Link</label>
+                        <input type="text" formControlName="instagram" class="form-control"
+                            placeholder=" Enter Your Instagram URL" [ngClass]="{
+                  'is-invalid': submitted && f.instagram.errors
+                }" />
+                        <div *ngIf="submitted && f.instagram.errors" class="invalid-feedback">
+                            <div *ngIf="f.instagram.errors.required">
+                                instagram Url is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <label>Facebook Link</label>
+                        <input type="text" formControlName="facebook" class="form-control"
+                            placeholder="Enter Facebook URL" [ngClass]="{
+                  'is-invalid': submitted && f.facebook.errors
+                }" />
+                        <div *ngIf="submitted && f.facebook.errors" class="invalid-feedback">
+                            <div *ngIf="f.facebook.errors.required">
+                                Facebook Url is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <label>Youtube URl</label>
+                        <input type="url" formControlName="youtube" class="form-control" placeholder="Enter Youtube URL"
+                            [ngClass]="{
+                  'is-invalid': submitted && f.youtube.errors
+                }" />
+                        <div *ngIf="submitted && f.youtube.errors" class="invalid-feedback">
+                            <div *ngIf="f.youtube.errors.required">
+                                Youtube Url is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <label>Twitter URL</label>
+                        <input type="url" formControlName="twitter" class="form-control" placeholder="Enter Twitter URL"
+                            [ngClass]="{
+                  'is-invalid': submitted && f.twitter.errors
+                }" />
+                        <div *ngIf="submitted && f.twitter.errors" class="invalid-feedback">
+                            <div *ngIf="f.twitter.errors.required">
+                                Twitter Url is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <label>Linked In</label>
+                        <input type="text" formControlName="linkedin" class="form-control"
+                            placeholder="Enter linkedIn URL" [ngClass]="{
+                  'is-invalid': submitted && f.linkedin.errors
+                }" />
+                        <div *ngIf="submitted && f.linkedin.errors" class="invalid-feedback">
+                            <div *ngIf="f.linkedin.errors.required">
+                                linkedInUrl is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group my-3 mt-4 d-flex justify-content-center">
+            <button type="submit" class="btn app-btn-primary w-50 theme-btn mx-auto justify-content-center">
+                Submit
+            </button>
+        </div>
+    </form>
+</div>

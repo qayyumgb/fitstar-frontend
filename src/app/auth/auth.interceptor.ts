@@ -7,15 +7,17 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 // import {api_url} from 'src/app/shared/Utils/global';
 // import {SharedService} from '../shared.service';
 // import {AuthService} from './auth.service';
+import {AuthService} from '../services/AuthService/auth.service'
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private router: Router) {}
+  constructor(private AuthService:AuthService,private toastr: ToastrService,private router: Router,) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -47,7 +49,9 @@ export class AuthInterceptor implements HttpInterceptor {
           if (error.status === 401) {
             // Logout Existing User
             // this.authorize.logout();
-            alert('Your session has been expired. Please sign in again.');
+            this.AuthService.logout();
+            this.toastr.error('','Your session has been expired. Please sign in again.',{timeOut:1500})
+
           }
         }
 

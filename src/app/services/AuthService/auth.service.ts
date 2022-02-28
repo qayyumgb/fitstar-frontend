@@ -5,11 +5,12 @@ import { API_ENDPOINTS, API_URL } from 'src/app/_util/global';
 import { basicInfo, login, OTP, verfyPhoneDTO } from 'src/app/AuthInterface/auth.interface';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private toastr: ToastrService,private http: HttpClient, private router: Router) { }
   private getPhoneNumber = new BehaviorSubject<string>('');
   getPhoneNumber$: Observable<any> = this.getPhoneNumber.asObservable();
 
@@ -75,6 +76,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+    this.toastr.success('','log out succesfully',{timeOut:1500})
     this.router.navigate(['login']);
   }
 

@@ -40,30 +40,16 @@ export class AbbassadorService {
 
   //getting User data of Specfic Id
   deleteUser(_id: any): Observable<Abbassador[]> {
-    return this.http.delete<Abbassador[]>(`${this.deleteAbbassador}/${_id}`);
+    return this.http.delete<Abbassador[]>(`${API_ENDPOINTS.ambassadorDelete}/${_id}`);
   }
 
-  //Update User data
-  // UpdateUser(_id: any): Observable<addUsers[]> {
-  //   return this.http.put<addUsers[]>(`${this._url}/${_id}`);
-  // }
+
 
   UpdateUser(_id: any, data: any): Observable<any> {
-    return this.http.put<any[]>(`${this.UpdateAbbassador}/${_id}`, data);
+    return this.http.put<any[]>(`${API_ENDPOINTS.ambassadorUpdate}/${_id}`, data);
   }
 
-  // update(id:any, post:any): Observable<any> {
 
-  //   return this.http.put(this.UpdateAbbassador + id, JSON.stringify(post))
-  //   .pipe(
-  //     catchError(this.handleError)
-  //   )
-  // }
-
-
-  update(id: string, params: any) {
-    return this.http.put(`${this.UpdateAbbassador}/${id}`, params);
-}
 
   // Error Handling Funcation
   handleError(error: any) {

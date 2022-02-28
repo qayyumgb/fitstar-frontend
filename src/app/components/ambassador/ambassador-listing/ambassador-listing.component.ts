@@ -192,7 +192,7 @@ this.UsersRecord();
 
 
 updateAmbassador(id:any): void {
-  this.AbbassadorService.update(id,this.AbbassadorData.ambassador)
+  this.AbbassadorService.UpdateUser(id,this.AbbassadorData.ambassador)
     .subscribe(
       response => {
         console.log(response);
@@ -207,7 +207,7 @@ updateAmbassador(id:any): void {
 }
 
 private updateUser() {
-  this.AbbassadorService.update(this.id, this.AbbassadorData.ambassador)
+  this.AbbassadorService.UpdateUser(this.id, this.AbbassadorData.ambassador)
       .pipe(first())
       .subscribe(
         response => {

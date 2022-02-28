@@ -37,8 +37,9 @@ export const API_ENDPOINTS = {
   /*Collabotors links */
   collaboratorsList: `${API_URL}collaborators/get/`,
   collaboratorsCreate: `${API_URL}collaborators/create`,
-  collaboratorsUpdate: `${API_URL}collaborators/update`,
+  collaboratorsUpdate: `${API_URL}collaborators/update/`,
   collaboratorsDelete: `${API_URL}collaborators/delete`,
+  collaboratorsSearch: `${API_URL}collaborators/search/`,
 
   // Landing 
   getLandingPage: `${API_URL}landing/get/`,

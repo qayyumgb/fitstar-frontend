@@ -20,10 +20,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CollaboratorListingComponent } from './collaborator-listing/collaborator-listing.component';
+import { AddCollaboratorComponent } from './add-collaborator/add-collaborator.component';
 // import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   declarations: [
-    CollaboratorListingComponent
+    CollaboratorListingComponent,
+    AddCollaboratorComponent
   ],
   imports: [
     CommonModule,

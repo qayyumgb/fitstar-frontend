@@ -1,33 +1,26 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  Validators
+  FormBuilder
 } from '@angular/forms';
-import { AddCollaborator } from 'src/app/AuthInterface/auth.interface';
-import { ShopService } from 'src/app/services/shopService/shop.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmationService, ConfirmEventType, Message, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { ShopService } from 'src/app/services/shopService/shop.service';
+import { CreateUpdateCollaborator, ICollaborator } from 'src/app/shared/interface/collaborator.interface';
 // import { MessageService } from "primeng/api";
 import { ambassadorList } from '../../../globalInterface/global.interface';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {ConfirmationService ,ConfirmEventType, MessageService} from 'primeng/api';
-import {Message} from 'primeng/api';
-import { PrimeNGConfig } from 'primeng/api';
-import {CollaboratorService} from '../../../services/collaboratorService/collaborator.service'
-import { ToastrService } from 'ngx-toastr';
+import { CollaboratorService } from '../../../services/collaboratorService/collaborator.service';
 
 @Component({
   selector: 'app-collaborator-listing',
   templateUrl: './collaborator-listing.component.html',
   styleUrls: ['./collaborator-listing.component.scss'],
-  providers: [ConfirmationService,MessageService]
+  providers: [ConfirmationService, MessageService]
 })
 export class CollaboratorListingComponent implements OnInit {
+  openCreateEditModal: boolean = false;
 
-  modalRef?: BsModalRef;
-  createcollaborator: FormGroup;
   collaboratorList: ambassadorList[];
   // representatives: Representative[];
   checked1: boolean = false;
@@ -35,11 +28,12 @@ export class CollaboratorListingComponent implements OnInit {
   loading: boolean = false;
   msgs: Message[] = [];
   position: string;
-  CollaboratorData:any=[];
-  CollaboratordataById:any[];
+  CollaboratorData: any = [];
+  CollaboratordataById: any[];
+  editCollaboratorData: ICollaborator;
 
   activityValues: number[] = [0, 100];
-
+  searchText: string = '';
   dtConfig: any = {
     id: 'collaborators',
     itemsPerPage: 10,
@@ -48,58 +42,18 @@ export class CollaboratorListingComponent implements OnInit {
   };
 
 
-  constructor(private cd: ChangeDetectorRef,private toastr: ToastrService,private CollaboratorService:CollaboratorService, private modalService: BsModalService, private formBuilder: FormBuilder, private shopSevice: ShopService ,private confirmationService: ConfirmationService ,private messageService: MessageService,private PrimeNGConfig:PrimeNGConfig) { }
+  constructor(private toastService: ToastrService, private collaboratorService: CollaboratorService, private shopSevice: ShopService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.UsersRecord()
-    this.createcollaborator = this.formBuilder.group(
-      {
-
-        title: ['', Validators.required],
-        subTitle: ['', Validators.required],
-        instagram: ['', Validators.required],
-        facebook: ['', Validators.required],
-        youtube: ['', Validators.required],
-        tiwtter: ['', Validators.required],
-        collaborattorImage:['',Validators.required],
-        picture:[null]
-      }
-    );
-
+    this.getCollaboratorRecord()
     this.shopSevice.getAmbassadorList().then(ambassadors => {
       this.collaboratorList = ambassadors;
       this.loading = false;
     });
 
-    this.statuses = [
-      { label: "Unqualified", value: "unqualified" },
-      { label: "Qualified", value: "qualified" },
-      { label: "New", value: "new" },
-      { label: "Negotiation", value: "negotiation" },
-      { label: "Renewal", value: "renewal" },
-      { label: "Proposal", value: "proposal" }
-    ];
-    this.PrimeNGConfig.ripple = true;
-  }
-  get f(): { [key: string]: AbstractControl } {
-    return this.createcollaborator.controls;
-  }
-
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
   }
 
 
-  submitted = false
-  onSubmit(): void {
-    this.submitted = true;
-    if (this.createcollaborator.invalid) {
-      return;
-    }
-    else
-   this.CreateNewUser();
-   this.modalService.hide();
-  }
 
 
   clear(table: Table) {
@@ -109,171 +63,104 @@ export class CollaboratorListingComponent implements OnInit {
   // Delete Record Confirm Popup
 
 
-OnDeleteRecord(_id:any) {
-  console.log('delete')
-  this.confirmationService.confirm({
+  OnDeleteRecord(_id: any) {
+    console.log('delete')
+    this.confirmationService.confirm({
       message: 'Do you want to delete this record?',
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-        this.CollaboratorService.deleteUser(_id)
-        .subscribe(
-          (data:any) => {
-            this.toastr.success(data.message);
-            this.UsersRecord();
-
-          },
-          error => {
-            console.log(error);
-          });
+        this.collaboratorService.deleteUser(_id)
+          .subscribe(
+            (data: any) => {
+              this.toastService.success(data.message);
+              this.getCollaboratorRecord();
+            },
+            error => {
+              console.log(error);
+            });
       },
-      reject: (type:any) => {
-          switch(type) {
-              case ConfirmEventType.REJECT:
-                  this.messageService.add({severity:'error', summary:'Rejected', detail:'You have rejected'});
-              break;
-              case ConfirmEventType.CANCEL:
-                  this.messageService.add({severity:'warn', summary:'Cancelled', detail:'You have cancelled'});
-              break;
-          }
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            break;
+        }
       },
       key: "deleteAlert"
-  });
-}
+    });
+  }
 
 
-UsersRecord(): void {
-  let limit= this.dtConfig.itemsPerPage;
-  let offset= this.dtConfig.currentPage;
-  this.CollaboratorService.getAllCollaborator(limit,offset)
-    .subscribe(
-      (data :any)=> {
-
-        console.log(data.collaborators);
-        this.CollaboratorData = data.collaborators;
-        console.log( `Getting data from ${this.CollaboratorData}`);
-
-        console.log("Total Items::", this.dtConfig.totalItems);
-        console.log(data.collaborators);
-        console.log("Oie data ah gya ha agey kam kir hun ")
-        console.log('Getting Vaule from DB :::::'+this.CollaboratorData)
-
-      },
-
-      error => {
-        console.log(error);
-      });
-}
-
-// getUserById(id?:any): void{
-
-//   this.CollaboratorService.getUserById(id)
-//     .subscribe(
-//       data => {
-//         this.CollaboratordataById=data
-//         console.log(data);
-//         console.log(this.CollaboratordataById)
-//       },
-//       error => {
-//         console.log(error);
-//       });
-
-// }
-
-
-
-
-
-
-
-
-
-
-
-CreateNewUser(){
-
-  const formData= this.createcollaborator.value;
-delete formData.collaborattorImage
-  console.log(formData)
-  this.CollaboratorService.CreateNewUser(formData)
+  getCollaboratorRecord(): void {
+    let limit = this.dtConfig.itemsPerPage;
+    let offset = this.dtConfig.currentPage;
+    this.collaboratorService.getAllCollaborator(limit, offset)
       .subscribe(
-        response => {
-          console.log('data addedd')
-          this.toastr.success('Collaborator Added  Succesfully','',{
-            timeOut: 2000,
-          });
-          console.log(response);
-          this.submitted = true;
-          // this.createAmbassador.value.reset
-          this.modalService.hide();
-          this.UsersRecord()
+        (data: any) => {
+          console.log(data.collaborators);
+          this.CollaboratorData = data.collaborators;
+          console.log(`Getting data from ${this.CollaboratorData}`);
+          console.log("Total Items::", this.dtConfig.totalItems);
+          console.log(data.collaborators);
+          console.log("Oie data ah gya ha agey kam kir hun ")
+          console.log('Getting Vaule from DB :::::' + this.CollaboratorData)
 
         },
+
         error => {
           console.log(error);
         });
-}
+  }
 
-DeleteUserById(id?:any): void{
-
-  this.CollaboratorService.deleteUser(id)
-    .subscribe(
-      data => {
-        this.CollaboratordataById=data
-        console.log(data);
-        console.log(this.CollaboratordataById)
+  collaboratorModal(response: boolean) {
+    this.openCreateEditModal = response;
+  }
+  updateButtonState(item: ICollaborator) {
+    let requestBody = {} as CreateUpdateCollaborator;
+    requestBody._id = item._id;
+    requestBody.active = item.active;
+    this.collaboratorService.updateCollaborator(requestBody).subscribe(
+      response => {
+        this.toastService.success(response.message);
+        console.log(response);
       },
       error => {
         console.log(error);
       });
+  }
 
-}
+  search() {
+    if (this.searchText.length > 0) {
+      this.collaboratorService.getSearchResult(this.searchText).subscribe(response => {
+        this.CollaboratorData = response.collaborators;
+      })
+    }
+    else {
+      this.getCollaboratorRecord();
+    }
 
- /*########################## File Upload ########################*/
- @ViewChild('fileInput') el: ElementRef;
- imageUrl: any = 'https://i.pinimg.com/236x/d6/27/d9/d627d9cda385317de4812a4f7bd922e9--man--iron-man.jpg';
- editFile: boolean = true;
- removeUpload: boolean = false;
+  }
 
- uploadFile(event:any) {
-   let reader = new FileReader(); // HTML5 FileReader API
-   let file = event.target.files[0];
-   if (event.target.files && event.target.files[0]) {
-     reader.readAsDataURL(file);
 
-     // When file uploads set it to file formcontrol
-     reader.onload = () => {
-       this.imageUrl = reader.result;
-       this.createcollaborator.patchValue({
-        picture: reader.result
-       });
-       this.editFile = false;
-       this.removeUpload = true;
-     }
-     // ChangeDetectorRef since file is loading outside the zone
-     this.cd.markForCheck();
-   }
- }
 
- // Function to remove uploaded file
- removeUploadedFile() {
-   let newFileList = Array.from(this.el.nativeElement.files);
-   this.imageUrl = 'https://i.pinimg.com/236x/d6/27/d9/d627d9cda385317de4812a4f7bd922e9--man--iron-man.jpg';
-   this.editFile = true;
-   this.removeUpload = false;
-   this.createcollaborator.patchValue({
-     file: [null]
-   });
- }
+  limitChanged(value: any) {
+    this.dtConfig.itemsPerPage = value;
+    this.dtConfig.currentPage = 1;
+    this.getCollaboratorRecord();
+  }
 
- limitChanged(value:any) {
-  this.dtConfig.itemsPerPage = value;
-  this.dtConfig.currentPage = 1;
-  this.UsersRecord();
-}
+  pageChanged(event: any) {
+    this.dtConfig.currentPage = event;
+    this.getCollaboratorRecord();
+  }
 
-pageChanged(event:any) {
-  this.dtConfig.currentPage = event;
-  this.UsersRecord();
-}
+  editCollaborator(item: ICollaborator) {
+
+    this.collaboratorModal(true);
+    this.editCollaboratorData = item;
+  }
 }

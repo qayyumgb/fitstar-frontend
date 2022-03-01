@@ -12,14 +12,12 @@ import { CreateUpdateCollaborator } from 'src/app/shared/interface/collaborator.
   providedIn: 'root'
 })
 export class CollaboratorService {
-  private getAllData = "https://fitstar-backend.herokuapp.com/app/v1/collaborators/get";
-  private createUrl = "https://fitstar-backend.herokuapp.com/app/v1/collaborators/create";
-  private deleteCollaborator = "https://fitstar-backend.herokuapp.com/app/v1/collaborators/delete";
+
 
   constructor(private http: HttpClient) { }
 
-  CreateNewUser(CollaboratorsData: CreateUpdateCollaborator) {
-    return this.http.post<CreateUpdateCollaborator>(API_ENDPOINTS.collaboratorsCreate, CollaboratorsData).pipe(map((res: any) => {
+  CreateNewUser(CollaboratorsData: any) {
+    return this.http.post<any[]>(API_ENDPOINTS.collaboratorsCreate, CollaboratorsData).pipe(map((res: any) => {
       return res
     }), retry(1),
       catchError(this.handleError))
@@ -62,7 +60,7 @@ export class CollaboratorService {
 
   //getting User data of Specfic Id
   deleteUser(_id: any): Observable<any[]> {
-    return this.http.delete<any[]>(`${this.deleteCollaborator}/${_id}`);
+    return this.http.delete<any[]>(`${(API_ENDPOINTS.collaboratorsDelete)}/${_id}`);
   }
 
   //Update User data

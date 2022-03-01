@@ -159,7 +159,7 @@ export class CollaboratorListingComponent implements OnInit {
   }
 
   editCollaborator(item: ICollaborator) {
-
+debugger;
     this.collaboratorModal(true);
     this.editCollaboratorData = item;
   }

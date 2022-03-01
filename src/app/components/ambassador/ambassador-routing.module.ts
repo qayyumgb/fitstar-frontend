@@ -7,10 +7,7 @@ const routes: Routes = [
     path: '',
     component: AmbassadorListingComponent
   },
-  {
-    path:"update/:id",
-    component:AmbassadorListingComponent
-  }
+
 ];
 
 @NgModule({

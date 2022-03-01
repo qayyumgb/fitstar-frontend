@@ -6,6 +6,7 @@ import { Abbassador } from '../../Models/models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { API_ENDPOINTS } from 'src/app/_util/global';
+import { CreateUpdateAmbassador } from 'src/app/shared/interface/ambassador.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -43,10 +44,22 @@ export class AbbassadorService {
     return this.http.delete<Abbassador[]>(`${API_ENDPOINTS.ambassadorDelete}/${_id}`);
   }
 
+  getSearchResult(searchText: string) {
+    return this.http.get<any[]>(API_ENDPOINTS.ambassadorSearch + searchText).pipe(map((res: any) => {
+      return res
+    }), retry(1),
+      catchError(this.handleError))
+  }
 
+  // UpdateUser(_id: any, data: any): Observable<any> {
+  //   return this.http.put<any[]>(`${API_ENDPOINTS.ambassadorUpdate}/${_id}`, data);
+  // }
 
-  UpdateUser(_id: any, data: any): Observable<any> {
-    return this.http.put<any[]>(`${API_ENDPOINTS.ambassadorUpdate}/${_id}`, data);
+  updateAmbassador(data: CreateUpdateAmbassador) {
+    return this.http.put<any[]>(API_ENDPOINTS.ambassadorUpdate + data._id, data).pipe(map((res: any) => {
+      return res
+    }), retry(1),
+      catchError(this.handleError))
   }
 
 

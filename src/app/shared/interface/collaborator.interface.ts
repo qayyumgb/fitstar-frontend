@@ -11,10 +11,10 @@ export interface ICollaborator {
     picture: string;
     facebook: string;
     youtube: string;
-    twitter: string;
+    tiwtter: string;
     active: boolean;
     isDeleted: boolean;
-    _id: string;
+    _id?: string;
     instagram: string;
     createdAt: Date;
     updatedAt: Date;
@@ -31,3 +31,5 @@ export interface CreateUpdateCollaborator {
     picture?: string;
     active?: boolean;
 }
+
+

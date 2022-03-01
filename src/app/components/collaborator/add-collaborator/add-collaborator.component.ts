@@ -14,6 +14,8 @@ import { ICollaborator } from 'src/app/shared/interface/collaborator.interface';
 export class AddCollaboratorComponent implements OnInit {
   @Output() modalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() editCollaboratorData: ICollaborator;
+
+
   collaboratorForm: FormGroup = new FormGroup(
     {
       _id: new FormControl(''),
@@ -41,7 +43,7 @@ export class AddCollaboratorComponent implements OnInit {
     if (changes) {
       if (this.editCollaboratorData) {
         this.collaboratorForm.patchValue(this.editCollaboratorData);
-        this.collaboratorForm.get('tiwtter')?.setValue(this.editCollaboratorData.twitter);
+        // this.collaboratorForm.get('tiwtter')?.setValue(this.editCollaboratorData.twitter);
       }
 
     }
@@ -70,14 +72,15 @@ export class AddCollaboratorComponent implements OnInit {
 
 
   onSubmit(): void {
-
     this.submitted = true;
     if (this.collaboratorForm.invalid) {
       return;
     }
     else {
+
       const formData = this.collaboratorForm.value;
       if (this.editCollaboratorData === undefined) {
+        delete formData._id
         this.collaboratorService.CreateNewUser(formData).subscribe(
           response => {
             this.toastService.success(response.message);

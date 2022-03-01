@@ -21,11 +21,13 @@ import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { HttpClientModule } from '@angular/common/http';
+import { AddAmbassadorComponent } from './add-ambassador/add-ambassador.component';
 // import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
-    AmbassadorListingComponent
+    AmbassadorListingComponent,
+    AddAmbassadorComponent
   ],
   imports: [
     CommonModule,

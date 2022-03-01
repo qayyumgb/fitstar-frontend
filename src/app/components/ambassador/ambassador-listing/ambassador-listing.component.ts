@@ -19,6 +19,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from "ngx-spinner";
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { CreateUpdateAmbassador, IAmbassador } from 'src/app/shared/interface/ambassador.interface';
 
 // import { UserService, AlertService } from '@app/_services';
 
@@ -29,8 +30,9 @@ import { first } from 'rxjs/operators';
   providers: [ConfirmationService,MessageService]
 })
 export class AmbassadorListingComponent implements OnInit {
+  openCreateEditModal: boolean = false;
   modalRef?: BsModalRef;
-  createAmbassador: FormGroup;
+
   ambassadorList: ambassadorList[];
   // representatives: Representative[];
   checked1: boolean = false;
@@ -43,6 +45,9 @@ export class AmbassadorListingComponent implements OnInit {
   loading = true;
   id!: string;
   activityValues: number[] = [0, 100];
+  searchText: string = '';
+
+  editAmbassadorData: IAmbassador;
 
 
   dtConfig: any = {
@@ -55,20 +60,10 @@ export class AmbassadorListingComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    this.getAmbassadorRecords();
     this.id = this.route.snapshot.params['id'];
-    this.createAmbassador = this.formBuilder.group(
-      {
-        name: ['', Validators.required],
-        tagLine: ['', Validators.required],
-        instagram: ['', Validators.required],
-        facebook: ['', Validators.required],
-        youtube: ['', Validators.required],
-        tiwtter: ['', Validators.required],
-        description:['',Validators.required],
-        userProfile:['',Validators.required],
-        picture:  [null],
-      }
-    );
+
 
     this.shopSevice.getAmbassadorList().then(ambassadors => {
       this.ambassadorList = ambassadors;
@@ -85,27 +80,14 @@ export class AmbassadorListingComponent implements OnInit {
     ];
     this.PrimeNGConfig.ripple = true;
 
-    this.UsersRecord();
-  }
-  get f(): { [key: string]: AbstractControl } {
-    return this.createAmbassador.controls;
-  }
-
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template,{class:"ambassadorListingModal"});
+    this.getAmbassadorRecords();
   }
 
 
-  submitted = false
-  onSubmit(): void {
-    this.submitted = true;
-    if (this.createAmbassador.invalid) {
-      return;
-    }
-    else
-    console.log(this.createAmbassador.value)
-    this.CreateNewUser();
-  }
+
+
+
+
 
 
   clear(table: Table) {
@@ -125,7 +107,7 @@ OnDeleteRecord(_id:any) {
         .subscribe(
           (data:any) => {
             this.toastr.success(data.message);
-            this.UsersRecord();
+            this.getAmbassadorRecords();
 
           },
           error => {
@@ -146,7 +128,7 @@ OnDeleteRecord(_id:any) {
   });
 }
 
-UsersRecord(): void {
+getAmbassadorRecords(): void {
   let limit= this.dtConfig.itemsPerPage;
   let offset= this.dtConfig.currentPage;
   this.AbbassadorService.getAllAmbassador(limit,offset)
@@ -167,110 +149,55 @@ UsersRecord(): void {
 }
 
 
-CreateNewUser(){
-  const formData =this.createAmbassador.value
-  delete formData.userProfile
-  console.log(formData)
-  console.log("sending data to service side")
-  this.AbbassadorService.CreateNewUser(formData)
-      .subscribe(
-        response => {
-          console.log('data addedd')
-          this.toastr.success('Abbassador Data Added  Succesfully','',{
-            timeOut: 2000,
-          });
-          console.log(response);
-          this.submitted = true;
-          this.modalService.hide();
-          // this.createAmbassador.value.reset
-this.UsersRecord();
-        },
-        error => {
-          console.log(error);
-        });
+
+
+AmbassdaorModal(response: boolean) {
+  this.openCreateEditModal = response;
 }
 
-
-updateAmbassador(id:any): void {
-  this.AbbassadorService.UpdateUser(id,this.AbbassadorData.ambassador)
-    .subscribe(
-      response => {
-        console.log(response);
-        console.log(this.AbbassadorData._id)
-        console.log(this.AbbassadorData.ambassador)
-
-        // this.toastr.success(response.message);
-      },
-      error => {
-        console.log(error);
-      });
-}
-
-private updateUser() {
-  this.AbbassadorService.UpdateUser(this.id, this.AbbassadorData.ambassador)
-      .pipe(first())
-      .subscribe(
-        response => {
-          console.log(response);
-          console.log(this.AbbassadorData._id)
-          console.log(this.AbbassadorData.ambassador)
-
-          // this.toastr.success(response.message);
-        },
-        error => {
-          console.log(error);
-        });
-
-}
-
-
-
-
-  /*########################## File Upload ########################*/
-  @ViewChild('fileInput') el: ElementRef;
-  imageUrl: any = 'https://i.pinimg.com/236x/d6/27/d9/d627d9cda385317de4812a4f7bd922e9--man--iron-man.jpg';
-  editFile: boolean = true;
-  removeUpload: boolean = false;
-
-  uploadFile(event:any) {
-    let reader = new FileReader(); // HTML5 FileReader API
-    let file = event.target.files[0];
-    if (event.target.files && event.target.files[0]) {
-      reader.readAsDataURL(file);
-
-      // When file uploads set it to file formcontrol
-      reader.onload = () => {
-        this.imageUrl = reader.result;
-        this.createAmbassador.patchValue({
-          picture:reader.result
-        });
-        this.editFile = false;
-        this.removeUpload = true;
-      }
-      // ChangeDetectorRef since file is loading outside the zone
-      this.cd.markForCheck();
-    }
-  }
-
-  // Function to remove uploaded file
-  removeUploadedFile() {
-    let newFileList = Array.from(this.el.nativeElement.files);
-    this.imageUrl = 'https://i.pinimg.com/236x/d6/27/d9/d627d9cda385317de4812a4f7bd922e9--man--iron-man.jpg';
-    this.editFile = true;
-    this.removeUpload = false;
-    this.createAmbassador.patchValue({
-      picture: [null]
+updateButtonState(item: IAmbassador) {
+  let requestBody = {} as CreateUpdateAmbassador;
+  requestBody._id = item._id;
+  requestBody.active = item.active;
+  this.AbbassadorService.updateAmbassador(requestBody).subscribe(
+    response => {
+      this.toastr.success(response.message);
+      console.log(response);
+    },
+    error => {
+      console.log(error);
     });
+}
+
+search() {
+  if (this.searchText.length > 0) {
+    this.AbbassadorService.getSearchResult(this.searchText).subscribe(response => {
+      this.AbbassadorData = response.collaborators;
+    })
   }
+  else {
+    this.getAmbassadorRecords();
+  }
+
+}
+
+
+
 
   limitChanged(value:any) {
     this.dtConfig.itemsPerPage = value;
     this.dtConfig.currentPage = 1;
-    this.UsersRecord();
+    this.getAmbassadorRecords();
   }
 
   pageChanged(event:any) {
     this.dtConfig.currentPage = event;
-    this.UsersRecord();
+    this.getAmbassadorRecords();
+  }
+
+  editAmbassador(item: IAmbassador) {
+
+    this.AmbassdaorModal(true);
+    this.editAmbassadorData = item;
   }
 }

@@ -273,7 +273,7 @@
             <!--//app-user-dropdown-->
           </div>
 
-          <div class="col logoutBtn d-flex justify-content-end">
+          <!-- <div class="col logoutBtn d-flex justify-content-end d-none">
             <button
               class="btn btn-danger"
               (click)="logout()"
@@ -281,6 +281,36 @@
             >
               logout
             </button>
+          </div> -->
+
+          <div class="">
+            <div class="half">
+              <label for="profile2" class="profile-dropdown">
+                <input type="checkbox" id="profile2" />
+                <img
+                  src="https://cdn0.iconfinder.com/data/icons/avatars-3/512/avatar_hipster_guy-512.png"
+                />
+                <span>John Doe</span>
+                <label for="profile2"><i class="fa-solid fa-bars"></i></label>
+                <ul>
+                  <li>
+                    <a><i class="fa-solid fa-envelope"></i>Messages</a>
+                  </li>
+                  <li>
+                    <a><i class="fa-solid fa-user"></i>Account</a>
+                  </li>
+                  <li>
+                    <a><i class="fa-solid fa-gears"></i>Settings</a>
+                  </li>
+                  <li>
+                    <a
+                      ><i class="fa-solid fa-left-long" (click)="logout()"></i
+                      >Logout</a
+                    >
+                  </li>
+                </ul>
+              </label>
+            </div>
           </div>
         </div>
       </div>

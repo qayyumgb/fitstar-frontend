@@ -21,7 +21,7 @@
 
           <p-table
             #dt2
-            [value]="ambassadorList"
+            [value]="AbbassadorData"
             dataKey="id"
             [rows]="10"
             [showCurrentPageReport]="true"
@@ -63,7 +63,7 @@
                 <th class="cell">Action</th>
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-ambassadors>
+            <ng-template pTemplate="body">
               <tr *ngFor="let ambassadorsData of AbbassadorData; index as i">
                 <td>
                   {{ i + 1 }}

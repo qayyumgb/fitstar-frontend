@@ -42,7 +42,7 @@ export class AmbassadorListingComponent implements OnInit {
   position: string;
   AbbassadorData:any=[];
   AbbassodordataById:any=[];
-  loading = true;
+  loading = false;
   id!: string;
   activityValues: number[] = [0, 100];
   searchText: string = '';
@@ -112,6 +112,7 @@ OnDeleteRecord(_id:any) {
 }
 
 getAmbassadorRecords(): void {
+  this.loading = true
   let limit= this.dtConfig.itemsPerPage;
   let offset= this.dtConfig.currentPage;
   this.AbbassadorService.getAllAmbassador(limit,offset)
@@ -119,10 +120,7 @@ getAmbassadorRecords(): void {
       (data:any)=> {
         this.dtConfig.totalItems = data.totalRecord;
         this.AbbassadorData = data.ambassador;
-        console.log("Total Items::", this.dtConfig.totalItems);
-        console.log(data.ambassador);
-        console.log("Oie data ah gya ha agey kam kir hun ")
-        console.log('Getting Vaule from DB :::::'+this.AbbassadorData)
+        this.loading = false
 
       },
 

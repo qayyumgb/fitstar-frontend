@@ -63,11 +63,15 @@ a:hover {
   background-color: #fff;
   border-radius: 15px;
   padding: 10px;
+
 }
-.landingpage-wrapper{
+.bannersection-wrapper{
   display: grid;
   grid-template-columns: repeat(auto-fill,minmax(350px,1fr));
   grid-gap: 22px;
+}
+.landingpage-wrapper{
+ 
 
   .landing-item{
     padding: 10px;

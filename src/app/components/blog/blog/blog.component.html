@@ -9,7 +9,7 @@
           >
             <div class="text-center">
               <button
-                (click)="openModal(template)"
+                (click)="BlogModal(true)"
                 type="submit"
                 class="btn app-btn-primary theme-btn mx-auto"
               >
@@ -17,41 +17,6 @@
               </button>
             </div>
           </div>
-          <!--//row-->
-          <!-- <div class="app-card app-card-orders-table shadow-sm mb-5">
-            <div class="app-card-body">
-              <div class="table-responsive">
-                <table class="table app-table-hover mb-0 text-left">
-                  <thead>
-                    <tr>
-                      <th class="cell">sr#</th>
-                      <th class="cell">username</th>
-                      <th class="cell">Role</th>
-                      <th class="cell">Active role</th>
-                      <th class="cell">Email address</th>
-                      <th class="cell">Created at</th>
-                      <th class="cell">Active</th>
-                      <th class="cell">Delete</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of userList">
-                      <td class="cell">{{item.srNum}}</td>
-                      <td class="cell">{{item.uname}}</td>
-                      <td class="cell">{{item.role}}</td>
-                      <td class="cell">{{item.activeRole}}</td>
-                      <td class="cell">{{item.email}}</td>
-                      <td class="cell">{{item.time}}</td>
-                      <td class="cell">Active</td>
-                      <td class="cell">Delete</td>
-
-                    </tr>
-
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div> -->
 
           <p-table
             #dt2
@@ -78,7 +43,8 @@
                   <input
                     pInputText
                     type="text"
-                    (input)="dt2.filterGlobal($event.target.value, 'contains')"
+                    [(ngModel)]="searchText"
+                    (ngModelChange)="search()"
                     placeholder="Search keyword"
                   />
                 </span>
@@ -93,20 +59,6 @@
                     let-value
                     let-filter="filterCallback"
                   >
-                    <!-- <p-dropdown
-                      [ngModel]="value"
-                      [options]="statuses"
-                      (onChange)="filter($event.value)"
-                      placeholder="Select Role"
-                      [showClear]="true"
-                    >
-                      <ng-template let-option pTemplate="item">
-                        <span
-                          [class]="'customer-badge status-' + option.value"
-                          >{{ option.label }}</span
-                        >
-                      </ng-template>
-                    </p-dropdown> -->
                   </ng-template>
                 </p-columnFilter>
               </div>
@@ -121,43 +73,6 @@
                 <th class="cell">Active</th>
                 <th class="cell">Action</th>
               </tr>
-              <!-- <tr>
-              <th>
-                <p-columnFilter type="text" field="name"></p-columnFilter>
-              </th>
-              <th>
-                <p-columnFilter type="text" field="country.name"></p-columnFilter>
-              </th>
-              <th>
-                <p-columnFilter field="representative" matchMode="in" [showMenu]="false">
-                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                    <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any"
-                      (onChange)="filter($event.value)" optionLabel="name">
-                      <ng-template let-option pTemplate="item">
-                        <div class="p-multiselect-representative-option">
-                          <span class="p-ml-1">{{option.name}}</span>
-                        </div>
-                      </ng-template>
-                    </p-multiSelect>
-                  </ng-template>
-                </p-columnFilter>
-              </th>
-              <th>
-                <p-columnFilter field="status" matchMode="equals" [showMenu]="false">
-                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                    <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any"
-                      [showClear]="true">
-                      <ng-template let-option pTemplate="item">
-                        <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
-                      </ng-template>
-                    </p-dropdown>
-                  </ng-template>
-                </p-columnFilter>
-              </th>
-              <th>
-                <p-columnFilter type="boolean" field="verified"></p-columnFilter>
-              </th>
-            </tr> -->
             </ng-template>
             <ng-template pTemplate="body">
               <tr *ngFor="let BlogData of BlogPostData; index as i">
@@ -183,7 +98,10 @@
 
                 <td>
                   <span>
-                    <p-inputSwitch [(ngModel)]="checked1"></p-inputSwitch>
+                    <p-inputSwitch
+                      [(ngModel)]="BlogData.active"
+                      (ngModelChange)="updateButtonState(BlogData)"
+                    ></p-inputSwitch>
                   </span>
                 </td>
                 <td>
@@ -194,7 +112,7 @@
                     ></i>
                     <i
                       class="mx-1 pi pi-pencil"
-                      (click)="openModal(editBlogPost)"
+                      (click)="editBlogPost(BlogData)"
                     ></i>
                     <i class="pi pi-eye"></i>
                   </span>
@@ -215,559 +133,28 @@
     </div>
   </div>
 
-  <ng-template #template>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Add New Blog Post</h4>
-      <button
-        type="button"
-        class="btn-close close pull-right"
-        aria-label="Close"
-        (click)="modalRef?.hide()"
-      >
-        <span aria-hidden="true" class="visually-hidden">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="shop-basicForm">
-        <div class="blogform" style="padding: 0">
-          <div class="profile">
-            <div class="FeaturedImg">
-              <div
-                id="imagePreview"
-                [style.backgroundImage]="'url(' + FeaturedImageUrl + ')'"
-              ></div>
-            </div>
-          </div>
-          <div class="profile">
-            <div class="profileImg">
-              <div
-                id="imagePreview"
-                [style.backgroundImage]="'url(' + ProfileimageUrl + ')'"
-              ></div>
-            </div>
-          </div>
-        </div>
-
-        <form [formGroup]="createBlogPost" (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-12 col-md-6">
-                  <label>Blog Title</label>
-                  <input
-                    type="text"
-                    formControlName="title"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.title.errors
-                    }"
-                    placeholder="Enter Blog Titile"
-                  />
-                  <div
-                    *ngIf="submitted && f.title.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.title.errors.required">
-                      Blog Titile is required
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                  <label>Short Description</label>
-                  <textarea
-                    id="shortdescription"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.description.errors
-                    }"
-                    class="form-control descript"
-                    formControlName="description"
-                    rows="3"
-                    cols="20"
-                  >
-                  </textarea>
-                  <div
-                    *ngIf="submitted && f.description.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.description.errors.required">
-                      Short Description is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-12 col-md-6">
-                  <label>Author Name</label>
-                  <input
-                    type="text"
-                    formControlName="authorName"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.authorName.errors
-                    }"
-                    placeholder="Enter AuthorName"
-                  />
-                  <div
-                    *ngIf="submitted && f.authorName.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.authorName.errors.required">
-                      AuthorName is required
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                  <label>Select Category</label>
-
-                  <p-dropdown
-                    [options]="catagory"
-                    placeholder="Select a User Role"
-                    [ngModel]="selectedcatagory"
-                    [showClear]="true"
-                    [style]="{ width: '253px' }"
-                    (onChange)="($event.value)"
-                    formControlName="category"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.category.errors
-                    }"
-                  >
-                  </p-dropdown>
-
-                  <div
-                    *ngIf="submitted && f.category.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.category.errors.required">
-                      Select Catagory is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-12 col-md-6">
-                  <label>Featured Image</label>
-                  <input
-                    class="hidden"
-                    type="file"
-                    id="uploadfile"
-                    name="uploadfile"
-                    #featuredImage
-                    ngf-max-size="2MB"
-                    formControlName="featuredImage"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.featuredImage.errors
-                    }"
-                    accept=".png, .jpg, .jpeg"
-                    #FeaturedImg
-                    (change)="uploadFeauterdFile($event)"
-                  />
-                  <div
-                    *ngIf="submitted && f.featuredImage.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.featuredImage.errors.required">
-                      Featured Image is required
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                  <label>Author Image</label>
-                  <input
-                    type="file"
-                    formControlName="authorProfile"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.authorProfile.errors
-                    }"
-                    id="imageUpload"
-                    accept=".png, .jpg, .jpeg"
-                    #profileImg
-                    (change)="uploadProfileFile($event)"
-                  />
-                  <div
-                    *ngIf="submitted && f.authorProfile.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.authorProfile.errors.required">
-                      Author Image is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-12 col-md-6">
-                  <label>Secound Featured Image </label>
-                  <input
-                    type="file"
-                    formControlName="secoundFeaturedImage"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.secoundFeaturedImage.errors
-                    }"
-                    id="imageUpload"
-                    accept=".png, .jpg, .jpeg"
-                    #SecFeaturedImg
-                    (change)="uploadSecFeauterdFile($event)"
-                  />
-                  <div
-                    *ngIf="submitted && f.secoundFeaturedImage.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.secoundFeaturedImage.errors.required">
-                      secoundFeatured Image is required
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                  <label>Video Link </label>
-                  <input
-                    type="text"
-                    formControlName="videoLink"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.videoLink.errors
-                    }"
-                    placeholder="Enter Video embedded Link"
-                  />
-                  <div
-                    *ngIf="submitted && f.videoLink.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.videoLink.errors.required">
-                      Video Link is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-12 col-md-12">
-                  <label>Blog Details</label>
-                  <textarea
-                    id="details"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.details.errors
-                    }"
-                    class="form-control descript"
-                    formControlName="details"
-                    rows="5"
-                    cols="50"
-                  >
-                  </textarea>
-                  <div
-                    *ngIf="submitted && f.details.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.details.errors.required">
-                      Type Details is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <button
-              type="submit"
-              class="btn app-btn-primary w-100 theme-btn mx-auto"
-            >
-              Submit
-            </button>
-            <!-- <button type="button" (click)="onReset()" class="btn btn-warning float-right">
-              Reset
-            </button> -->
-          </div>
-        </form>
+  <p-dialog
+    header="Header"
+    [(visible)]="openCreateEditModal"
+    [style]="{ width: '50vw' }"
+    [baseZIndex]="10000"
+  >
+    <p-header>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">
+          {{
+            editBlogData == undefined ? "Add New Blog" : "Update Blog Record"
+          }}
+        </h4>
       </div>
-    </div>
-  </ng-template>
+    </p-header>
+    <app-add-blog
+      (modalChange)="BlogModal(false)"
+      [editBlogData]="editBlogData"
+    >
+    </app-add-blog>
+  </p-dialog>
 
-  <!-- Edit Blog Post  -->
-  <ng-template #editBlogPost>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Add New Blog Post</h4>
-      <button
-        type="button"
-        class="btn-close close pull-right"
-        aria-label="Close"
-        (click)="modalRef?.hide()"
-      >
-        <span aria-hidden="true" class="visually-hidden">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="shop-basicForm">
-        <form [formGroup]="createBlogPost" (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-12 col-md-6">
-                  <label>Blog Title</label>
-                  <input
-                    type="text"
-                    formControlName="title"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.title.errors
-                    }"
-                    placeholder="Enter Blog Titile"
-                  />
-                  <div
-                    *ngIf="submitted && f.title.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.title.errors.required">
-                      Blog Titile is required
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                  <label>Short Description</label>
-                  <textarea
-                    id="shortdescription"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.description.errors
-                    }"
-                    class="form-control descript"
-                    formControlName="description"
-                    rows="3"
-                    cols="20"
-                  >
-                  </textarea>
-                  <div
-                    *ngIf="submitted && f.description.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.description.errors.required">
-                      Short Description is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-12 col-md-6">
-                  <label>Author Name</label>
-                  <input
-                    type="text"
-                    formControlName="authorName"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.authorName.errors
-                    }"
-                    placeholder="Enter AuthorName"
-                  />
-                  <div
-                    *ngIf="submitted && f.authorName.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.authorName.errors.required">
-                      AuthorName is required
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                  <label>Select Category</label>
-
-                  <p-dropdown
-                    [options]="catagory"
-                    placeholder="Select a User Role"
-                    [ngModel]="selectedcatagory"
-                    [showClear]="true"
-                    [style]="{ width: '253px' }"
-                    (onChange)="($event.value)"
-                    formControlName="category"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.category.errors
-                    }"
-                  >
-                  </p-dropdown>
-
-                  <div
-                    *ngIf="submitted && f.category.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.category.errors.required">
-                      Select category is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-12 col-md-6">
-                  <label>Featured Image</label>
-                  <input
-                    type="file"
-                    formControlName="featuredImage"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.featuredImage.errors
-                    }"
-                    id="imageUpload"
-                    accept=".png, .jpg, .jpeg"
-                    #fileInput
-                    (change)="uploadFeauterdFile($event)"
-                  />
-                  <div
-                    *ngIf="submitted && f.featuredImage.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.featuredImage.errors.required">
-                      Featured Image is required
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                  <label>Author Image</label>
-                  <input
-                    type="file"
-                    formControlName="authorProfile"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.authorProfile.errors
-                    }"
-                    id="imageUpload"
-                    accept=".png, .jpg, .jpeg"
-                    #fileInput
-                    (change)="uploadProfileFile($event)"
-                  />
-                  <div
-                    *ngIf="submitted && f.authorProfile.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.authorProfile.errors.required">
-                      Author Image is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-12 col-md-6">
-                  <label>Secound Featured Image </label>
-                  <input
-                    type="file"
-                    formControlName="secoundFeaturedImage"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.secoundFeaturedImage.errors
-                    }"
-                    id="imageUpload"
-                    accept=".png, .jpg, .jpeg"
-                    #SecFeaturedImg
-                    (change)="uploadSecFeauterdFile($event)"
-                  />
-                  <div
-                    *ngIf="submitted && f.secoundFeaturedImage.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.secoundFeaturedImage.errors.required">
-                      secoundFeatured Image is required
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                  <label>Video Link </label>
-                  <input
-                    type="text"
-                    formControlName="videoLink"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.videoLink.errors
-                    }"
-                    placeholder="Enter Video embedded Link"
-                  />
-                  <div
-                    *ngIf="submitted && f.videoLink.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.videoLink.errors.required">
-                      Video Link is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-12 col-md-12">
-                  <label>Blog Details</label>
-                  <textarea
-                    id="details"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.details.errors
-                    }"
-                    class="form-control descript"
-                    formControlName="details"
-                    rows="5"
-                    cols="50"
-                  >
-                  </textarea>
-                  <div
-                    *ngIf="submitted && f.details.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.details.errors.required">
-                      Type Details is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <button
-              type="submit"
-              class="btn app-btn-primary w-100 theme-btn mx-auto"
-            >
-              Submit
-            </button>
-            <!-- <button type="button" (click)="onReset()" class="btn btn-warning float-right">
-              Reset
-            </button> -->
-          </div>
-        </form>
-      </div>
-    </div>
-  </ng-template>
   <p-confirmDialog
     appendTo="body"
     header="Confirmation"

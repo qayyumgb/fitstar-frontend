@@ -17,6 +17,7 @@ import { PrimeNGConfig } from 'primeng/api';
 import { BlogPostService } from '../../../services/BlogPostService/blog-post.service'
 import { ToastrService } from 'ngx-toastr';
 import { TooltipModule } from 'primeng/tooltip';
+import { CreateUpdateBlogPost, IBlogpost } from 'src/app/shared/interface/BlogPost.interface';
 
 
 @Component({
@@ -26,7 +27,7 @@ import { TooltipModule } from 'primeng/tooltip';
   providers: [ConfirmationService, MessageService]
 })
 export class BlogComponent implements OnInit {
-
+  openCreateEditModal: boolean = false;
   modalRef?: BsModalRef;
   createBlogPost: FormGroup;
   ambassadorList: ambassadorList[];
@@ -39,7 +40,8 @@ export class BlogComponent implements OnInit {
   BlogPostData: any[]
   BlogdataById: any[]
   activityValues: number[] = [0, 100];
-
+  searchText: string = '';
+  BlogData:any=[];
   dtConfig: any = {
     id: 'blogs',
     itemsPerPage: 10,
@@ -47,11 +49,14 @@ export class BlogComponent implements OnInit {
     totalItems: 0
   };
 
+  editBlogData: IBlogpost;
+
+
   constructor(private toastr: ToastrService, private cd: ChangeDetectorRef, private BlogPostService: BlogPostService, private modalService: BsModalService, private formBuilder: FormBuilder, private shopSevice: ShopService, private confirmationService: ConfirmationService, private messageService: MessageService, private PrimeNGConfig: PrimeNGConfig) { }
 
 
   ngOnInit(): void {
-    this.UsersRecord()
+    this.getBlogPosts()
     this.createBlogPost = this.formBuilder.group(
       {
         title: ['', Validators.required],
@@ -85,23 +90,24 @@ export class BlogComponent implements OnInit {
       { label: "News", value: "News" }
     ];
   }
+
+
   get f(): { [key: string]: AbstractControl } {
     return this.createBlogPost.controls;
   }
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, { class: "BlogListingModal" });
+
+
+
+
+
+  BlogModal(response: boolean) {
+    this.openCreateEditModal = response;
   }
-  submitted = false
-  onSubmit(): void {
-    this.submitted = true;
-    if (this.createBlogPost.invalid) {
-      return;
-    }
-    else
-      console.log(this.createBlogPost.value)
-    // this.createBlogPost.reset()
-    this.CreateNewUser();
-  }
+
+
+
+
+
 
 
   clear(table: Table) {
@@ -111,7 +117,7 @@ export class BlogComponent implements OnInit {
 
 
 
-  UsersRecord(): void {
+  getBlogPosts(): void {
     let limit = this.dtConfig.itemsPerPage;
     let offset = this.dtConfig.currentPage;
     this.BlogPostService.getAllBlog(limit, offset)
@@ -134,30 +140,33 @@ export class BlogComponent implements OnInit {
 
 
 
-  CreateNewUser() {
-    const formdata = this.createBlogPost.value
-    delete formdata.featuredImage
-    delete formdata.authorProfile
-    delete formdata.secoundFeaturedImage
-    console.log(formdata)
-
-    console.log("sending data to service side")
-    this.BlogPostService.CreateNewUser(formdata)
-      .subscribe(
-        response => {
-          console.log('data addedd')
-          this.toastr.success(response.message);
-          console.log(response);
-          this.submitted = true;
-          this.modalService.hide();
-          this.UsersRecord();
-          // this.createAmbassador.value.reset
-
-        },
-        error => {
-          console.log(error);
-        });
+  updateButtonState(item: IBlogpost) {
+    let requestBody = {} as CreateUpdateBlogPost;
+    requestBody._id = item._id;
+    requestBody.active = item.active;
+    this.BlogPostService.updateBlogPost(requestBody).subscribe(
+      response => {
+        this.toastr.success(response.message);
+        console.log(response);
+      },
+      error => {
+        console.log(error);
+      });
   }
+
+
+  search() {
+    if (this.searchText.length > 0) {
+      this.BlogPostService.getSearchResult(this.searchText).subscribe(response => {
+        this.BlogData = response.blogs;
+      })
+    }
+    else {
+      this.getBlogPosts();
+    }
+
+  }
+
 
 
   OnDeleteRecord(_id: any) {
@@ -171,7 +180,7 @@ export class BlogComponent implements OnInit {
           .subscribe(
             (data: any) => {
               this.toastr.success(data.message);
-              this.UsersRecord();
+              this.getBlogPosts();
 
             },
             error => {
@@ -193,120 +202,24 @@ export class BlogComponent implements OnInit {
   }
 
 
-  /*########################## Profile Image Upload ########################*/
-  @ViewChild('profileImage') profileImg: ElementRef;
-  ProfileimageUrl: any = 'https://i.pinimg.com/236x/d6/27/d9/d627d9cda385317de4812a4f7bd922e9--man--iron-man.jpg';
-  editProfileImg: boolean = true;
-  removeProfileImg: boolean = false;
-
-  uploadProfileFile(event: any) {
-    let reader = new FileReader(); // HTML5 FileReader API
-    let file = event.target.files[0];
-    if (event.target.files && event.target.files[0]) {
-      reader.readAsDataURL(file);
-
-      // When file uploads set it to file formcontrol
-      reader.onload = () => {
-        this.ProfileimageUrl = reader.result;
-        this.createBlogPost.patchValue({
-          authorImage: reader.result
-        });
-        this.editProfileImg = false;
-        this.removeProfileImg = true;
-      }
-      // ChangeDetectorRef since file is loading outside the zone
-      this.cd.markForCheck();
-    }
-  }
-
-  // Function to remove uploaded file
-  removeprofileUploadedFile() {
-    let newFileList = Array.from(this.profileImg.nativeElement.files);
-    this.ProfileimageUrl = 'https://i.pinimg.com/236x/d6/27/d9/d627d9cda385317de4812a4f7bd922e9--man--iron-man.jpg';
-    this.editProfileImg = true;
-    this.removeProfileImg = false;
-    this.createBlogPost.patchValue({
-      authorImage: [null]
-    });
-  }
-
-  ///////******** Featured Image******/
-
-  @ViewChild('FeaturedImg') FeaturedImg: ElementRef;
-  FeaturedImageUrl: any = 'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
-  editFeaturedImg: boolean = true;
-  removeFeaturedImg: boolean = false;
-
-  uploadFeauterdFile(event: any) {
-    let reader = new FileReader(); // HTML5 FileReader API
-    let file = event.target.files[0];
-    if (event.target.files && event.target.files[0]) {
-      reader.readAsDataURL(file);
-
-      // When file uploads set it to file formcontrol
-      reader.onload = () => {
-        this.FeaturedImageUrl = reader.result;
-        this.createBlogPost.patchValue({
-          featuredImageOne: reader.result
-        });
-        this.editFeaturedImg = false;
-        this.removeFeaturedImg = true;
-      }
-      // ChangeDetectorRef since file is loading outside the zone
-      this.cd.markForCheck();
-    }
-  }
-
-  // Function to remove uploaded file
-  removeFeaturedUploadedFile() {
-    let newFileList = Array.from(this.FeaturedImg.nativeElement.files);
-    this.FeaturedImageUrl = 'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
-    this.editFeaturedImg = true;
-    this.removeFeaturedImg = false;
-    this.createBlogPost.patchValue({
-      featuredImageOne: [null]
-    });
-  }
-
-
-
-  ///////******** Secoundary Featured Image******/
-
-  @ViewChild('SecFeaturedImg') secFeaturedImaga: ElementRef;
-
-
-  uploadSecFeauterdFile(event: any) {
-    const reader = new FileReader();
-
-    if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.createBlogPost.patchValue({
-          featuredImageTwo: reader.result
-        });
-
-
-        // need to run CD since file load runs outside of zone
-        this.cd.markForCheck();
-      };
-    }
-
-  }
-
-
-
 
 
   limitChanged(value: any) {
     this.dtConfig.itemsPerPage = value;
     this.dtConfig.currentPage = 1;
-    this.UsersRecord();
+    this.getBlogPosts();
   }
 
   pageChanged(event: any) {
     this.dtConfig.currentPage = event;
-    this.UsersRecord();
+    this.getBlogPosts();
+  }
+
+
+  editBlogPost(item: IBlogpost) {
+
+    this.BlogModal(true);
+    this.editBlogData = item;
   }
 
 

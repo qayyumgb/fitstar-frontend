@@ -16,6 +16,7 @@ import {Message} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
 import { ToastrService } from 'ngx-toastr';
 import {SponserService} from '../../../services/SponserService/sponser.service'
+import { CreateUpdateSponsors, ISponsors } from 'src/app/shared/interface/sponsor.interface';
 
 
 @Component({
@@ -25,7 +26,7 @@ import {SponserService} from '../../../services/SponserService/sponser.service'
   providers: [ConfirmationService,MessageService]
 })
 export class SponsorListingComponent implements OnInit {
-
+  openCreateEditModal: boolean = false;
   modalRef?: BsModalRef;
   createsponsor: FormGroup;
   sponserList: ambassadorList[];
@@ -39,7 +40,7 @@ SponserData:any=[];
 // data:{};
 SponerdataById:any[];
   activityValues: number[] = [0, 100];
-
+  searchText: string = '';
 
   dtConfig: any = {
     id: 'sponsors',
@@ -48,54 +49,22 @@ SponerdataById:any[];
     totalItems: 0
   };
 
-
+  editSponsorData: ISponsors;
   constructor(private cd: ChangeDetectorRef,private toastr: ToastrService,private SponserService :SponserService,private modalService: BsModalService, private formBuilder: FormBuilder, private shopSevice: ShopService ,private confirmationService: ConfirmationService ,private messageService: MessageService,private PrimeNGConfig:PrimeNGConfig) { }
 
 
   ngOnInit(): void {
-    this.createsponsor= this.formBuilder.group(
-      {
-        userProfile:['',Validators.required],
-        image:[null]
-      }
-    );
 
-    this.shopSevice.getAmbassadorList().then(ambassadors => {
-      this.sponserList = ambassadors;
-      this.loading = false;
-    });
-
-    this.statuses = [
-      { label: "Unqualified", value: "unqualified" },
-      { label: "Qualified", value: "qualified" },
-      { label: "New", value: "new" },
-      { label: "Negotiation", value: "negotiation" },
-      { label: "Renewal", value: "renewal" },
-      { label: "Proposal", value: "proposal" }
-    ];
+    this.getAllSponsors();
     this.PrimeNGConfig.ripple = true;
-    this.UsersRecord();
-  }
-  get f(): { [key: string]: AbstractControl } {
-    return this.createsponsor.controls;
-  }
 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
   }
 
 
-  submitted = false
-  onSubmit(): void {
-    this.submitted = true;
-    if (this.createsponsor.invalid) {
-      return;
-    }
-    else
-    this.CreateNewUser()
-    console.log(this.createsponsor.value)
 
-  }
+
+
+
 
 
   clear(table: Table) {
@@ -120,7 +89,7 @@ console.log('delete')
             this.toastr.success('User Deleted Succesfully', 'Deleting User!',{
               timeOut: 4000,
             });
-            this.UsersRecord();
+            this.getAllSponsors();
 
           },
           error => {
@@ -143,12 +112,14 @@ console.log('delete')
 
 
 // Getting All Sponsors Records
-UsersRecord(): void {
+getAllSponsors(): void {
   let limit= this.dtConfig.itemsPerPage;
   let offset= this.dtConfig.currentPage;
   this.SponserService.getAllSponser(limit,offset)
     .subscribe(
       (data:any)=> {
+        console.log(data)
+
         this.SponserData=data.sponsors
         console.log(this.SponserData)
         console.log("Total Items::", this.dtConfig.totalItems);
@@ -162,92 +133,59 @@ UsersRecord(): void {
       });
 }
 
-getUserById(id?:any): void{
 
-  this.SponserService.getUserById(id)
-    .subscribe(
-      data => {
-        this.SponerdataById=data
-        console.log(data);
-        console.log(this.SponerdataById)
-      },
-      error => {
-        console.log(error);
-      });
 
-}
 
-CreateNewUser(){
-  const formData =this.createsponsor.value;
-  delete formData.userProfile;
-  console.log(formData)
-  console.log("sending data to service side")
-  this.SponserService.CreateNewUser(formData)
-      .subscribe(
-        response => {
-          console.log('data addedd')
-          this.toastr.success('SponserData Added  Succesfully','',{
-            timeOut: 2000,
-          });
-          console.log(response);
-          this.submitted = true;
-          // this.createAmbassador.value.reset
-          this.modalService.hide();
-          this.UsersRecord();
-        },
-        error => {
-          console.log(error);
-        });
+
+
+SponsorModal(response: boolean) {
+  this.openCreateEditModal = response;
 }
 
 
+updateButtonState(item: ISponsors) {
+  let requestBody = {} as CreateUpdateSponsors;
+  requestBody._id = item._id;
+  requestBody.active = item.active;
+  this.SponserService.updateSponsors(requestBody).subscribe(
+    response => {
+      this.toastr.success(response.message);
+      console.log(response);
+    },
+    error => {
+      console.log(error);
+    });
+}
 
- /*########################## File Upload ########################*/
- @ViewChild('fileInput') el: ElementRef;
- imageUrl: any = 'https://i.pinimg.com/236x/d6/27/d9/d627d9cda385317de4812a4f7bd922e9--man--iron-man.jpg';
- editFile: boolean = true;
- removeUpload: boolean = false;
 
- uploadFile(event:any) {
-   let reader = new FileReader(); // HTML5 FileReader API
-   let file = event.target.files[0];
-   if (event.target.files && event.target.files[0]) {
-     reader.readAsDataURL(file);
+search() {
+  if (this.searchText.length > 0) {
+    this.SponserService.getSearchResult(this.searchText).subscribe(response => {
+      this.SponserData = response.sponsors;
+    })
+  }
+  else {
+    this.getAllSponsors();
+  }
 
-     // When file uploads set it to file formcontrol
-     reader.onload = () => {
-       this.imageUrl = reader.result;
-       this.createsponsor.patchValue({
-         image: reader.result
-       });
-       this.editFile = false;
-       this.removeUpload = true;
-     }
-     // ChangeDetectorRef since file is loading outside the zone
-     this.cd.markForCheck();
-   }
- }
+}
 
- // Function to remove uploaded file
- removeUploadedFile() {
-   let newFileList = Array.from(this.el.nativeElement.files);
-   this.imageUrl = 'https://i.pinimg.com/236x/d6/27/d9/d627d9cda385317de4812a4f7bd922e9--man--iron-man.jpg';
-   this.editFile = true;
-   this.removeUpload = false;
-   this.createsponsor.patchValue({
-     file: [null]
-   });
- }
 
  limitChanged(value:any) {
   this.dtConfig.itemsPerPage = value;
   this.dtConfig.currentPage = 1;
-  this.UsersRecord();
+  this.getAllSponsors();
 }
 
 pageChanged(event:any) {
   this.dtConfig.currentPage = event;
-  this.UsersRecord();
+  this.getAllSponsors();
 }
 
+
+editSponsor(item: ISponsors) {
+
+  this.SponsorModal(true);
+  this.editSponsorData = item;
+}
 }

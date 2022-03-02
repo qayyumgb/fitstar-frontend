@@ -21,10 +21,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AddBlogComponent } from './add-blog/add-blog.component';
 // import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   declarations: [
-    BlogComponent
+    BlogComponent,
+    AddBlogComponent
   ],
   imports: [
     CommonModule,

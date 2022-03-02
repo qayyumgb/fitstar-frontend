@@ -22,11 +22,13 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AddSponsorComponent } from './add-sponsor/add-sponsor.component';
 // import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
-    SponsorListingComponent
+    SponsorListingComponent,
+    AddSponsorComponent
   ],
   imports: [
     CommonModule,

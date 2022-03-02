@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 import { BlogPost } from '../../Models/models'
 import { API_ENDPOINTS } from 'src/app/_util/global';
+import { CreateUpdateBlogPost } from 'src/app/shared/interface/BlogPost.interface';
 
 
 @Injectable({
@@ -39,7 +40,7 @@ getAllBlog(limit:number,offset:number): Observable<any[]> {
 
   //getting User data of Specfic Id
   deleteUser(_id: any): Observable<any[]> {
-    return this.http.delete<any[]>(`${this.deleteblogs}/${_id}`);
+    return this.http.delete<any[]>(`${API_ENDPOINTS.blogDelete}/${_id}`);
   }
 
   //Update User data
@@ -50,6 +51,22 @@ getAllBlog(limit:number,offset:number): Observable<any[]> {
 
   UpdateUser(_id: any, data: any): Observable<any> {
     return this.http.put<any>(`${this.updateBlog}/${_id}`, data);
+  }
+
+
+  getSearchResult(searchText: string) {
+    return this.http.get<any[]>(API_ENDPOINTS.blogSearch + searchText).pipe(map((res: any) => {
+      return res
+    }), retry(1),
+      catchError(this.handleError))
+  }
+
+
+  updateBlogPost(data: CreateUpdateBlogPost) {
+    return this.http.put<any[]>(API_ENDPOINTS.blogUpdate + data._id, data).pipe(map((res: any) => {
+      return res
+    }), retry(1),
+      catchError(this.handleError))
   }
 
 

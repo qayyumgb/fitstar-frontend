@@ -1,0 +1,268 @@
+<div class="modal-body">
+  <div class="shop-basicForm">
+    <div class="blogform" style="padding: 0">
+      <div class="profile">
+        <div class="FeaturedImg">
+          <div
+            id="imagePreview"
+            [style.backgroundImage]="'url(' + f.featuredImageOne.value + ')'"
+          ></div>
+        </div>
+      </div>
+      <div class="profile">
+        <div class="profileImg">
+          <div
+            id="imagePreview"
+            [style.backgroundImage]="'url(' + f.authorImage.value + ')'"
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <form [formGroup]="BlogForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <label>Blog Title</label>
+              <input
+                type="text"
+                formControlName="title"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': submitted && f.title.errors
+                }"
+                placeholder="Enter Blog Titile"
+              />
+              <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                <div *ngIf="f.title.errors.required">
+                  Blog Titile is required
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <label>Short Description</label>
+              <textarea
+                id="shortdescription"
+                [ngClass]="{
+                  'is-invalid': submitted && f.description.errors
+                }"
+                class="form-control descript"
+                formControlName="description"
+                rows="3"
+                cols="20"
+              >
+              </textarea>
+              <div
+                *ngIf="submitted && f.description.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.description.errors.required">
+                  Short Description is required
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <label>Author Name</label>
+              <input
+                type="text"
+                formControlName="authorName"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': submitted && f.authorName.errors
+                }"
+                placeholder="Enter AuthorName"
+              />
+              <div
+                *ngIf="submitted && f.authorName.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.authorName.errors.required">
+                  AuthorName is required
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <label>Select Category</label>
+
+              <p-dropdown
+                [options]="catagory"
+                placeholder="Select a User Role"
+                [ngModel]="selectedcatagory"
+                [showClear]="true"
+                [style]="{ width: '253px' }"
+                (onChange)="($event.value)"
+                formControlName="category"
+                [ngClass]="{
+                  'is-invalid': submitted && f.category.errors
+                }"
+              >
+              </p-dropdown>
+
+              <div
+                *ngIf="submitted && f.category.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.category.errors.required">
+                  Select Catagory is required
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <label>Featured Image</label>
+              <input
+                class="hidden"
+                type="file"
+                id="uploadfile"
+                name="uploadfile"
+                #featuredImage
+                ngf-max-size="2MB"
+                formControlName="featuredImageOne"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': submitted && f.featuredImageOne.errors
+                }"
+                accept=".png, .jpg, .jpeg"
+                #FeaturedImg
+                (change)="uploadfeaturedImageOne($event)"
+              />
+              <div
+                *ngIf="submitted && f.featuredImageOne.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.featuredImageOne.errors.required">
+                  Featured Image is required
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <label>Author Image</label>
+              <input
+                type="file"
+                formControlName="authorImage"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': submitted && f.authorImage.errors
+                }"
+                id="imageUpload"
+                accept=".png, .jpg, .jpeg"
+                #profileImg
+                (change)="uploadauthorImage($event)"
+              />
+              <div
+                *ngIf="submitted && f.authorImage.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.authorImage.errors.required">
+                  Author Image is required
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <label>Secound Featured Image </label>
+              <input
+                type="file"
+                formControlName="secoundFeaturedImage"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': submitted && f.featuredImageTwo.errors
+                }"
+                id="imageUpload"
+                accept=".png, .jpg, .jpeg"
+                #SecFeaturedImg
+                (change)="uploadfeaturedImageTwo($event)"
+              />
+              <div
+                *ngIf="submitted && f.featuredImageTwo.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.featuredImageTwo.errors.required">
+                  secoundFeatured Image is required
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <label>Video Link </label>
+              <input
+                type="text"
+                formControlName="videoLink"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': submitted && f.videoLink.errors
+                }"
+                placeholder="Enter Video embedded Link"
+              />
+              <div
+                *ngIf="submitted && f.videoLink.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.videoLink.errors.required">
+                  Video Link is required
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-md-12">
+              <label>Blog Details</label>
+              <textarea
+                id="details"
+                [ngClass]="{
+                  'is-invalid': submitted && f.details.errors
+                }"
+                class="form-control descript"
+                formControlName="details"
+                rows="5"
+                cols="50"
+              >
+              </textarea>
+              <div
+                *ngIf="submitted && f.details.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.details.errors.required">
+                  Type Details is required
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <button
+          type="submit"
+          class="btn app-btn-primary w-100 theme-btn mx-auto"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

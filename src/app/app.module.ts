@@ -13,13 +13,15 @@ import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 
 import { ToastrModule } from 'ngx-toastr';
-import {InterceptorService} from './services/InterceptorService/interceptor.service'
+import {InterceptorService} from './services/InterceptorService/interceptor.service';
+
 // import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+
   ],
   imports: [
     BrowserModule,

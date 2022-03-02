@@ -5,6 +5,7 @@ import { catchError, map, retry } from 'rxjs/operators';
 
 import {Sponser} from '../../Models/models'
 import { API_ENDPOINTS } from 'src/app/_util/global';
+import { CreateUpdateSponsors } from 'src/app/shared/interface/sponsor.interface';
 
 
 
@@ -28,9 +29,7 @@ var headers_object = new HttpHeaders({
 
 export class SponserService {
 
-  private _CreateUrl="https://fitstar-backend.herokuapp.com/app/v1/sponsors/create";
-  private _gettAllSponsors="https://fitstar-backend.herokuapp.com/app/v1/sponsors/get";
-  private deleteSponsor="https://fitstar-backend.herokuapp.com/app/v1/sponsors/delete";
+
 
 
 
@@ -52,24 +51,31 @@ getAllSponser(limit:number,offset:number): Observable<any> {
 
 //getting User data of Specfic Id
 getUserById(_id: any): Observable<Sponser[]> {
-  return this.http.get<Sponser[]>(`${this.deleteSponsor}/${_id}`);
+  return this.http.get<Sponser[]>(`${API_ENDPOINTS.ambassadorList}/${_id}`);
 }
 
 //getting User data of Specfic Id
 deleteUser(_id: any): Observable<any> {
-  return this.http.delete<any>(`${this.deleteSponsor}/${_id}`);
+  return this.http.delete<any>(`${API_ENDPOINTS.ambassadorDelete}/${_id}`);
 }
 
-//Update User data
-// UpdateUser(_id: any): Observable<addUsers[]> {
-//   return this.http.put<addUsers[]>(`${this._CreateUrl}/${_id}`);
-// }
 
 
-UpdateUser(_id: any, data: any): Observable<any> {
-  return this.http.put<Sponser[]>(`${this._CreateUrl}/${_id}`, data);
+
+getSearchResult(searchText: string) {
+  return this.http.get<any[]>(API_ENDPOINTS.sponsorSearch + searchText).pipe(map((res: any) => {
+    return res
+  }), retry(1),
+    catchError(this.handleError))
 }
 
+
+updateSponsors(data: CreateUpdateSponsors) {
+  return this.http.put<any[]>(API_ENDPOINTS.sponsorUpdate + data._id, data).pipe(map((res: any) => {
+    return res
+  }), retry(1),
+    catchError(this.handleError))
+}
 
 
    // Error Handling Funcation

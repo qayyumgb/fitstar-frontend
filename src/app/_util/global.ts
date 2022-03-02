@@ -24,13 +24,13 @@ export const API_ENDPOINTS = {
   /**blogs links */
   blogList: `${API_URL}blogs/get/`,
   blogCreate: `${API_URL}blogs/create`,
-  blogUpdate: `${API_URL}blogs/update`,
+  blogUpdate: `${API_URL}blogs/update/`,
   blogDelete: `${API_URL}blogs/delete`,
   blogSearch: `${API_URL}blogs/search/`,
   /*sponsorss links */
   sponsorList: `${API_URL}sponsors/get/`,
   sponsorCreate: `${API_URL}sponsors/create`,
-  sponsorUpdate: `${API_URL}sponsors/update`,
+  sponsorUpdate: `${API_URL}sponsors/update/`,
   sponsorDelete: `${API_URL}sponsors/delete`,
   sponsorSearch: `${API_URL}sponsors/search/`,
 

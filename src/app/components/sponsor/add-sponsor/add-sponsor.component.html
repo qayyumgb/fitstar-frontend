@@ -1,0 +1,49 @@
+<div class="modal-body">
+  <div class="shop-basicForm">
+    <div class="avatar-upload">
+      <div class="avatar-edit">
+        <div class="avatar-preview">
+          <div
+            id="imagePreview"
+            [style.backgroundImage]="'url(' + f.image.value + ')'"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="SponsorsForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <label>User Profile</label>
+              <input
+                type="file"
+                formControlName="image"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': submitted && f.image.errors
+                }"
+                id="imageUpload"
+                accept=".png, .jpg, .jpeg"
+                (change)="uploadFile($event)"
+              />
+              <div *ngIf="submitted && f.image.errors" class="invalid-feedback">
+                <div *ngIf="f.image.errors.required">
+                  User Profile Image Required
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group my-3 mt-4">
+        <button
+          type="submit"
+          class="btn app-btn-primary w-100 theme-btn mx-auto"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

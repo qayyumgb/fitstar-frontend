@@ -63,24 +63,7 @@ export class AmbassadorListingComponent implements OnInit {
 
     this.getAmbassadorRecords();
     this.id = this.route.snapshot.params['id'];
-
-
-    this.shopSevice.getAmbassadorList().then(ambassadors => {
-      this.ambassadorList = ambassadors;
-      this.loading = false;
-    });
-
-    this.statuses = [
-      { label: "Unqualified", value: "unqualified" },
-      { label: "Qualified", value: "qualified" },
-      { label: "New", value: "new" },
-      { label: "Negotiation", value: "negotiation" },
-      { label: "Renewal", value: "renewal" },
-      { label: "Proposal", value: "proposal" }
-    ];
     this.PrimeNGConfig.ripple = true;
-
-    this.getAmbassadorRecords();
   }
 
 
@@ -172,7 +155,7 @@ updateButtonState(item: IAmbassador) {
 search() {
   if (this.searchText.length > 0) {
     this.AbbassadorService.getSearchResult(this.searchText).subscribe(response => {
-      this.AbbassadorData = response.collaborators;
+      this.AbbassadorData = response.ambassadors;
     })
   }
   else {

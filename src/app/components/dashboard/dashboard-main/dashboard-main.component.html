@@ -2,17 +2,23 @@
 <div class="app-wrapper">
   <div class="app-content pt-3 p-md-3 p-lg-4">
     <div class="">
-      <h3>Dashboard</h3>
+      <h3 class="font-weight-bold">Dashboard</h3>
 
-      <section id="cards">
+      <section class="mt-4" id="cards">
         <div class="row">
           <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card text-white bg-dark o-hidden h-100">
               <div class="card-body">
-                <div class="card-body-icon">
-                  <i class="fa fa-fw fa-users"></i>
+                <!-- <div class="card-body-icon">
+                </div> -->
+                <div class="row col-12">
+                  <div class="col-4"><i class="fa fa-fw fa-users"></i></div>
+                  <div class="col-8">
+                    <div class="text-right"><strong>USERS </strong> <br /><span class="font-weight-bold">25</span>
+                    </div>
+                  </div>
                 </div>
-                <div class="mr-5">Total Users 20</div>
+
               </div>
               <!-- <a class="card-footer text-white clearfix small z-1" href="#">
                 <span class="float-left">View Details</span>
@@ -25,11 +31,21 @@
           <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card text-white bg-warning o-hidden h-100">
               <div class="card-body">
-                <div class="card-body-icon">
+                <!-- <div class="card-body-icon">
                   <i class="fa fa-fw fa-list"></i>
                 </div>
-                <div class="mr-5">Total Blogs 10</div>
+                <div class="mr-5">Total Blogs 10</div> -->
+
+                <div class="row col-12">
+                  <div class="col-4"><i class="fa fa-fw fa-list"></i></div>
+                  <div class="col-8">
+                    <div class="text-right"><strong>BLOGS </strong> <br /><span class="font-weight-bold">30</span>
+                    </div>
+                  </div>
+                </div>
+
               </div>
+              
               <!-- <a class="card-footer text-white clearfix small z-1" href="#">
                 <span class="float-left">View Details</span>
                 <span class="float-right">
@@ -41,10 +57,18 @@
           <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card text-white bg-success o-hidden h-100">
               <div class="card-body">
-                <div class="card-body-icon">
+                <!-- <div class="card-body-icon">
                   <i class="fa fa-fw fa-user"></i>
                 </div>
-                <div class="mr-5">Total Ambassadors 15</div>
+                <div class="mr-5">Total Ambassadors 15</div> -->
+
+                <div class="row col-12">
+                  <div class="col-4"><i class="fa fa-fw fa-user"></i></div>
+                  <div class="col-8">
+                    <div class="text-right"><strong>AMBASSADORS </strong> <br /><span class="font-weight-bold">24</span>
+                    </div>
+                  </div>
+                </div>
               </div>
               <!-- <a class="card-footer text-white clearfix small z-1" href="#">
                 <span class="float-left">View Details</span>
@@ -57,10 +81,19 @@
           <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card text-white bg-secondary o-hidden h-100">
               <div class="card-body">
-                <div class="card-body-icon">
+                <!-- <div class="card-body-icon">
                   <i class="fa fa-fw fa-life-ring"></i>
                 </div>
-                <div class="mr-5">Total Sponsors 40</div>
+                <div class="mr-5">Total Sponsors 40</div> -->
+
+                
+                <div class="row col-12">
+                  <div class="col-4"><i class="fa fa-fw fa-life-ring"></i></div>
+                  <div class="col-8">
+                    <div class="text-right"><strong>SPONSORS </strong> <br /><span class="font-weight-bold">10</span>
+                    </div>
+                  </div>
+                </div>
               </div>
               <!-- <a class="card-footer text-white clearfix small z-1" href="#">
                 <span class="float-left">View Details</span>
@@ -74,24 +107,22 @@
       </section>
 
       <section id="userGraph" class="my-2">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-6">
+          <div class="row col-12">
+            <div class="col-6">
               <app-garph-chart></app-garph-chart>
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="col-6">
               <app-latest-user-table></app-latest-user-table>
             </div>
           </div>
-        </div>
       </section>
-
+<!-- 
       <section id="PieGraph">
         <div class="container">
           <h5 class="mb-2 heading">Active Users</h5>
           <app-pie-chart></app-pie-chart>
         </div>
-      </section>
+      </section> -->
     </div>
     <!--//container-fluid-->
   </div>

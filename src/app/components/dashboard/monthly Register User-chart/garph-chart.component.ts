@@ -5,7 +5,8 @@ import {
   ApexAxisChartSeries,
   ApexChart,
   ApexXAxis,
-  ApexTitleSubtitle
+  ApexTitleSubtitle,
+  ApexFill
 } from "ng-apexcharts";
 
 export type ChartOptions = {
@@ -13,6 +14,7 @@ export type ChartOptions = {
   chart: ApexChart;
   xaxis: ApexXAxis;
   title: ApexTitleSubtitle;
+  fill: ApexFill;
 };
 
 @Component({
@@ -31,17 +33,20 @@ constructor() {
   this.chartOptions = {
     series: [
       {
-        name: "My-series",
+        name: "users",
         data: [10, 41, 35, 51, 49, 62, 69, 91, 148,219,33,112]
       }
     ],
     chart: {
-      height: 614.1,
-      width:500,
+      // height: 614.1,
+      // width:500,
       type: "bar"
     },
     title: {
       text: "Monthly Register User"
+    },
+    fill:{
+      colors:['#191431']
     },
     xaxis: {
       categories: ["Jan", "Feb",  "Mar",  "Apr",  "May",  "Jun",  "Jul",  "Aug", "Sep","Oct","Nov","Dec"]

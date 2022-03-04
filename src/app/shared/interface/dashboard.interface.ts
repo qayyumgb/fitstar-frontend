@@ -14,6 +14,12 @@ export interface IDashboardLatestUser {
   latestUsers: LatestUser[];
 }
 
+export interface IDashboardGraphData {
+  message: string;
+  labels: [];
+  data: [];
+}
+
 export interface LatestUser {
   fullName: string;
   location: string;

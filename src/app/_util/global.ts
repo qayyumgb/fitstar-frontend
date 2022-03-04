@@ -49,6 +49,7 @@ export const API_ENDPOINTS = {
   // dashboard
   dashboardCard: `${API_URL}dashboard/cards`,
   dashboardLatestUser: `${API_URL}dashboard/latest/users`,
+  dashboardGraphData: `${API_URL}dashboard/graph/data`,
 
 
 

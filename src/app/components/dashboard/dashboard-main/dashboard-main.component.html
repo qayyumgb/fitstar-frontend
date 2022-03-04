@@ -38,7 +38,7 @@
                 <div class="mr-5">Total Blogs 10</div> -->
 
                 <div class="row col-12">
-                  <div class="col-4"><i class="fa fa-fw fa-list"></i></div>
+                  <div class="col-4"><i class="fa fa-fw fa-blog"></i></div>
                   <div class="col-8">
                     <div class="text-right"><strong>BLOGS </strong> <br /><span
                         class="font-weight-bold">{{dashboardCounter.totalBlogs}}</span>
@@ -111,12 +111,16 @@
       </section>
 
       <section id="userGraph" class="my-2">
-        <div class="row col-12">
-          <div class="col-6">
-            <app-garph-chart></app-garph-chart>
-          </div>
-          <div class="col-6">
-            <app-latest-user-table></app-latest-user-table>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row col-12">
+              <div class="col-6">
+                <app-garph-chart></app-garph-chart>
+              </div>
+              <div class="col-6">
+                <app-latest-user-table></app-latest-user-table>
+              </div>
+            </div>
           </div>
         </div>
       </section>

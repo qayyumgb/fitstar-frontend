@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IDashboardCounter, IDashboardLatestUser } from 'src/app/shared/interface/dashboard.interface';
+import { IDashboardCounter, IDashboardLatestUser, IDashboardGraphData } from 'src/app/shared/interface/dashboard.interface';
 import { API_ENDPOINTS } from 'src/app/_util/global';
 
 @Injectable({
@@ -20,6 +20,10 @@ export class DashboardService {
 
   getDashboardLatestUser(): Observable<IDashboardLatestUser> {
     return this.http.get<IDashboardLatestUser>(API_ENDPOINTS.dashboardLatestUser)
+  }
+
+  getDashboardGraphData(): Observable<any> {
+    return this.http.get<any>(API_ENDPOINTS.dashboardGraphData)
   }
 
 }

@@ -10,7 +10,7 @@
       <!-- Grid column -->
     </div>
     <!-- Grid row -->
-    <table class="table table-hover" *ngFor="let item of latestUsers">
+    <table class="table table-hover" *ngFor="let item of latestUsers;let i=index">
       <thead>
         <tr>
           <th>S#</th>
@@ -22,7 +22,7 @@
       </thead>
       <tbody>
         <tr class="table-success">
-          <th scope="row">1</th>
+          <th scope="row">{{i+1}}</th>
           <td>
             <img src="../../../../assets/images/profiles/profile-2.png" alt="" />
           </td>

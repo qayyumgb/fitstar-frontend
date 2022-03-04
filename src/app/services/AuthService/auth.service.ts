@@ -10,13 +10,13 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private toastr: ToastrService,private http: HttpClient, private router: Router) { }
+  constructor(private toastr: ToastrService, private http: HttpClient, private router: Router) { }
+
   private getPhoneNumber = new BehaviorSubject<string>('');
   getPhoneNumber$: Observable<any> = this.getPhoneNumber.asObservable();
 
 
   verifyPhone(data: verfyPhoneDTO): Observable<any> {
-    // let url = `http://192.168.8.100:3000/app/v1/auth/signup`;
     let url = API_URL + API_ENDPOINTS.verifyPhone;
     return this.http.post(url, data);
 
@@ -28,56 +28,39 @@ export class AuthService {
   }
 
   Login(data: login): Observable<any> {
-    // let url = `http://192.168.8.100:3000/app/v1/auth/signin`;
     let url = API_URL + API_ENDPOINTS.loginUser;
-
-
     return this.http.post(url, data)
 
 
   }
-  // get headerSelectedOption() {
-  //   return this.getPhoneNumber.asObservable();
-  // }
+
   setPhoneNumber(option: string) {
     this.getPhoneNumber.next(option);
     this.router.navigate(['Auth/verifyOTP']);
   }
 
   getSignUpData(regValues: basicInfo): Observable<any> {
-    // let url = `http://192.168.8.100:3000/app/v1/auth/basic/info`;
     let url = API_URL + API_ENDPOINTS.signUp;
     return this.http.post(url, regValues);
   }
 
-  setToken(token: string): void {
-    localStorage.setItem('token', token);
+  public isAuthenticated(): boolean | null | '' {
+    let accessToken = this.getAccessToken();
+    return accessToken && accessToken.length > 0;
   }
 
-
-  getToken() {
-    return localStorage.getItem('token')
+  // Clears the token
+  async logout() {
+    localStorage.removeItem('accessToken');
+    this.router.navigate(['/login']);
   }
 
-  isLoggedIn(): any {
-
-
-    if (this.getToken() !== null || this.getToken() !== undefined) {
-      return this.getToken() !== null;
-    }
-    else {
-      console.log('logic pass gi')
-      return true
-    }
-
-
+  public getAccessToken(): string | null {
+    return localStorage.getItem('accessToken');
+  }
+  public setAccessToken(token: string): void {
+    localStorage.setItem('accessToken', token);
   }
 
-
-  logout() {
-    localStorage.removeItem('token');
-    this.toastr.success('','log out succesfully',{timeOut:1500})
-    this.router.navigate(['login']);
-  }
 
 }

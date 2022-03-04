@@ -7,13 +7,12 @@ import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './auth/auth.interceptor';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 
 import { ToastrModule } from 'ngx-toastr';
-import {InterceptorService} from './services/InterceptorService/interceptor.service';
+import { InterceptorService } from './services/InterceptorService/interceptor.service';
 
 // import { NgxSpinnerModule } from 'ngx-spinner';
 
@@ -37,11 +36,6 @@ import {InterceptorService} from './services/InterceptorService/interceptor.serv
     ToastrModule.forRoot(), // ToastrModule added
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,

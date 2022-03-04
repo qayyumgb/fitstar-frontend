@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/AuthService/auth.service';
 import { LoginService } from '../../services/LoginService/login.service';
 import { MessageService } from 'primeng/api';
 import { ToastrService } from 'ngx-toastr';
+import { IUserData } from 'src/app/shared/interface/auth.interface';
 
 
 @Component({
@@ -23,9 +24,9 @@ export class LoginComponent implements OnInit {
   loading = false;
   showStatus = false;
   alertMessage = ""
-  isLoading:boolean=false
+  isLoading: boolean = false
 
-  constructor(private formBuilder: FormBuilder, private toastr: ToastrService, private router: Router, private authService: AuthService, private loginService: LoginService, private messageService: MessageService) { }
+  constructor(private formBuilder: FormBuilder, private toastr: ToastrService, private router: Router, private authService: AuthService, private loginService: LoginService,) { }
 
   ngOnInit(): void {
     this.LoginForm = this.formBuilder.group(
@@ -42,10 +43,8 @@ export class LoginComponent implements OnInit {
       }
     );
 
-    if (this.authService.isLoggedIn()) {
-      this.toastr.info('User is Already Login', 'Redirecting', {
-        timeOut: 3000,
-      })
+    if (this.authService.isAuthenticated()) {
+      this.toastr.info('User is Already Login', 'Redirecting', { timeOut: 3000, })
       this.router.navigate(['dashboard']);
 
     }
@@ -55,65 +54,41 @@ export class LoginComponent implements OnInit {
     return this.LoginForm.controls;
   }
 
-  toggleLoading(){
-    this.isLoading=true;
-  }
 
   onSubmit(): void {
+    debugger
     this.submitted = true;
     if (this.LoginForm.invalid) {
       return;
     }
     else {
-      // this.getCodeone()
-      this.loginUser()
+      this.isLoading = true
+      this.loginUser();
     }
-
-    console.log(JSON.stringify(this.LoginForm.value, null, 2));
   }
-
-
-
 
   loginUser() {
-    this.toggleLoading()
-    this.loginService.LoginUser(this.LoginForm.value)
+    debugger
+    this.isLoading = true;
+    this.loginService.loginUser(this.LoginForm.value)
       .subscribe({
-
-        next: (res) => {
-          localStorage.setItem('token', res.token)
-
-          this.toastr.success('User login successfully');
+        next: (res: IUserData) => {
+          if (res.message === 'Successful Login!')
+            this.authService.setAccessToken(res.token);
+          this.toastr.success(res.message);
           this.router.navigate(['dashboard']);
-this.isLoading=false
         },
-        error: error => {
+        error: (error: IUserData) => {
           this.toastr.error('Provided credentials are incorrect, please try again.');
-          // this.showError(error)
-          this.isLoading=false
+          this.isLoading = false
         }
       });
-  }
-
-  showError(error: any) {
-    console.log('Authentication Failed');
-    this.messageService.add({
-      severity: 'error',
-      summary: 'Authentication Failed',
-      detail: `InValid Email or Password ${error}`,
-    });
-
 
   }
 
-  showValidUser() {
-    console.log('Authentication Passed');
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Authentication Passed',
-      detail: `User Login Successfully`,
-    });
-  }
 
 
 }
+
+
+

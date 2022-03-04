@@ -193,6 +193,20 @@
                             </div>
                           </div>
                         </div>
+                        <div class="row pb-3">
+                          <div class="col-sm-12 col-md-6">
+                            <label>Footer Email</label>
+                            <input type="text" formControlName="footerEmail" class="form-control" [ngClass]="{
+                                'is-invalid':
+                                  submitted && f?.footerEmail?.errors
+                              }" />
+                            <div *ngIf="submitted && f?.footerEmail?.errors" class="invalid-feedback">
+                              <div *ngIf="f?.footerEmail?.errors?.required">
+                                Footer Email is required
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

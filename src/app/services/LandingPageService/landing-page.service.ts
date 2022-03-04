@@ -17,15 +17,13 @@ export class LandingPageService {
   CreateNewUser(CollaboratorsData: any) {
     return this.http.post<any[]>(this.createUrl, CollaboratorsData).pipe(map((res: any) => {
       return res
-    }), retry(1),
-      catchError(this.handleError))
+    }))
   }
 
   getLandingPage() {
     return this.http.get<any[]>(API_ENDPOINTS.getLandingPage).pipe(map((res: any) => {
       return res
-    }), retry(1),
-      catchError(this.handleError))
+    }))
   }
 
   updateLandingPage(data: Data) {
@@ -39,22 +37,8 @@ export class LandingPageService {
     }
     return this.http.put<any[]>(API_ENDPOINTS.updateLandingPAge + data._id, body).pipe(map((res: any) => {
       return res
-    }), retry(1),
-      catchError(this.handleError))
+    }))
   }
 
-  // Error Handling Funcation
-  handleError(error: any) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // client-side error
-      errorMessage = `Error: ${error.error.message}`;
-    } else {
-      // server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    console.log(` Error From Handeler: ${errorMessage}`);
 
-    return throwError(errorMessage);
-  }
 }

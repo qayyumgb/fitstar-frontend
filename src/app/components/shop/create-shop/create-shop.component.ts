@@ -26,6 +26,7 @@ import {
 import { PrimeNGConfig } from 'primeng/api';
 import { ToastrService } from 'ngx-toastr';
 import { AddUsersService } from '../../../services/AddUserService/add-users.service';
+import { IShopStatusInterface, IShopUser, IShopUserEntity, UserStatusEnum } from 'src/app/shared/interface/shop-user.interface';
 
 @Component({
   selector: 'app-create-shop',
@@ -41,7 +42,7 @@ export class CreateShopComponent implements OnInit {
   statuses: any[];
   loading: boolean = false;
   position: string;
-  isLoading=false
+  isLoading = false
   userRole: any[];
   selectedRole: any[];
 
@@ -66,7 +67,7 @@ export class CreateShopComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private confirmationService: ConfirmationService,
     private PrimeNGConfig: PrimeNGConfig
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.UsersRecord();
@@ -112,7 +113,7 @@ export class CreateShopComponent implements OnInit {
     return this.createUser.controls;
   }
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template,{class:'modal-lg'});
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
   }
   submitted = false;
 
@@ -137,7 +138,7 @@ export class CreateShopComponent implements OnInit {
       accept: () => {
         this.userService.deleteUser(id).subscribe(
           (data) => {
-            this.toastr.success('User Deleted Succesfully', 'Deleting User!', {
+            this.toastr.success('User Deleted Successfully', 'Deleting User!', {
               timeOut: 4000,
             });
             this.UsersRecord();
@@ -173,9 +174,11 @@ export class CreateShopComponent implements OnInit {
     let limit = this.dtConfig.itemsPerPage;
     let offset = this.dtConfig.currentPage;
     this.userService.getAllUser(limit, offset).subscribe(
-      (data) => {
+      (data: IShopUser) => {
         console.log('DATA::::', data);
-        this.usersArray = data.users;
+        let usersArray = data.users;
+        this.userStatusDataMapping(usersArray)
+
         console.log('Total Items::', this.dtConfig.totalItems);
         console.log('Getting Vaule from DB:::', this.usersArray);
       },
@@ -183,6 +186,36 @@ export class CreateShopComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+
+  toggleActiveStatus(userObject: IShopUserEntity) {
+
+    userObject.activeStatus ? userObject.status = UserStatusEnum.active : userObject.status = UserStatusEnum.blocked;
+    this.userService.updateUser(userObject).subscribe((res: IShopStatusInterface) => {
+      if (res.message === 'User successfully updated.') {
+        this.toastr.success(res.message, '', {
+          timeOut: 1000,
+        });
+      }
+      else {
+        this.toastr.error('Failed To Update Role Status');
+      }
+
+    })
+  }
+
+
+  userStatusDataMapping(usersArray: IShopUserEntity[]) {
+    for (let iterator of usersArray as IShopUserEntity[]) {
+      if (iterator.status === UserStatusEnum.active) {
+        iterator.activeStatus = true;
+      }
+      else {
+        iterator.activeStatus = false;
+      }
+    }
+    this.usersArray = usersArray;
   }
 
   getUserById(id?: any): void {
@@ -197,7 +230,10 @@ export class CreateShopComponent implements OnInit {
       }
     );
   }
+  getId(user: any) {
+    console.log(user);
 
+  }
   CreateNewUser() {
     const formData = this.createUser.value;
     delete formData.ProfileImage;
@@ -212,7 +248,7 @@ export class CreateShopComponent implements OnInit {
 
       (response) => {
 
-        this.toastr.success('User  Added  Succesfully', '', {
+        this.toastr.success('User  Added  Successfully', '', {
           timeOut: 4000,
         });
         console.log(response);
@@ -220,7 +256,7 @@ export class CreateShopComponent implements OnInit {
         this.modalService.hide();
         // window.location.reload()
         this.UsersRecord();
-        this.isLoading=false
+        this.isLoading = false
       },
       (error) => {
         console.log(error);
@@ -229,8 +265,8 @@ export class CreateShopComponent implements OnInit {
   }
 
 
-  toggleLoading(){
-    this.isLoading=true;
+  toggleLoading() {
+    this.isLoading = true;
   }
 
 

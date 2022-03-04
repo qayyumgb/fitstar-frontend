@@ -6,21 +6,21 @@ import { Abbassador } from '../../Models/models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { API_ENDPOINTS } from 'src/app/_util/global';
-import { CreateUpdateAmbassador } from 'src/app/shared/interface/ambassador.interface';
+import { CreateUpdateAmbassador, IAmbassadors } from 'src/app/shared/interface/ambassador.interface';
 @Injectable({
   providedIn: 'root',
 })
 export class AbbassadorService {
   private createAbbassador =
     'https://fitstar-backend.herokuapp.com/app/v1/ambassadors/create';
-    private deleteAbbassador =
+  private deleteAbbassador =
     'https://fitstar-backend.herokuapp.com/app/v1/ambassadors/delete';
-    private GetAllAbbassador =
+  private GetAllAbbassador =
     'https://fitstar-backend.herokuapp.com/app/v1/ambassadors/get';
-    private UpdateAbbassador =
+  private UpdateAbbassador =
     'https://fitstar-backend.herokuapp.com/app/v1/ambassadors/update';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   CreateNewUser(AbbassadorData: any) {
     return this.http.post<any[]>(API_ENDPOINTS.ambassadorCreate, AbbassadorData).pipe(
@@ -33,9 +33,9 @@ export class AbbassadorService {
   }
 
   //getting all data
-  getAllAmbassador(limit:number,offset:number): Observable<Abbassador[]> {
+  getAllAmbassador(limit: number, offset: number): Observable<IAmbassadors> {
     console.log(API_ENDPOINTS.ambassadorList)
-    return this.http.get<Abbassador[]>(API_ENDPOINTS.ambassadorList+`${limit}/${offset}`);
+    return this.http.get<IAmbassadors>(API_ENDPOINTS.ambassadorList + `${limit}/${offset}`);
   }
 
 

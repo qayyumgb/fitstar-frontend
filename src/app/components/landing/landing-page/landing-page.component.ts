@@ -23,7 +23,8 @@ export class LandingPageComponent implements OnInit {
   landingPageDetails: FormGroup = new FormGroup({
     footerDetails: new FormGroup({
       footerDetails: new FormControl(''),
-      footerPhone: new FormControl('')
+      footerPhone: new FormControl(''),
+      footerEmail: new FormControl()
     }),
     aboutPageDetails: new FormGroup({
       aboutUsBannerImage: new FormControl(''),
@@ -31,6 +32,7 @@ export class LandingPageComponent implements OnInit {
       aboutUsMainHeading: new FormControl(''),
       aboutUsSubHeading: new FormControl(''),
       aboutUsDetails: new FormControl('')
+
     }),
     landingPage: new FormArray([this.landingPageFormControls()]),
   });

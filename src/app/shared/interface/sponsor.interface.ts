@@ -1,4 +1,4 @@
-export interface IBlogposts {
+export interface ISponsorEntity {
   status: boolean;
   message: string;
   totalRecord: number;
@@ -8,36 +8,35 @@ export interface IBlogposts {
 export interface ISponsors {
   title: string
   description: string
-  authorName:string
+  authorName: string
   category: string
-
   videoLink: string
   details: string
   authorImage: string
   featuredImageOne: string
   featuredImageTwo: string
   createdAt: Date;
-updatedAt: Date;
-active?: boolean;
-isDeleted: boolean;
-_id: string;
+  updatedAt: Date;
+  active?: boolean;
+  isDeleted: boolean;
+  _id: string;
 }
 
 export interface CreateUpdateSponsors {
   title?: string;
   description?: string;
-  authorName?:string;
+  authorName?: string;
   category?: string;
 
   videoLink?: string;
   details?: string;
   authorImage?: string;
-  featuredImageOne?: string ;
+  featuredImageOne?: string;
   featuredImageTwo?: string;
 
-active?: boolean;
+  active?: boolean;
 
-_id?: string;
+  _id?: string;
 }
 
 

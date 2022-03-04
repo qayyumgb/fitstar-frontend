@@ -6,21 +6,44 @@ export interface IBlogposts {
 }
 
 export interface IBlogpost {
-  userProfile?:string;
+  userProfile?: string;
   createdAt: Date;
-updatedAt: Date;
-active?: boolean;
-isDeleted: boolean;
-_id: string;
+  updatedAt: Date;
+  active?: boolean;
+  isDeleted: boolean;
+  _id: string;
 }
 
 export interface CreateUpdateBlogPost {
-  userProfile?:string;
+  userProfile?: string;
 
-active?: boolean;
+  active?: boolean;
 
-_id?: string;
+  _id?: string;
 }
 
 
 
+export interface IBlog {
+  status: boolean;
+  message: string;
+  totalRecord: number;
+  blogs: Blog[];
+}
+
+export interface Blog {
+  title: string;
+  description: string;
+  featuredImageOne: string;
+  featuredImageTwo: string;
+  authorImage: string;
+  videoLink: string;
+  details: string;
+  active: boolean;
+  isDeleted: boolean;
+  _id: string;
+  authorName: string;
+  category: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

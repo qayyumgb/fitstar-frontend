@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 import { addUsers } from '../../Models/models';
 import { API_ENDPOINTS } from 'src/app/_util/global';
+import { IShopStatusInterface, IShopUserEntity } from 'src/app/shared/interface/shop-user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import { API_ENDPOINTS } from 'src/app/_util/global';
 export class AddUsersService {
   private _url = 'https://fitstar-backend.herokuapp.com/app/v1/users/all';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   CreateNewUser(userData: any) {
     return this.http.post<any>(API_ENDPOINTS.userCreate, userData);
@@ -36,6 +37,14 @@ export class AddUsersService {
     return this.http.delete<addUsers[]>(`${API_ENDPOINTS.userDelete}/${_id}`);
   }
 
+  updateUser(userObject: IShopUserEntity): Observable<IShopStatusInterface> {
+    let body = { status: userObject.status }
+    return this.http.put<IShopStatusInterface>(API_ENDPOINTS.userStatusUpdate + userObject._id, body).pipe(map((res: any) => {
+      return res
+    }))
+  }
+
+
   //Update User data
   // UpdateUser(_id: any): Observable<addUsers[]> {
   //   return this.http.put<addUsers[]>(`${this._url}/${_id}`);
@@ -46,21 +55,5 @@ export class AddUsersService {
   // }
 
   // Error Handling Funcation
-  handleError(error: any) {
-    let errorMessage = '';
 
-    if (error.error instanceof ErrorEvent) {
-      // client-side error
-
-      errorMessage = `Error: ${error.error.message}`;
-    } else {
-      // server-side error
-
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-
-    window.alert(errorMessage);
-
-    return throwError(errorMessage);
-  }
 }

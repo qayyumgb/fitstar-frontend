@@ -1,90 +1,38 @@
+<!--MDB Tables-->
+<div class="card mb-4">
+  <div class="card-body">
+    <!-- Grid row -->
+    <div class="row">
+      <!-- Grid column -->
+      <!-- <div class="col-md-12"> -->
+      <h5 class="ml-4 font-bold latestUser">Latest Register User</h5>
+      <!-- </div> -->
+      <!-- Grid column -->
+    </div>
+    <!-- Grid row -->
+    <table class="table table-hover" *ngFor="let item of latestUsers">
+      <thead>
+        <tr>
+          <th>S#</th>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Register Country</th>
+          <th>Date & Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="table-success">
+          <th scope="row">1</th>
+          <td>
+            <img src="../../../../assets/images/profiles/profile-2.png" alt="" />
+          </td>
+          <td>{{item.fullName}}</td>
+          <td>{{item.location}}</td>
+          <td>{{item. createdAt|date:'short'}}</td>
+        </tr>
+      </tbody>
+    </table>
 
-    <!--MDB Tables-->
-      <div class="card mb-4">
-        <div class="card-body">
-          <!-- Grid row -->
-          <div class="row">
-            <!-- Grid column -->
-            <!-- <div class="col-md-12"> -->
-              <h5 class="ml-4 font-bold latestUser">Latest Register User</h5>
-            <!-- </div> -->
-            <!-- Grid column -->
-          </div>
-          <!-- Grid row -->
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>S#</th>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Register Country</th>
-                <th>Date & Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="table-success">
-                <th scope="row">1</th>
-                <td>
-                  <img
-                    src="../../../../assets/images/profiles/profile-2.png"
-                    alt=""
-                  />
-                </td>
-                <td>Ali Hamza</td>
-                <td>Pakistan</td>
-                <td>03-03-2022 21:00</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>
-                  <img
-                    src="../../../../assets/images/profiles/profile-1.png"
-                    alt=""
-                  />
-                </td>
-                <td>Joshin Adma</td>
-                <td>USA</td>
-                <td>03-03-2022 21:00</td>
-              </tr>
-              <tr class="table-info">
-                <th scope="row">3</th>
-                <td>
-                  <img
-                    src="../../../../assets/images/profiles/profile-3.png"
-                    alt=""
-                  />
-                </td>
-                <td>Blake Tonny</td>
-                <td>UK</td>
-                <td>03-03-2022 21:00</td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>
-                  <img
-                    src="../../../../assets/images/profiles/profile-1.png"
-                    alt=""
-                  />
-                </td>
-                <td>Depeek Khan</td>
-                <td>India</td>
-                <td>03-03-2022 21:00</td>
-              </tr>
-              <tr class="table-warning">
-                <th scope="row">5</th>
-                <td>
-                  <img
-                    src="../../../../assets/images/profiles/profile-2.png"
-                    alt=""
-                  />
-                </td>
-                <td>Kubara Allam</td>
-                <td>UAE</td>
-                <td>03-03-2022 21:00</td>
-              </tr>
-            </tbody>
-          </table>
-
-        </div>
-      </div>
-    <!--MDB Tables-->
+  </div>
+</div>
+<!--MDB Tables-->

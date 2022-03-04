@@ -9,16 +9,24 @@ import { IShopUser } from 'src/app/shared/interface/shop-user.interface';
 import { ISponsorEntity } from 'src/app/shared/interface/sponsor.interface';
 import { AbbassadorService } from './../../../services/AbbassadorService/abbassador.service';
 import { SponserService } from './../../../services/SponserService/sponser.service';
+import { DashboardService } from './../../../services/dashbordService/dashboard.service';
+import { IDashboardCounter, IDashboardLatestUser, LatestUser } from 'src/app/shared/interface/dashboard.interface';
 @Component({
   selector: 'app-dashboard-main',
   templateUrl: './dashboard-main.component.html',
   styleUrls: ['./dashboard-main.component.scss']
 })
 export class DashboardMainComponent implements OnInit {
-  blogCount: number = 0;
-  userCount: number = 0;
-  ambassadorCount: number = 0;
-  sponsorCount: number = 0
+
+  dashboardCounter: Partial<IDashboardCounter> = {
+    totalAmbassadors: 0,
+    totalUsers: 0,
+    totalBlogs: 0,
+    totalSponsor: 0,
+    totalCollaborator: 0
+  }
+
+
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
       {
@@ -100,28 +108,12 @@ export class DashboardMainComponent implements OnInit {
       { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
     ]
   };
-  constructor(private userService: AddUsersService,
-    private blogService: BlogPostService, private ambassadorService: AbbassadorService, private sponsorService: SponserService) { }
+  constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
-    this.blogService.getAllBlog(1, 1).subscribe((res: IBlog) => {
-      this.blogCount = res.totalRecord;
+    this.dashboardService.getDashboardCount().subscribe((res: IDashboardCounter) => {
+      this.dashboardCounter = res;
     })
-    this.userService.getAllUser(1, 1).subscribe((res: IShopUser) => {
-      this.userCount = res.totalRecord;
-    })
-    this.ambassadorService.getAllAmbassador(1, 1).subscribe((data: IAmbassadors) => {
-      this.ambassadorCount = data.totalRecord
-    }
-    );
-
-    this.sponsorService.getAllSponser(1, 1).subscribe(
-      (data: ISponsorEntity) => {
-        this.sponsorCount = data.totalRecord;
-
-
-      },
-    );
 
 
   }

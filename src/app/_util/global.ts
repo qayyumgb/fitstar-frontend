@@ -46,5 +46,10 @@ export const API_ENDPOINTS = {
   getLandingPage: `${API_URL}landing/get/`,
   updateLandingPAge: `${API_URL}landing/update/`,
 
+  // dashboard
+  dashboardCard: `${API_URL}dashboard/cards`,
+  dashboardLatestUser: `${API_URL}dashboard/latest/users`,
+
+
 
 };

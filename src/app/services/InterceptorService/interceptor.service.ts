@@ -7,13 +7,15 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import { AuthService } from '../AuthService/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { SharedService } from './../shared.service';
 @Injectable({
   providedIn: 'root'
 })
 export class InterceptorService implements HttpInterceptor {
   constructor(
     private auhService: AuthService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private sharedService: SharedService
   ) {
   }
 
@@ -23,9 +25,12 @@ export class InterceptorService implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
 
     let accessToken = this.auhService.getAccessToken();
+    this.sharedService.loaderSubject.next(true);
 
     return this.processRequestWithToken(accessToken as any, req, next).pipe(
-      finalize(() => { }),
+      finalize(() => {
+        this.sharedService.loaderSubject.next(false);
+      }),
       catchError((error: HttpErrorResponse) => {
         let errorMsg = '';
 

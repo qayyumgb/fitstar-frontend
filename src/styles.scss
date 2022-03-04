@@ -332,3 +332,25 @@ input.form-control {
   height: 28px;
   color: #fff;
 }
+.fitstar-loader-conatiner {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  z-index: 10000;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    z-index: 999999;
+  }
+}

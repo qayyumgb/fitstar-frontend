@@ -38,7 +38,7 @@ constructor() {
       }
     ],
     chart: {
-      // height: 614.1,
+      height: 350.48,
       // width:500,
       type: "bar"
     },

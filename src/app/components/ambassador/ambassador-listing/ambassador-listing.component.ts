@@ -50,6 +50,7 @@ export class AmbassadorListingComponent implements OnInit {
   editAmbassadorData: IAmbassador;
 
 
+
   dtConfig: any = {
     id: 'ambassadors',
     itemsPerPage: 10,

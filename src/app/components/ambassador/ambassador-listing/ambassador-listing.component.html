@@ -63,35 +63,39 @@
                 <th class="cell">Action</th>
               </tr>
             </ng-template>
-            <ng-template pTemplate="body">
-              <tr *ngFor="let ambassadorsData of AbbassadorData; index as i">
+            <ng-template
+              pTemplate="body"
+              let-ambassador
+              let-rowIndex="rowIndex"
+            >
+              <tr>
                 <td>
-                  {{ i + 1 }}
+                  {{ rowIndex + 1 }}
                 </td>
                 <td>
                   <span class="image-text">
-                    <img src="{{ ambassadorsData.picture }}" />
+                    <img src="{{ ambassador.picture }}" />
                   </span>
                 </td>
                 <td>
-                  <span class="image-text">{{ ambassadorsData.name }}</span>
+                  <span class="image-text">{{ ambassador.name }}</span>
                 </td>
                 <td>
                   <span class="customer-badge status">{{
-                    ambassadorsData.tagLine
+                    ambassador.tagLine
                   }}</span>
                 </td>
                 <td>
-                  <span>{{ ambassadorsData.createdAt | date: "medium" }}</span>
+                  <span>{{ ambassador.createdAt | date: "medium" }}</span>
                 </td>
                 <td>
-                  <span>{{ ambassadorsData.description }}</span>
+                  <span>{{ ambassador.description }}</span>
                 </td>
                 <td>
                   <span>
                     <p-inputSwitch
-                      [(ngModel)]="ambassadorsData.active"
-                      (ngModelChange)="updateButtonState(ambassadorsData)"
+                      [(ngModel)]="ambassador.active"
+                      (ngModelChange)="updateButtonState(ambassador)"
                     ></p-inputSwitch>
                   </span>
                 </td>
@@ -99,12 +103,12 @@
                   <span class="action-col">
                     <i
                       class="pi pi-trash"
-                      (click)="OnDeleteRecord(ambassadorsData._id)"
+                      (click)="OnDeleteRecord(ambassador._id)"
                     ></i>
 
                     <i
                       class="mx-1 pi pi-pencil"
-                      (click)="editAmbassador(ambassadorsData)"
+                      (click)="editAmbassador(ambassador)"
                     >
                     </i>
 

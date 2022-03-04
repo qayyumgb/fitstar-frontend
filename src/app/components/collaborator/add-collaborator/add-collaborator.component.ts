@@ -14,7 +14,7 @@ import { ICollaborator } from 'src/app/shared/interface/collaborator.interface';
 export class AddCollaboratorComponent implements OnInit {
   @Output() modalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() editCollaboratorData: ICollaborator;
-
+  isLoading:boolean=false
 
   collaboratorForm: FormGroup = new FormGroup(
     {
@@ -69,7 +69,9 @@ export class AddCollaboratorComponent implements OnInit {
     }
   }
 
-
+  toggleLoading(){
+    this.isLoading=true;
+  }
 
   onSubmit(): void {
     this.submitted = true;
@@ -81,12 +83,14 @@ export class AddCollaboratorComponent implements OnInit {
       const formData = this.collaboratorForm.value;
       if (this.editCollaboratorData === undefined) {
         delete formData._id
+        this.toggleLoading()
         this.collaboratorService.CreateNewUser(formData).subscribe(
           response => {
             this.toastService.success(response.message);
             console.log(response);
             this.modalChange.emit(this.submitted);
             this.submitted = true;
+            this.isLoading=false
           },
           error => {
             console.log(error);
@@ -94,13 +98,15 @@ export class AddCollaboratorComponent implements OnInit {
 
       }
       else {
-
+        this.toggleLoading()
         this.collaboratorService.updateCollaborator(formData).subscribe(
           response => {
+
             this.toastService.success(response.message);
             console.log(response);
             this.modalChange.emit(this.submitted);
             this.submitted = true;
+            this.isLoading=false
           },
           error => {
             console.log(error);

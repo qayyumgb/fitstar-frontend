@@ -48,9 +48,9 @@ export class AuthInterceptor implements HttpInterceptor {
           }`;
           if (error.status === 401) {
             // Logout Existing User
-            // this.authorize.logout();
+             //this.authorize.logout();
             this.AuthService.logout();
-            this.toastr.error('','Your session has been expired. Please sign in again.',{timeOut:1500})
+             this.toastr.error('','Your session has been expired. Please sign in again.',{timeOut:1500})
 
           }
         }

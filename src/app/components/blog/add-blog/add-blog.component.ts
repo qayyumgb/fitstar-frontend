@@ -16,7 +16,7 @@ export class AddBlogComponent implements OnInit {
   @Output() modalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() editBlogData: IBlogpost;
   submitted: boolean = false;
-
+  isLoading:boolean=false
 
 
   selectedcatagory: any[]
@@ -87,6 +87,10 @@ export class AddBlogComponent implements OnInit {
     }
   }
 
+  toggleLoading(){
+    this.isLoading=true;
+  }
+
 
   uploadfeaturedImageOne(event: any) {
     let reader = new FileReader(); // HTML5 FileReader API
@@ -136,13 +140,16 @@ export class AddBlogComponent implements OnInit {
     else {
       const formData = this.BlogForm.value;
       if (this.editBlogData === undefined) {
+
         delete formData._id
+        this.toggleLoading()
         this.blogService.CreateNewUser(formData).subscribe(
           response => {
             this.toastService.success(response.message);
             console.log(response);
             this.modalChange.emit(this.submitted);
             this.submitted = true;
+            this.isLoading=false
           },
           error => {
             console.log(error);
@@ -150,15 +157,16 @@ export class AddBlogComponent implements OnInit {
 
       }
       else {
-debugger
+        this.toggleLoading()
         this.blogService.updateBlogPost(formData).subscribe(
           response => {
-            debugger
+
             this.toastService.success(response.message);
             console.log(response);
             debugger;
             this.modalChange.emit(this.submitted);
             this.submitted = true;
+            this.isLoading=false;
           },
           error => {
             console.log(error);

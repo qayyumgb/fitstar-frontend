@@ -13,7 +13,7 @@ export class AddAmbassadorComponent implements OnInit {
   @Output() modalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() editAmbassadorData: IAmbassador;
   submitted: boolean = false;
-
+  isLoading:boolean=false
 
   AmbassadorForm: FormGroup = new FormGroup({
     _id: new FormControl(''),
@@ -51,7 +51,9 @@ export class AddAmbassadorComponent implements OnInit {
   }
 
 
-
+  toggleLoading(){
+    this.isLoading=true;
+  }
 
 
   uploadFile(event: any) {
@@ -82,12 +84,14 @@ export class AddAmbassadorComponent implements OnInit {
       const formData = this.AmbassadorForm.value;
       if (this.editAmbassadorData === undefined) {
         delete formData._id
+        this.toggleLoading()
         this.ambbassadorService.CreateNewUser(formData).subscribe(
           response => {
             this.toastService.success(response.message);
             console.log(response);
             this.modalChange.emit(this.submitted);
             this.submitted = true;
+            this.isLoading=false
           },
           error => {
             console.log(error);
@@ -95,13 +99,14 @@ export class AddAmbassadorComponent implements OnInit {
 
       }
       else {
-
+        this.toggleLoading()
         this.ambbassadorService.updateAmbassador(formData).subscribe(
           response => {
             this.toastService.success(response.message);
             console.log(response);
             this.modalChange.emit(this.submitted);
             this.submitted = true;
+            this.isLoading =false;
           },
           error => {
             console.log(error);

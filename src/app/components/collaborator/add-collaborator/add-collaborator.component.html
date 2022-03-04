@@ -180,8 +180,13 @@
       <div class="form-group my-3 mt-4">
         <button
           type="submit"
+          [disabled]="isLoading"
+          (click)="(toggleLoading)"
           class="btn app-btn-primary w-100 theme-btn mx-auto"
         >
+          <div *ngIf="isLoading" class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
           Submit
         </button>
       </div>

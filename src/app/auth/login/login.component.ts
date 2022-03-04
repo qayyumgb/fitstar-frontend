@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   showStatus = false;
   alertMessage = ""
+  isLoading:boolean=false
 
   constructor(private formBuilder: FormBuilder, private toastr: ToastrService, private router: Router, private authService: AuthService, private loginService: LoginService, private messageService: MessageService) { }
 
@@ -54,7 +55,9 @@ export class LoginComponent implements OnInit {
     return this.LoginForm.controls;
   }
 
-
+  toggleLoading(){
+    this.isLoading=true;
+  }
 
   onSubmit(): void {
     this.submitted = true;
@@ -73,18 +76,21 @@ export class LoginComponent implements OnInit {
 
 
   loginUser() {
-
+    this.toggleLoading()
     this.loginService.LoginUser(this.LoginForm.value)
       .subscribe({
+
         next: (res) => {
           localStorage.setItem('token', res.token)
+
           this.toastr.success('User login successfully');
           this.router.navigate(['dashboard']);
+this.isLoading=false
         },
         error: error => {
-          this.toastr.error(`Invalid Credentials.\n ${error}`);
+          this.toastr.error('Provided credentials are incorrect, please try again.');
           // this.showError(error)
-          this.loading = false;
+          this.isLoading=false
         }
       });
   }

@@ -14,7 +14,7 @@ export class AddSponsorComponent implements OnInit {
   @Output() modalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() editBlogData: ISponsors;
   submitted: boolean = false;
-
+  isLoading:boolean=false
 
 
   SponsorsForm: FormGroup = new FormGroup({
@@ -63,7 +63,9 @@ export class AddSponsorComponent implements OnInit {
     }
   }
 
-
+  toggleLoading(){
+    this.isLoading=true;
+  }
 
   onSubmit(): void {
 
@@ -73,6 +75,7 @@ export class AddSponsorComponent implements OnInit {
     }
     else {
       const formData = this.SponsorsForm.value;
+      this.toggleLoading()
       if (this.editBlogData === undefined) {
         delete formData._id
         this.sponsorsService.CreateNewUser(formData).subscribe(
@@ -81,6 +84,7 @@ export class AddSponsorComponent implements OnInit {
             console.log(response);
             this.modalChange.emit(this.submitted);
             this.submitted = true;
+            this.isLoading=false
           },
           error => {
             console.log(error);

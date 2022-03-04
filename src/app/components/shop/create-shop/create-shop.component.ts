@@ -41,7 +41,7 @@ export class CreateShopComponent implements OnInit {
   statuses: any[];
   loading: boolean = false;
   position: string;
-
+  isLoading=false
   userRole: any[];
   selectedRole: any[];
 
@@ -207,8 +207,11 @@ export class CreateShopComponent implements OnInit {
     console.log('sending data to service side');
     console.log(formData);
     delete formData.file;
+    this.toggleLoading()
     this.userService.CreateNewUser(formData).subscribe(
+
       (response) => {
+
         this.toastr.success('User  Added  Succesfully', '', {
           timeOut: 4000,
         });
@@ -217,12 +220,19 @@ export class CreateShopComponent implements OnInit {
         this.modalService.hide();
         // window.location.reload()
         this.UsersRecord();
+        this.isLoading=false
       },
       (error) => {
         console.log(error);
       }
     );
   }
+
+
+  toggleLoading(){
+    this.isLoading=true;
+  }
+
 
   /*########################## File Upload ########################*/
   @ViewChild('fileInput') el: ElementRef;

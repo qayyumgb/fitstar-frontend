@@ -5,7 +5,7 @@ import { catchError, map, retry } from 'rxjs/operators';
 
 import { Collaborators } from '../../Models/models'
 import { API_ENDPOINTS } from 'src/app/_util/global';
-import { CreateUpdateCollaborator } from 'src/app/shared/interface/collaborator.interface';
+import { CreateUpdateCollaborator, ICollaborators } from 'src/app/shared/interface/collaborator.interface';
 
 
 @Injectable({
@@ -49,9 +49,9 @@ export class CollaboratorService {
 
 
   //getting all data
-  getAllCollaborator(limit: number, offset: number): Observable<Collaborators[]> {
+  getAllCollaborator(limit: number, offset: number): Observable<ICollaborators> {
     console.log(API_ENDPOINTS.collaboratorsList)
-    return this.http.get<Collaborators[]>(API_ENDPOINTS.collaboratorsList + `${limit}/${offset}`);
+    return this.http.get<ICollaborators>(API_ENDPOINTS.collaboratorsList + `${limit}/${offset}`);
   }
   //getting User data of Specfic Id
   // getUserById(_id: any): Observable<Collaborators[]> {

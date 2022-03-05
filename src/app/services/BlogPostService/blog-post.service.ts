@@ -39,7 +39,7 @@ export class BlogPostService {
   }
 
 
-  getSearchResult(searchText: string) {
+  getSearchResult(searchText: any) {
     return this.http.get<any[]>(API_ENDPOINTS.blogSearch + searchText).pipe(map((res: any) => {
       return res
     }))

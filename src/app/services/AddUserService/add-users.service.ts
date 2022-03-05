@@ -44,6 +44,12 @@ export class AddUsersService {
     }))
   }
 
+  getSearchResult(searchText: string) {
+    return this.http.get<any[]>(API_ENDPOINTS.userSearch + searchText).pipe(map((res: any) => {
+      return res
+    }))
+  }
+
 
   //Update User data
   // UpdateUser(_id: any): Observable<addUsers[]> {

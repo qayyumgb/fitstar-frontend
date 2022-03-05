@@ -9,7 +9,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmationService, ConfirmEventType, Message, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { ShopService } from 'src/app/services/shopService/shop.service';
-import { CreateUpdateAmbassador, IAmbassador } from 'src/app/shared/interface/ambassador.interface';
+import { CreateUpdateAmbassador, IAmbassador, IAmbassadors } from 'src/app/shared/interface/ambassador.interface';
+import { IPagination } from 'src/app/shared/interface/shared.interface';
 // import { MessageService } from "primeng/api";
 import { ambassadorList } from '../../../globalInterface/global.interface';
 import { AbbassadorService } from '../../../services/AbbassadorService/abbassador.service';
@@ -33,12 +34,12 @@ export class AmbassadorListingComponent implements OnInit {
   // loading: boolean = false;
   msgs: Message[] = [];
   position: string;
-  AbbassadorData: any = [];
+  AbbassadorData: IAmbassador[] = [];
   AbbassodordataById: any = [];
   loading = false;
   id!: string;
   activityValues: number[] = [0, 100];
-  searchText: string = '';
+  totalRecords: number;
 
   editAmbassadorData: IAmbassador;
 
@@ -55,7 +56,6 @@ export class AmbassadorListingComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getAmbassadorRecords();
     this.id = this.route.snapshot.params['id'];
     this.PrimeNGConfig.ripple = true;
   }
@@ -84,7 +84,7 @@ export class AmbassadorListingComponent implements OnInit {
           .subscribe(
             (data: any) => {
               this.toastr.success(data.message);
-              this.getAmbassadorRecords();
+              this.apiDataLoad();
 
             },
             error => {
@@ -105,23 +105,7 @@ export class AmbassadorListingComponent implements OnInit {
     });
   }
 
-  getAmbassadorRecords(): void {
-    this.loading = true
-    let limit = this.dtConfig.itemsPerPage;
-    let offset = this.dtConfig.currentPage;
-    this.AbbassadorService.getAllAmbassador(limit, offset)
-      .subscribe(
-        (data: any) => {
-          this.dtConfig.totalItems = data.totalRecord;
-          this.AbbassadorData = data.ambassador;
-          this.loading = false
 
-        },
-
-        error => {
-          console.log(error);
-        });
-  }
 
 
 
@@ -144,14 +128,14 @@ export class AmbassadorListingComponent implements OnInit {
       });
   }
 
-  search() {
-    if (this.searchText.length > 0) {
-      this.AbbassadorService.getSearchResult(this.searchText).subscribe(response => {
+  search(searchText: string | null) {
+    if (searchText?.length) {
+      this.AbbassadorService.getSearchResult(searchText).subscribe(response => {
         this.AbbassadorData = response.ambassadors;
       })
     }
     else {
-      this.getAmbassadorRecords();
+      this.apiDataLoad();
     }
 
   }
@@ -159,20 +143,34 @@ export class AmbassadorListingComponent implements OnInit {
 
 
 
-  limitChanged(value: any) {
-    this.dtConfig.itemsPerPage = value;
-    this.dtConfig.currentPage = 1;
-    this.getAmbassadorRecords();
-  }
 
-  pageChanged(event: any) {
-    this.dtConfig.currentPage = event;
-    this.getAmbassadorRecords();
-  }
 
   editAmbassador(item: IAmbassador) {
 
     this.AmbassdaorModal(true);
     this.editAmbassadorData = item;
+  }
+
+  apiDataLoad(event?: IPagination) {
+
+    if (event?.globalFilter) {
+      this.search(event.globalFilter)
+      return
+    }
+
+    let _first = event?.first ? event?.first : 0;
+    let _last = event?.rows ? event.rows + _first : 10;
+    this.AbbassadorService.getAllAmbassador(_last, _first + 1).subscribe(
+      (data: IAmbassadors) => {
+        console.log('DATA::::', data.ambassador);
+        this.AbbassadorData = data.ambassador;
+        this.totalRecords = data.totalRecord;
+        console.log('Total Items::', this.dtConfig.totalItems);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
   }
 }

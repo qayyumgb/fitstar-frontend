@@ -30,4 +30,7 @@ export class ShopService {
       .then(res => <userlist[]>res.data)
       .then(data => { return data; });
   }
+
+
+
 }

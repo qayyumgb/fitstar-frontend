@@ -27,6 +27,7 @@ import { PrimeNGConfig } from 'primeng/api';
 import { ToastrService } from 'ngx-toastr';
 import { AddUsersService } from '../../../services/AddUserService/add-users.service';
 import { IShopStatusInterface, IShopUser, IShopUserEntity, UserStatusEnum } from 'src/app/shared/interface/shop-user.interface';
+import { IPagination } from 'src/app/shared/interface/shared.interface';
 
 @Component({
   selector: 'app-create-shop',
@@ -45,6 +46,7 @@ export class CreateShopComponent implements OnInit {
   isLoading = false
   userRole: any[];
   selectedRole: any[];
+  totalRecords: number
 
   activityValues: number[] = [0, 100];
 
@@ -70,7 +72,6 @@ export class CreateShopComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.UsersRecord();
 
     this.createUser = this.formBuilder.group(
       {
@@ -141,7 +142,7 @@ export class CreateShopComponent implements OnInit {
             this.toastr.success('User Deleted Successfully', 'Deleting User!', {
               timeOut: 4000,
             });
-            this.UsersRecord();
+            // this.UsersRecord();
           },
           (error) => {
             console.log(error);
@@ -170,23 +171,20 @@ export class CreateShopComponent implements OnInit {
     });
   }
 
-  UsersRecord(): void {
-    let limit = this.dtConfig.itemsPerPage;
-    let offset = this.dtConfig.currentPage;
-    this.userService.getAllUser(limit, offset).subscribe(
-      (data: IShopUser) => {
-        console.log('DATA::::', data);
-        let usersArray = data.users;
-        this.userStatusDataMapping(usersArray)
 
-        console.log('Total Items::', this.dtConfig.totalItems);
-        console.log('Getting Vaule from DB:::', this.usersArray);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+  search(searchText: string | null) {
+    if (searchText?.length) {
+      this.userService.getSearchResult(searchText).subscribe(response => {
+        this.usersArray = response.collaborators;
+      })
+    }
+    else {
+      this.apiDataLoad();
+    }
   }
+
+
+
 
 
   toggleActiveStatus(userObject: IShopUserEntity) {
@@ -254,12 +252,13 @@ export class CreateShopComponent implements OnInit {
         console.log(response);
         this.submitted = true;
         this.modalService.hide();
-        // window.location.reload()
-        this.UsersRecord();
+        this.createUser.reset();
+        this.apiDataLoad();
         this.isLoading = false
       },
       (error) => {
         console.log(error);
+        this.isLoading = false
       }
     );
   }
@@ -309,14 +308,28 @@ export class CreateShopComponent implements OnInit {
     });
   }
 
-  limitChanged(value: any) {
-    this.dtConfig.itemsPerPage = value;
-    this.dtConfig.currentPage = 1;
-    this.UsersRecord();
-  }
+  apiDataLoad(event?: IPagination) {
 
-  pageChanged(event: any) {
-    this.dtConfig.currentPage = event;
-    this.UsersRecord();
+    if (event?.globalFilter) {
+      this.search(event.globalFilter)
+      return
+    }
+
+    let _first = event?.first ? event?.first : 0;
+    let _last = event?.rows ? event.rows + _first : 10;
+    this.userService.getAllUser(_last, _first + 1).subscribe(
+      (data: IShopUser) => {
+        console.log('DATA::::', data);
+        let usersArray = data.users;
+        this.totalRecords = data.totalRecord;
+        this.userStatusDataMapping(usersArray)
+        console.log('Total Items::', this.dtConfig.totalItems);
+        console.log('Getting Vaule from DB:::', this.usersArray);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
   }
 }

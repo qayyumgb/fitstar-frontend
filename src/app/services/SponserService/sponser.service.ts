@@ -62,8 +62,8 @@ export class SponserService {
 
 
 
-  getSearchResult(searchText: string) {
-    return this.http.get<any[]>(API_ENDPOINTS.sponsorSearch + searchText).pipe(map((res: any) => {
+  getSearchResult(searchText: any) {
+    return this.http.get<any>(API_ENDPOINTS.sponsorSearch + searchText).pipe(map((res: any) => {
       return res
     }), retry(1),
       catchError(this.handleError))

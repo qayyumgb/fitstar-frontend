@@ -17,7 +17,8 @@ import { PrimeNGConfig } from 'primeng/api';
 import { BlogPostService } from '../../../services/BlogPostService/blog-post.service'
 import { ToastrService } from 'ngx-toastr';
 import { TooltipModule } from 'primeng/tooltip';
-import { CreateUpdateBlogPost, IBlogpost } from 'src/app/shared/interface/BlogPost.interface';
+import { CreateUpdateBlogPost, IBlog, IBlogpost } from 'src/app/shared/interface/BlogPost.interface';
+import { IPagination } from 'src/app/shared/interface/shared.interface';
 
 
 @Component({
@@ -30,7 +31,6 @@ export class BlogComponent implements OnInit {
   openCreateEditModal: boolean = false;
   modalRef?: BsModalRef;
   createBlogPost: FormGroup;
-  ambassadorList: ambassadorList[];
   // representatives: Representative[];
   checked1: boolean = false;
   selectedcatagory: any[]
@@ -40,14 +40,14 @@ export class BlogComponent implements OnInit {
   BlogPostData: any[]
   BlogdataById: any[]
   activityValues: number[] = [0, 100];
-  searchText: string = '';
-  BlogData:any=[];
+  BlogData: any = [];
   dtConfig: any = {
     id: 'blogs',
     itemsPerPage: 10,
     currentPage: 1,
     totalItems: 0
   };
+  totalRecords: number;
 
   editBlogData: IBlogpost;
 
@@ -56,7 +56,6 @@ export class BlogComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getBlogPosts()
     this.createBlogPost = this.formBuilder.group(
       {
         title: ['', Validators.required],
@@ -75,10 +74,6 @@ export class BlogComponent implements OnInit {
       }
     );
 
-    this.shopSevice.getAmbassadorList().then(ambassadors => {
-      this.ambassadorList = ambassadors;
-      this.loading = false;
-    });
 
     this.catagory = [
       { label: "Nutrition", value: "Nutrition" },
@@ -117,26 +112,7 @@ export class BlogComponent implements OnInit {
 
 
 
-  getBlogPosts(): void {
-    let limit = this.dtConfig.itemsPerPage;
-    let offset = this.dtConfig.currentPage;
-    this.BlogPostService.getAllBlog(limit, offset)
-      .subscribe(
-        (data: any) => {
-          this.BlogPostData = data.blogs;
-          console.log(data.blogs);
-          console.log("Oie data ah gya ha agey kam kir hun ")
-          console.log('Getting Vaule from DB' + this.BlogPostData)
-          console.log("Total Items::", this.dtConfig.totalItems);
-          console.log(data.blogs);
-          console.log("Oie data ah gya ha agey kam kir hun ")
-          console.log('Getting Vaule from DB :::::' + this.BlogPostData)
-        },
 
-        error => {
-          console.log(error);
-        });
-  }
 
 
 
@@ -155,14 +131,14 @@ export class BlogComponent implements OnInit {
   }
 
 
-  search() {
-    if (this.searchText.length > 0) {
-      this.BlogPostService.getSearchResult(this.searchText).subscribe(response => {
+  search(searchText: any) {
+    if (searchText.length > 0) {
+      this.BlogPostService.getSearchResult(searchText).subscribe(response => {
         this.BlogData = response.blogs;
       })
     }
     else {
-      this.getBlogPosts();
+      this.apiDataLoad();
     }
 
   }
@@ -180,7 +156,7 @@ export class BlogComponent implements OnInit {
           .subscribe(
             (data: any) => {
               this.toastr.success(data.message);
-              this.getBlogPosts();
+              this.apiDataLoad();
 
             },
             error => {
@@ -204,16 +180,6 @@ export class BlogComponent implements OnInit {
 
 
 
-  limitChanged(value: any) {
-    this.dtConfig.itemsPerPage = value;
-    this.dtConfig.currentPage = 1;
-    this.getBlogPosts();
-  }
-
-  pageChanged(event: any) {
-    this.dtConfig.currentPage = event;
-    this.getBlogPosts();
-  }
 
 
   editBlogPost(item: IBlogpost) {
@@ -223,6 +189,28 @@ export class BlogComponent implements OnInit {
   }
 
 
+
+  apiDataLoad(event?: IPagination) {
+
+    if (event?.globalFilter) {
+      this.search(event.globalFilter)
+      return
+    }
+
+    let _first = event?.first ? event?.first : 0;
+    let _last = event?.rows ? event.rows + _first : 10;
+    this.BlogPostService.getAllBlog(_last, _first + 1).subscribe(
+      (data: IBlog) => {
+        this.BlogPostData = data.blogs;
+        this.totalRecords = data.totalRecord;
+        console.log('Total Items::', this.dtConfig.totalItems);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+  }
 
 
 

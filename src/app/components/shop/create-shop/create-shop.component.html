@@ -49,9 +49,11 @@
 
           <!-- table View  -->
 
-          <p-table #dt2 [value]="usersArray" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
-            [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading" styleClass="p-datatable-customers"
-            [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+          <p-table #dt2 [value]="usersArray" [rows]="5" dataKey="id" [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[5,10, 25, 50]" [loading]="loading" styleClass="p-datatable-customers"
+            [totalRecords]="totalRecords" [paginator]="true"
+            [currentPageReportTemplate]="'Showing {first} to {last} of {totalRecords} entries'" [lazy]="true"
+            (onLazyLoad)="apiDataLoad($event)">
             <ng-template pTemplate="caption">
               <div class="d-flex justify-content-between">
                 <span class="p-input-icon-left p-ml-auto">

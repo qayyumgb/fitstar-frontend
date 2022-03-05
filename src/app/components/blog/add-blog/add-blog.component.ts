@@ -16,7 +16,7 @@ export class AddBlogComponent implements OnInit {
   @Output() modalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() editBlogData: IBlogpost;
   submitted: boolean = false;
-  isLoading:boolean=false
+  isLoading: boolean = false
 
 
   selectedcatagory: any[]
@@ -25,16 +25,16 @@ export class AddBlogComponent implements OnInit {
 
   BlogForm: FormGroup = new FormGroup({
     _id: new FormControl(''),
-    title: new FormControl ('', Validators.required),
-    description: new FormControl ('', Validators.required),
-    authorName:new FormControl ('', Validators.required),
-    category: new FormControl ('', Validators.required),
+    title: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required),
+    authorName: new FormControl('', Validators.required),
+    category: new FormControl('', Validators.required),
 
-    videoLink: new FormControl ('', Validators.required),
-    details: new FormControl ('', Validators.required),
+    videoLink: new FormControl('', Validators.required),
+    details: new FormControl('', Validators.required),
     authorImage: new FormControl(DefaultauthorURl, Validators.required),
-    featuredImageOne:  new FormControl(DefaultFeturedImageURl, Validators.required),
-    featuredImageTwo:  new FormControl('', Validators.required),
+    featuredImageOne: new FormControl(DefaultFeturedImageURl, Validators.required),
+    featuredImageTwo: new FormControl('', Validators.required),
   })
 
 
@@ -42,31 +42,31 @@ export class AddBlogComponent implements OnInit {
     return this.BlogForm.controls;
   }
 
-  constructor(  private toastService: ToastrService,private blogService:BlogPostService
+  constructor(private toastService: ToastrService, private blogService: BlogPostService
 
-    ) {
+  ) {
 
-      this.catagory = [
-        { label: "Nutrition", value: "Nutrition" },
-        { label: "Recipies", value: "Recipies" },
-        { label: "Workouts", value: "Workouts" },
-        { label: "Reviews", value: "Reviews" },
-        { label: "Podcasts", value: "Podcasts" },
-        { label: "Music", value: "Music" },
-        { label: "News", value: "News" }
-      ];
-    }
-    ngOnChanges(changes: SimpleChanges): void {
-      //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-      //Add '${implements OnChanges}' to the class.
-      if (changes) {
-        if (this.editBlogData) {
-          this.BlogForm.patchValue(this.editBlogData);
-
-        }
+    this.catagory = [
+      { label: "Nutrition", value: "Nutrition" },
+      { label: "Recipies", value: "Recipies" },
+      { label: "Workouts", value: "Workouts" },
+      { label: "Reviews", value: "Reviews" },
+      { label: "Podcasts", value: "Podcasts" },
+      { label: "Music", value: "Music" },
+      { label: "News", value: "News" }
+    ];
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    if (changes) {
+      if (this.editBlogData) {
+        this.BlogForm.patchValue(this.editBlogData);
 
       }
+
     }
+  }
   ngOnInit(): void {
   }
 
@@ -87,8 +87,8 @@ export class AddBlogComponent implements OnInit {
     }
   }
 
-  toggleLoading(){
-    this.isLoading=true;
+  toggleLoading() {
+    this.isLoading = true;
   }
 
 
@@ -100,7 +100,7 @@ export class AddBlogComponent implements OnInit {
       reader.onload = () => {
         this.BlogForm.patchValue({
 
-          featuredImageOne:reader.result,
+          featuredImageOne: reader.result,
 
 
         });
@@ -119,7 +119,7 @@ export class AddBlogComponent implements OnInit {
       reader.onload = () => {
         this.BlogForm.patchValue({
 
-          featuredImageTwo:reader.result,
+          featuredImageTwo: reader.result,
 
         });
         console.log(reader.result);
@@ -149,7 +149,7 @@ export class AddBlogComponent implements OnInit {
             console.log(response);
             this.modalChange.emit(this.submitted);
             this.submitted = true;
-            this.isLoading=false
+            this.isLoading = false
           },
           error => {
             console.log(error);
@@ -163,10 +163,10 @@ export class AddBlogComponent implements OnInit {
 
             this.toastService.success(response.message);
             console.log(response);
-            debugger;
+            ;
             this.modalChange.emit(this.submitted);
             this.submitted = true;
-            this.isLoading=false;
+            this.isLoading = false;
           },
           error => {
             console.log(error);

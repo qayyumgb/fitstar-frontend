@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
 
 
   onSubmit(): void {
-    debugger
+
     this.submitted = true;
     if (this.LoginForm.invalid) {
       return;
@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser() {
-    debugger
+
     this.isLoading = true;
     this.loginService.loginUser(this.LoginForm.value)
       .subscribe({

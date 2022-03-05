@@ -15,6 +15,7 @@ export const API_ENDPOINTS = {
   userUpdate: `${API_URL}users/update/`,
   userDelete: `${API_URL}users/delete`,
   userStatusUpdate: `${API_URL}users/update/status/`,
+  userSearch: `${API_URL}users/search/`,
 
   /**Ambassador links */
   ambassadorList: `${API_URL}ambassadors/get/`,

@@ -7,7 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmationService, ConfirmEventType, Message, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { ShopService } from 'src/app/services/shopService/shop.service';
-import { CreateUpdateCollaborator, ICollaborator } from 'src/app/shared/interface/collaborator.interface';
+import { CreateUpdateCollaborator, ICollaborator, ICollaborators } from 'src/app/shared/interface/collaborator.interface';
+import { IPagination } from 'src/app/shared/interface/shared.interface';
 // import { MessageService } from "primeng/api";
 import { ambassadorList } from '../../../globalInterface/global.interface';
 import { CollaboratorService } from '../../../services/collaboratorService/collaborator.service';
@@ -21,16 +22,16 @@ import { CollaboratorService } from '../../../services/collaboratorService/colla
 export class CollaboratorListingComponent implements OnInit {
   openCreateEditModal: boolean = false;
 
-  collaboratorList: ambassadorList[];
   // representatives: Representative[];
   checked1: boolean = false;
   statuses: any[]
   loading: boolean = false;
   msgs: Message[] = [];
   position: string;
-  CollaboratorData: any = [];
+  CollaboratorData: ICollaborator[];
   CollaboratordataById: any[];
   editCollaboratorData: ICollaborator;
+  totalRecords: number;
 
   activityValues: number[] = [0, 100];
   searchText: string = '';
@@ -45,11 +46,7 @@ export class CollaboratorListingComponent implements OnInit {
   constructor(private toastService: ToastrService, private collaboratorService: CollaboratorService, private shopSevice: ShopService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.getCollaboratorRecord()
-    this.shopSevice.getAmbassadorList().then(ambassadors => {
-      this.collaboratorList = ambassadors;
-      this.loading = false;
-    });
+
 
   }
 
@@ -74,7 +71,7 @@ export class CollaboratorListingComponent implements OnInit {
           .subscribe(
             (data: any) => {
               this.toastService.success(data.message);
-              this.getCollaboratorRecord();
+              this.apiDataLoad();
             },
             error => {
               console.log(error);
@@ -95,26 +92,7 @@ export class CollaboratorListingComponent implements OnInit {
   }
 
 
-  getCollaboratorRecord(): void {
-    let limit = this.dtConfig.itemsPerPage;
-    let offset = this.dtConfig.currentPage;
-    this.collaboratorService.getAllCollaborator(limit, offset)
-      .subscribe(
-        (data: any) => {
-          console.log(data.collaborators);
-          this.CollaboratorData = data.collaborators;
-          console.log(`Getting data from ${this.CollaboratorData}`);
-          console.log("Total Items::", this.dtConfig.totalItems);
-          console.log(data.collaborators);
-          console.log("Oie data ah gya ha agey kam kir hun ")
-          console.log('Getting Vaule from DB :::::' + this.CollaboratorData)
 
-        },
-
-        error => {
-          console.log(error);
-        });
-  }
 
   collaboratorModal(response: boolean) {
     this.openCreateEditModal = response;
@@ -133,33 +111,45 @@ export class CollaboratorListingComponent implements OnInit {
       });
   }
 
-  search() {
+  search(searchText: any) {
     if (this.searchText.length > 0) {
-      this.collaboratorService.getSearchResult(this.searchText).subscribe(response => {
+      this.collaboratorService.getSearchResult(searchText).subscribe(response => {
         this.CollaboratorData = response.collaborators;
       })
     }
     else {
-      this.getCollaboratorRecord();
+      this.apiDataLoad();
     }
 
   }
 
 
 
-  limitChanged(value: any) {
-    this.dtConfig.itemsPerPage = value;
-    this.dtConfig.currentPage = 1;
-    this.getCollaboratorRecord();
-  }
 
-  pageChanged(event: any) {
-    this.dtConfig.currentPage = event;
-    this.getCollaboratorRecord();
+  apiDataLoad(event?: IPagination) {
+
+    if (event?.globalFilter) {
+      this.search(event.globalFilter)
+      return
+    }
+
+    let _first = event?.first ? event?.first : 0;
+    let _last = event?.rows ? event.rows + _first : 10;
+    this.collaboratorService.getAllCollaborator(_last, _first + 1).subscribe((data: ICollaborators) => {
+      console.log('DATA::::', data.collaborators);
+      this.CollaboratorData = data.collaborators;
+      this.totalRecords = data.totalRecord;
+      console.log('Total Items::', this.dtConfig.totalItems);
+    },
+      (error) => {
+        console.log(error);
+      }
+    );
+
   }
 
   editCollaborator(item: ICollaborator) {
-debugger;
+    ;
     this.collaboratorModal(true);
     this.editCollaboratorData = item;
   }

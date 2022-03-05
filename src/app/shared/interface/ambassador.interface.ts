@@ -2,7 +2,7 @@ export interface IAmbassadors {
   status: boolean;
   message: string;
   totalRecord: number;
-  ambassadors: IAmbassador[];
+  ambassador: IAmbassador[];
 }
 
 export interface IAmbassador {

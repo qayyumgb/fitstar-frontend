@@ -132,7 +132,7 @@ export class CollaboratorListingComponent implements OnInit {
       this.search(event.globalFilter)
       return
     }
-
+debugger
     let _first = event?.first ? event?.first : 0;
     let _last = event?.rows ? event.rows + _first : 10;
     this.collaboratorService.getAllCollaborator(_last, _first + 1).subscribe((data: ICollaborators) => {
@@ -149,7 +149,7 @@ export class CollaboratorListingComponent implements OnInit {
   }
 
   editCollaborator(item: ICollaborator) {
-    ;
+
     this.collaboratorModal(true);
     this.editCollaboratorData = item;
   }

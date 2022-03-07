@@ -6,6 +6,13 @@ export interface IBlogposts {
 }
 
 export interface IBlogpost {
+  title: string;
+  description: string;
+  featuredImageOne: string;
+  featuredImageTwo: string;
+  authorImage: string;
+  videoLink: string;
+  details: string;
   userProfile?: string;
   createdAt: Date;
   updatedAt: Date;

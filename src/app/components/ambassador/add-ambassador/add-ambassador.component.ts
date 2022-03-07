@@ -37,11 +37,10 @@ export class AddAmbassadorComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
-    debugger
     if (changes) {
       if (this.editAmbassadorData) {
         this.AmbassadorForm.patchValue(this.editAmbassadorData);
-        this.AmbassadorForm.get('tiwtter')?.setValue(this.editAmbassadorData.tiwtter);
+        // this.AmbassadorForm.get('tiwtter')?.setValue(this.editAmbassadorData.tiwtter);
       }
 
     }

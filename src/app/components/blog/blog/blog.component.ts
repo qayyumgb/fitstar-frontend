@@ -17,7 +17,7 @@ import { PrimeNGConfig } from 'primeng/api';
 import { BlogPostService } from '../../../services/BlogPostService/blog-post.service'
 import { ToastrService } from 'ngx-toastr';
 import { TooltipModule } from 'primeng/tooltip';
-import { CreateUpdateBlogPost, IBlog, IBlogpost } from 'src/app/shared/interface/BlogPost.interface';
+import { Blog, CreateUpdateBlogPost, IBlog, IBlogpost } from 'src/app/shared/interface/BlogPost.interface';
 import { IPagination } from 'src/app/shared/interface/shared.interface';
 
 
@@ -37,10 +37,10 @@ export class BlogComponent implements OnInit {
   catagory: any[];
   loading: boolean = false;
   position: string;
-  BlogPostData: any[]
+  BlogPostData: any[]=[];
   BlogdataById: any[]
   activityValues: number[] = [0, 100];
-  BlogData: any = [];
+  // BlogData: any = [];
   dtConfig: any = {
     id: 'blogs',
     itemsPerPage: 10,
@@ -56,23 +56,6 @@ export class BlogComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.createBlogPost = this.formBuilder.group(
-      {
-        title: ['', Validators.required],
-        description: ['', Validators.required],
-        authorName: ['', Validators.required],
-        category: ['', Validators.required],
-        featuredImage: ['', Validators.required],
-        authorProfile: ['', Validators.required],
-        secoundFeaturedImage: ['', Validators.required],
-        videoLink: ['', Validators.required],
-        details: ['', Validators.required],
-        authorImage: [null],
-        featuredImageOne: [null],
-        featuredImageTwo: [null]
-
-      }
-    );
 
 
     this.catagory = [
@@ -134,7 +117,7 @@ export class BlogComponent implements OnInit {
   search(searchText: any) {
     if (searchText.length > 0) {
       this.BlogPostService.getSearchResult(searchText).subscribe(response => {
-        this.BlogData = response.blogs;
+        this.BlogPostData = response.blogs;
       })
     }
     else {
@@ -203,7 +186,7 @@ export class BlogComponent implements OnInit {
       (data: IBlog) => {
         this.BlogPostData = data.blogs;
         this.totalRecords = data.totalRecord;
-        console.log('Total Items::', this.dtConfig.totalItems);
+        console.log('Total Items::', this.BlogPostData);
       },
       (error) => {
         console.log(error);

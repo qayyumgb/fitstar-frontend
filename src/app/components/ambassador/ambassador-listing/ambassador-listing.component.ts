@@ -151,17 +151,20 @@ export class AmbassadorListingComponent implements OnInit {
     this.editAmbassadorData = item;
   }
 
+
   apiDataLoad(event?: IPagination) {
 
     if (event?.globalFilter) {
       this.search(event.globalFilter)
       return
     }
-
+   debugger
     let _first = event?.first ? event?.first : 0;
     let _last = event?.rows ? event.rows + _first : 10;
+debugger
     this.AbbassadorService.getAllAmbassador(_last, _first + 1).subscribe(
       (data: IAmbassadors) => {
+        console.log(_first)
         console.log('DATA::::', data.ambassador);
         this.AbbassadorData = data.ambassador;
         this.totalRecords = data.totalRecord;

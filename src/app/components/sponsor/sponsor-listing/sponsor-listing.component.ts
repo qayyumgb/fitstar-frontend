@@ -42,7 +42,7 @@ export class SponsorListingComponent implements OnInit {
   SponerdataById: any[];
   activityValues: number[] = [0, 100];
   searchText: string = '';
-  totalRecords: number;
+  totalRecords: any=[];
 
   dtConfig: any = {
     id: 'sponsors',
@@ -168,9 +168,11 @@ export class SponsorListingComponent implements OnInit {
     let _last = event?.rows ? event.rows + _first : 10;
     this.SponserService.getAllSponser(_last, _first + 1).subscribe(
       (data: ISponsorEntity) => {
+
         console.log('DATA::::', data);
         this.SponserData = data.sponsors;
         this.totalRecords = data.totalRecord;
+        console.log(this.totalRecords)
 
       },
       (error) => {

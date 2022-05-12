@@ -3,10 +3,7 @@
     <div class="avatar-upload">
       <div class="avatar-edit">
         <div class="avatar-preview">
-          <div
-            id="imagePreview"
-            [style.backgroundImage]="'url(' + f.picture.value + ')'"
-          ></div>
+          <div id="imagePreview" [style.backgroundImage]="'url(' + f.picture.value + ')'"></div>
         </div>
       </div>
     </div>
@@ -17,28 +14,17 @@
         <div class="row">
           <div class="col-sm-12 col-md-6">
             <label>Enter Name</label>
-            <input
-              type="text"
-              formControlName="name"
-              class="form-control"
-              [ngClass]="{
+            <input type="text" formControlName="name" class="form-control" [ngClass]="{
                 'is-invalid': submitted && f.name.errors
-              }"
-              placeholder=" Enter Abbassador Name"
-            />
+              }" placeholder=" Enter Abbassador Name" />
             <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
               <div *ngIf="f.name.errors.required">name is required</div>
             </div>
           </div>
           <div class="col-sm-12 col-md-6">
             <label>Tag Line</label>
-            <input
-              type="text"
-              formControlName="tagLine"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.tagLine.errors }"
-              placeholder="Enter tagLine"
-            />
+            <input type="text" formControlName="tagLine" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.tagLine.errors }" placeholder="Enter tagLine" />
             <div *ngIf="submitted && f.tagLine.errors" class="invalid-feedback">
               <div *ngIf="f.tagLine.errors.required">TagLine is required</div>
             </div>
@@ -52,43 +38,13 @@
         <div class="row">
           <div class="col-sm-12 col-md-6">
             <label>Instagram URl</label>
-            <input
-              type="url"
-              formControlName="instagram"
-              class="form-control"
-              [ngClass]="{
-                'is-invalid': submitted && f.instagram.errors
-              }"
-              placeholder="Enter Instagram URL"
-            />
-            <div
-              *ngIf="submitted && f.instagram.errors"
-              class="invalid-feedback"
-            >
-              <div *ngIf="f.instagram.errors.required">
-                Instagram URL is required
-              </div>
-            </div>
+            <input type="url" formControlName="instagram" class="form-control" placeholder="Enter Instagram URL" />
+
           </div>
           <div class="col-sm-12 col-md-6">
             <label>Facebook URL</label>
-            <input
-              type="url"
-              formControlName="facebook"
-              class="form-control"
-              [ngClass]="{
-                'is-invalid': submitted && f.facebook.errors
-              }"
-              placeholder="Enter Facebook URL"
-            />
-            <div
-              *ngIf="submitted && f.facebook.errors"
-              class="invalid-feedback"
-            >
-              <div *ngIf="f.facebook.errors.required">
-                Facebook URL is required
-              </div>
-            </div>
+            <input type="url" formControlName="facebook" class="form-control" placeholder="Enter Facebook URL" />
+
           </div>
         </div>
       </div>
@@ -99,37 +55,13 @@
         <div class="row">
           <div class="col-sm-12 col-md-6">
             <label>Youtube URL</label>
-            <input
-              type="text"
-              formControlName="youtube"
-              class="form-control"
-              [ngClass]="{
-                'is-invalid': submitted && f.youtube.errors
-              }"
-              placeholder="Enter Youtube URL"
-            />
-            <div *ngIf="submitted && f.youtube.errors" class="invalid-feedback">
-              <div *ngIf="f.youtube.errors.required">
-                Youtube URL is required
-              </div>
-            </div>
+            <input type="text" formControlName="youtube" class="form-control" placeholder="Enter Youtube URL" />
+
           </div>
           <div class="col-sm-12 col-md-6">
             <label>Twitter URL</label>
-            <input
-              type="url"
-              formControlName="tiwtter"
-              class="form-control"
-              [ngClass]="{
-                'is-invalid': submitted && f.tiwtter.errors
-              }"
-              placeholder="Twitter URL"
-            />
-            <div *ngIf="submitted && f.tiwtter.errors" class="invalid-feedback">
-              <div *ngIf="f.tiwtter.errors.required">
-                Twitter URL is required
-              </div>
-            </div>
+            <input type="url" formControlName="tiwtter" class="form-control" placeholder="Twitter URL" />
+
           </div>
         </div>
       </div>
@@ -140,22 +72,12 @@
         <div class="row">
           <div class="col-sm-12 col-md-12">
             <label>Description</label>
-            <textarea
-              id="description"
-              [ngClass]="{
+            <textarea id="description" [ngClass]="{
                 'is-invalid': submitted && f.description.errors
-              }"
-              class="form-control descript"
-              formControlName="description"
-              rows="4"
-              cols="50"
-            >
+              }" class="form-control descript" formControlName="description" rows="4" cols="50">
             </textarea>
 
-            <div
-              *ngIf="submitted && f.description.errors"
-              class="invalid-feedback"
-            >
+            <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
               <div *ngIf="f.description.errors.required">
                 Description is required
               </div>
@@ -170,17 +92,9 @@
           <div class="col-sm-12 col-md-6">
             <label>User Profile</label>
 
-            <input
-              type="file"
-              formControlName="picture"
-              class="form-control"
-              [ngClass]="{
+            <input type="file" formControlName="picture" class="form-control" [ngClass]="{
                 'is-invalid': submitted && f.picture.errors
-              }"
-              id="imageUpload"
-              accept=".png, .jpg, .jpeg"
-              (change)="uploadFile($event)"
-            />
+              }" id="imageUpload" accept=".png, .jpg, .jpeg" (change)="uploadFile($event)" />
             <div *ngIf="submitted && f.picture.errors" class="invalid-feedback">
               <div *ngIf="f.picture.errors.required">
                 User Profile Image Required
@@ -191,12 +105,8 @@
       </div>
     </div>
     <div class="form-group my-3 mt-4">
-      <button
-        type="submit"
-        [disabled]="isLoading"
-        (click)="(toggleLoading)"
-        class="btn app-btn-primary w-100 theme-btn mx-auto"
-      >
+      <button type="submit" [disabled]="isLoading" (click)="(toggleLoading)"
+        class="btn app-btn-primary w-100 theme-btn mx-auto">
         <div *ngIf="isLoading" class="spinner-border" role="status">
           <span class="sr-only">Loading...</span>
         </div>

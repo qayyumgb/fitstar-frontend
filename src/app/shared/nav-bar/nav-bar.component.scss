@@ -22,7 +22,7 @@
   padding-left: 1rem;
   margin-bottom: 1rem;
   display: flex;
-  background: #15094e;
+  background: #ffffff;
   box-shadow: 0px 1px 5px -1px black;
 }
 .app-branding .logo-icon {
@@ -270,19 +270,20 @@ $animation: pulse;
 
   & > label {
     position: relative;
-    height: 3.5rem;
+    height: 2.5rem;
     display: block;
     text-decoration: none;
     background: transparent;
     color: #333;
     box-sizing: border-box;
     padding: 0.9rem;
+    padding-top: 4px;
     float: right;
     border-radius: 0 $border-radius $border-radius 0;
 
     i {
       color: darken($primary, 25%);
-      font-size: 1.55rem;
+      font-size: 0.57rem;
       vertical-align: middle;
     }
   }

@@ -43,7 +43,7 @@ export class SponsorListingComponent implements OnInit {
   activityValues: number[] = [0, 100];
   searchText: string = '';
   totalRecords: any=[];
-
+  sponsorsList=this.apiDataLoad()
   dtConfig: any = {
     id: 'sponsors',
     itemsPerPage: 10,
@@ -60,13 +60,6 @@ export class SponsorListingComponent implements OnInit {
     this.PrimeNGConfig.ripple = true;
 
   }
-
-
-
-
-
-
-
 
   clear(table: Table) {
     table.clear();
@@ -112,10 +105,6 @@ export class SponsorListingComponent implements OnInit {
   }
 
 
-
-
-
-
   SponsorModal(response: boolean) {
     this.openCreateEditModal = response;
   }
@@ -129,6 +118,7 @@ export class SponsorListingComponent implements OnInit {
       response => {
         this.toastr.success(response.message);
         console.log(response);
+        this.apiDataLoad();
       },
       error => {
         console.log(error);
@@ -136,9 +126,13 @@ export class SponsorListingComponent implements OnInit {
   }
 
 
-  search(searchText: any) {
-    if (this.searchText) {
-      this.SponserService.getSearchResult(searchText).subscribe(response => {
+  search(searchText: any,event?: IPagination) {
+
+    if (searchText?.length) {
+      let _first = event?.first ? event?.first : 0;
+    let _last = event?.rows ? event.rows + _first : 10;
+    debugger
+      this.SponserService.getSearchResult(searchText,_last, _first + 1).subscribe(response => {
         this.SponserData = response.sponsors;
       })
     }
@@ -156,6 +150,7 @@ export class SponsorListingComponent implements OnInit {
 
     this.SponsorModal(true);
     this.editSponsorData = item;
+    this.apiDataLoad();
   }
 
   apiDataLoad(event?: IPagination) {

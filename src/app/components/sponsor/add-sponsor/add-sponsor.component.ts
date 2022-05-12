@@ -13,6 +13,7 @@ import { ISponsors } from 'src/app/shared/interface/sponsor.interface';
 export class AddSponsorComponent implements OnInit {
   @Output() modalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() editBlogData: ISponsors;
+  @Input() sponsorsData:any
   submitted: boolean = false;
   isLoading:boolean=false
 
@@ -75,6 +76,7 @@ export class AddSponsorComponent implements OnInit {
     }
     else {
       const formData = this.SponsorsForm.value;
+      console.log(formData)
       this.toggleLoading()
       if (this.editBlogData === undefined) {
         delete formData._id
@@ -84,6 +86,7 @@ export class AddSponsorComponent implements OnInit {
             console.log(response);
             this.modalChange.emit(this.submitted);
             this.submitted = true;
+            this.sponsorsData
             this.isLoading=false
           },
           error => {

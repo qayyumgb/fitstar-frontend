@@ -74,30 +74,14 @@ export class BlogComponent implements OnInit {
     return this.createBlogPost.controls;
   }
 
-
-
-
-
   BlogModal(response: boolean) {
     this.openCreateEditModal = response;
+    this.apiDataLoad();
   }
-
-
-
-
-
-
 
   clear(table: Table) {
     table.clear();
   }
-
-
-
-
-
-
-
 
   updateButtonState(item: IBlogpost) {
     let requestBody = {} as CreateUpdateBlogPost;
@@ -107,6 +91,7 @@ export class BlogComponent implements OnInit {
       response => {
         this.toastr.success(response.message);
         console.log(response);
+        this.apiDataLoad();
       },
       error => {
         console.log(error);
@@ -114,9 +99,11 @@ export class BlogComponent implements OnInit {
   }
 
 
-  search(searchText: any) {
+  search(searchText: any,event?: IPagination) {
+    let _first = event?.first ? event?.first : 0;
+    let _last = event?.rows ? event.rows + _first : 10;
     if (searchText.length > 0) {
-      this.BlogPostService.getSearchResult(searchText).subscribe(response => {
+      this.BlogPostService.getSearchResult(searchText,_last, _first + 1).subscribe(response => {
         this.BlogPostData = response.blogs;
       })
     }
@@ -169,6 +156,7 @@ export class BlogComponent implements OnInit {
 
     this.BlogModal(true);
     this.editBlogData = item;
+    this.apiDataLoad();
   }
 
 

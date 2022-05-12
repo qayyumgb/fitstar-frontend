@@ -44,8 +44,8 @@ export class AbbassadorService {
     return this.http.delete<Abbassador[]>(`${API_ENDPOINTS.ambassadorDelete}/${_id}`);
   }
 
-  getSearchResult(searchText: string) {
-    return this.http.get<any[]>(API_ENDPOINTS.ambassadorSearch + searchText).pipe(map((res: any) => {
+  getSearchResult(searchText: string,limit: number, offset: number) {
+    return this.http.get<any[]>(API_ENDPOINTS.ambassadorSearch + searchText+ `/${limit}/${offset}`).pipe(map((res: any) => {
       return res
     }), retry(1),
       catchError(this.handleError))

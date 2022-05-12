@@ -14,6 +14,7 @@ import { ICollaborator } from 'src/app/shared/interface/collaborator.interface';
 export class AddCollaboratorComponent implements OnInit {
   @Output() modalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() editCollaboratorData: ICollaborator;
+  @Input() collaborators:any;
   isLoading:boolean=false
 
   collaboratorForm: FormGroup = new FormGroup(
@@ -21,10 +22,10 @@ export class AddCollaboratorComponent implements OnInit {
       _id: new FormControl(''),
       title: new FormControl('', Validators.required),
       subTitle: new FormControl('', Validators.required),
-      instagram: new FormControl('', Validators.required),
-      facebook: new FormControl('', Validators.required),
-      youtube: new FormControl('', Validators.required),
-      tiwtter: new FormControl('', Validators.required),
+      instagram: new FormControl(''),
+      facebook: new FormControl(''),
+      youtube: new FormControl(''),
+      tiwtter: new FormControl(''),
       picture: new FormControl(DefaultImageURl, Validators.required),
     });
 
@@ -106,6 +107,7 @@ export class AddCollaboratorComponent implements OnInit {
             console.log(response);
             this.modalChange.emit(this.submitted);
             this.submitted = true;
+            this.collaborators
             this.isLoading=false
           },
           error => {

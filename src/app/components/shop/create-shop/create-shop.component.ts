@@ -95,12 +95,10 @@ export class CreateShopComponent implements OnInit {
     // });
 
     this.statuses = [
-      { label: 'Unqualified', value: 'unqualified' },
-      { label: 'Qualified', value: 'qualified' },
-      { label: 'New', value: 'new' },
-      { label: 'Negotiation', value: 'negotiation' },
-      { label: 'Renewal', value: 'renewal' },
-      { label: 'Proposal', value: 'proposal' },
+      { label: 'Pros', value: 'pro' },
+      { label: 'Centers', value: 'center' },
+      { label: 'Models', value: 'model' },
+
     ];
 
     this.userRole = [
@@ -139,10 +137,8 @@ export class CreateShopComponent implements OnInit {
       accept: () => {
         this.userService.deleteUser(id).subscribe(
           (data) => {
-            this.toastr.success('User Deleted Successfully', 'Deleting User!', {
-              timeOut: 4000,
-            });
-            // this.UsersRecord();
+            this.toastr.success('User Deleted Successfully');
+            this.apiDataLoad();
           },
           (error) => {
             console.log(error);
@@ -172,10 +168,16 @@ export class CreateShopComponent implements OnInit {
   }
 
 
-  search(searchText: string | null) {
+search(searchText: string | null,event?: IPagination) {
+     let _first = event?.first ? event?.first : 0;
+     let _last = event?.rows ? event.rows + _first : 10;
     if (searchText?.length) {
-      this.userService.getSearchResult(searchText).subscribe(response => {
-        this.usersArray = response.collaborators;
+      debugger;
+      console.log(`Search text is ${searchText}`)
+      this.userService.getSearchResult(searchText,_last, _first + 1).subscribe(response => {
+        debugger
+        console.log(response)
+        this.usersArray = response.users;
       })
     }
     else {
@@ -183,6 +185,23 @@ export class CreateShopComponent implements OnInit {
     }
   }
 
+filterRole(filterRole: string | null ,event?: IPagination){
+     let _first = event?.first ? event?.first : 0;
+    let _last = event?.rows ? event.rows + _first : 10;
+console.log(`Selected Filter Role is ${filterRole}`)
+if (filterRole?.length) {
+  debugger;
+  console.log(`Search text is ${filterRole}`)
+  this.userService.getSearchResultByFilterRole(filterRole,_last, _first + 1).subscribe(response => {
+    console.log(response);
+    debugger
+    this.usersArray = response.users;
+  })
+}
+else {
+  this.apiDataLoad();
+}
+}
 
 
 
@@ -308,6 +327,8 @@ export class CreateShopComponent implements OnInit {
     });
   }
 
+
+
   apiDataLoad(event?: IPagination) {
 
     if (event?.globalFilter) {
@@ -320,9 +341,9 @@ export class CreateShopComponent implements OnInit {
     this.userService.getAllUser(_last, _first + 1).subscribe(
       (data: IShopUser) => {
         console.log('DATA::::', data);
-        let usersArray = data.users;
+        this.usersArray = data.users;
         this.totalRecords = data.totalRecord;
-        this.userStatusDataMapping(usersArray)
+        this.userStatusDataMapping(this.usersArray)
         console.log('Total Items::', this.dtConfig.totalItems);
         console.log('Getting Vaule from DB:::', this.usersArray);
       },

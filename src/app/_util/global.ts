@@ -15,14 +15,18 @@ export const API_ENDPOINTS = {
   userUpdate: `${API_URL}users/update/`,
   userDelete: `${API_URL}users/delete`,
   userStatusUpdate: `${API_URL}users/update/status/`,
-  userSearch: `${API_URL}users/search/`,
+  userSearch: `${API_URL}users/get/dashboard/search/`,
+  filterSearch: `${API_URL}users/get/dashboard/role/`,
+
+  // /get/dashboard/search/:search/:limit/:offset
+  // /get/dashboard/role/:role/:limit/:offset
 
   /**Ambassador links */
   ambassadorList: `${API_URL}ambassadors/get/`,
   ambassadorCreate: `${API_URL}ambassadors/create`,
   ambassadorUpdate: `${API_URL}ambassadors/update/`,
   ambassadorDelete: `${API_URL}ambassadors/delete`,
-  ambassadorSearch: `${API_URL}blogs/search/`,
+  ambassadorSearch: `${API_URL}ambassadors/search/`,
   /**blogs links */
   blogList: `${API_URL}blogs/get/`,
   blogCreate: `${API_URL}blogs/create`,

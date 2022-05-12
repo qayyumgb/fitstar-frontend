@@ -39,8 +39,8 @@ export class BlogPostService {
   }
 
 
-  getSearchResult(searchText: any) {
-    return this.http.get<any[]>(API_ENDPOINTS.blogSearch + searchText).pipe(map((res: any) => {
+  getSearchResult(searchText: any,limit: number, offset: number) {
+    return this.http.get<any[]>(API_ENDPOINTS.blogSearch + searchText+ `/${limit}/${offset}`).pipe(map((res: any) => {
       return res
     }))
   }

@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 export class AddAmbassadorComponent implements OnInit {
   @Output() modalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() editAmbassadorData: IAmbassador;
+  @Input() ambassadors:any;
   submitted: boolean = false;
   isLoading: boolean = false
 
@@ -19,10 +20,10 @@ export class AddAmbassadorComponent implements OnInit {
     _id: new FormControl(''),
     name: new FormControl('', Validators.required),
     tagLine: new FormControl('', Validators.required),
-    instagram: new FormControl('', Validators.required),
-    facebook: new FormControl('', Validators.required),
-    youtube: new FormControl('', Validators.required),
-    tiwtter: new FormControl('', Validators.required),
+    instagram: new FormControl(''),
+    facebook: new FormControl(''),
+    youtube: new FormControl(''),
+    tiwtter: new FormControl(''),
     description: new FormControl('', Validators.required),
     picture: new FormControl(DefaultImageURl, Validators.required),
   })
@@ -48,6 +49,7 @@ export class AddAmbassadorComponent implements OnInit {
 
 
   ngOnInit(): void {
+
   }
 
 
@@ -91,6 +93,7 @@ export class AddAmbassadorComponent implements OnInit {
             console.log(response);
             this.modalChange.emit(this.submitted);
             this.submitted = true;
+            this.ambassadors
             this.isLoading = false
           },
           error => {

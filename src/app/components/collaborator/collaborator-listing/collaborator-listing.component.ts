@@ -35,6 +35,7 @@ export class CollaboratorListingComponent implements OnInit {
 
   activityValues: number[] = [0, 100];
   searchText: string = '';
+  collaboratorsList=this.apiDataLoad()
   dtConfig: any = {
     id: 'collaborators',
     itemsPerPage: 10,
@@ -96,6 +97,7 @@ export class CollaboratorListingComponent implements OnInit {
 
   collaboratorModal(response: boolean) {
     this.openCreateEditModal = response;
+    this.apiDataLoad();
   }
   updateButtonState(item: ICollaborator) {
     let requestBody = {} as CreateUpdateCollaborator;
@@ -105,24 +107,29 @@ export class CollaboratorListingComponent implements OnInit {
       response => {
         this.toastService.success(response.message);
         console.log(response);
+        this.apiDataLoad();
       },
       error => {
         console.log(error);
       });
   }
 
-  search(searchText: any) {
-    if (this.searchText.length > 0) {
-      this.collaboratorService.getSearchResult(searchText).subscribe(response => {
+
+  search(searchText: string | null,event?: IPagination) {
+    if (searchText?.length) {
+      let _first = event?.first ? event?.first : 0;
+      let _last = event?.rows ? event.rows + _first : 10;
+      debugger;
+      console.log(`Search text is ${searchText}`)
+      this.collaboratorService.getSearchResult(searchText,_last, _first + 1).subscribe(response => {
+        console.log(response)
         this.CollaboratorData = response.collaborators;
       })
     }
     else {
       this.apiDataLoad();
     }
-
   }
-
 
 
 
@@ -152,5 +159,6 @@ debugger
 
     this.collaboratorModal(true);
     this.editCollaboratorData = item;
+    this.apiDataLoad();
   }
 }

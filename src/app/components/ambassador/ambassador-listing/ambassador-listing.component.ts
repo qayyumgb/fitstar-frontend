@@ -40,9 +40,8 @@ export class AmbassadorListingComponent implements OnInit {
   id!: string;
   activityValues: number[] = [0, 100];
   totalRecords: number;
-
   editAmbassadorData: IAmbassador;
-
+  public ambassadorsData= this.apiDataLoad()
 
 
   dtConfig: any = {
@@ -55,17 +54,9 @@ export class AmbassadorListingComponent implements OnInit {
 
 
   ngOnInit(): void {
-
     this.id = this.route.snapshot.params['id'];
     this.PrimeNGConfig.ripple = true;
   }
-
-
-
-
-
-
-
 
   clear(table: Table) {
     table.clear();
@@ -105,13 +96,9 @@ export class AmbassadorListingComponent implements OnInit {
     });
   }
 
-
-
-
-
-
   AmbassdaorModal(response: boolean) {
     this.openCreateEditModal = response;
+    this.apiDataLoad()
   }
 
   updateButtonState(item: IAmbassador) {
@@ -128,10 +115,12 @@ export class AmbassadorListingComponent implements OnInit {
       });
   }
 
-  search(searchText: string | null) {
+  search(searchText: string | null, event?: IPagination) {
     if (searchText?.length) {
-      this.AbbassadorService.getSearchResult(searchText).subscribe(response => {
-        this.AbbassadorData = response.ambassadors;
+      let _first = event?.first ? event?.first : 0;
+      let _last = event?.rows ? event.rows + _first : 10;
+      this.AbbassadorService.getSearchResult(searchText,_last, _first + 1).subscribe(response => {
+        this.AbbassadorData = response.ambassador;
       })
     }
     else {
@@ -141,14 +130,11 @@ export class AmbassadorListingComponent implements OnInit {
   }
 
 
-
-
-
-
   editAmbassador(item: IAmbassador) {
 
     this.AmbassdaorModal(true);
     this.editAmbassadorData = item;
+    this.apiDataLoad()
   }
 
 

@@ -43,9 +43,15 @@ export class AddUsersService {
       return res
     }))
   }
-
-  getSearchResult(searchText: string) {
-    return this.http.get<any[]>(API_ENDPOINTS.userSearch + searchText).pipe(map((res: any) => {
+  getSearchResultByFilterRole (filterRole:string ,limit: number, offset: number) {
+    console.log(filterRole);
+    return this.http.get<any[]>(API_ENDPOINTS.filterSearch + filterRole+ `/${limit}/${offset}`).pipe(map((res: any) => {
+      return res
+    }))
+  }
+  getSearchResult(searchText: string,limit: number, offset: number) {
+    console.log(searchText);
+    return this.http.get<any[]>(API_ENDPOINTS.userSearch + searchText+ `/${limit}/${offset}`).pipe(map((res: any) => {
       return res
     }))
   }

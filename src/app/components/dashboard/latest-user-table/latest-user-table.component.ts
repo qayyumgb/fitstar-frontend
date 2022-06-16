@@ -15,6 +15,7 @@ export class LatestUserTableComponent implements OnInit {
   ngOnInit(): void {
     this.dashboardService.getDashboardLatestUser().subscribe((res: IDashboardLatestUser) => {
       this.latestUsers = res.latestUsers;
+      console.log(this.latestUsers)
     })
   }
 

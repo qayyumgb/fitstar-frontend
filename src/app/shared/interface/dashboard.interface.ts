@@ -21,8 +21,12 @@ export interface IDashboardGraphData {
 }
 
 export interface LatestUser {
+  location: {
+    country: string,
+    state: string,
+    city: string,
+  };
   fullName: string;
-  location: string;
   tokenStatus: boolean;
   isDeleted: boolean;
   status: string;

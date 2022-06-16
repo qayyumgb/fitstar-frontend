@@ -4,15 +4,9 @@
     <div class="row mx-0 g-3 mb-4 align-items-center justify-content-between">
       <div class="w-100">
         <div class="page-utilities">
-          <div
-            class="row mx-0 mb-3 g-2 justify-content-start justify-content-md-end align-items-center"
-          >
+          <div class="row mx-0 mb-3 g-2 justify-content-start justify-content-md-end align-items-center">
             <div class="text-center">
-              <button
-                (click)="openModal(template)"
-                type="submit"
-                class="btn app-btn-primary theme-btn mx-auto"
-              >
+              <button (click)="openModal(template)" type="submit" class="btn app-btn-primary theme-btn mx-auto">
                 Add New User
               </button>
             </div>
@@ -55,57 +49,25 @@
 
           <!-- table View  -->
 
-          <p-table
-            #dt2
-            [value]="usersArray"
-            dataKey="id"
-            [showCurrentPageReport]="true"
-            [rowsPerPageOptions]="[5, 10, 25, 50]"
-            [loading]="loading"
-            styleClass="p-datatable-customers"
-            [paginator]="true"
-            [currentPageReportTemplate]="
+          <p-table #dt2 [value]="usersArray" dataKey="id" [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[5, 10, 25, 50]" [loading]="loading" styleClass="p-datatable-customers"
+            [paginator]="true" [currentPageReportTemplate]="
               'Showing {first} to {last} of {totalRecords} entries'
-            "
-            [lazy]="true"
-            (onLazyLoad)="apiDataLoad($event)"
-            [rows]="10"
-            [totalRecords]="totalRecords"
-          >
+            " [lazy]="true" (onLazyLoad)="apiDataLoad($event)" [rows]="10" [totalRecords]="totalRecords">
             <ng-template pTemplate="caption">
               <div class="d-flex justify-content-between">
                 <span class="p-input-icon-left p-ml-auto">
                   <i class="pi pi-search"></i>
-                  <input
-                    pInputText
-                    type="text"
-                    (input)="dt2.filterGlobal($event.target.value, 'contains')"
-                    placeholder="Search keyword"
-                  />
+                  <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')"
+                    placeholder="Search keyword" />
                 </span>
 
-                <p-columnFilter
-                  field="status"
-                  matchMode="equals"
-                  [showMenu]="false"
-                >
-                  <ng-template
-                    pTemplate="filter"
-                    let-value
-                    let-filter="filterCallback"
-                  >
-                    <p-dropdown
-                      [ngModel]="value"
-                      [options]="statuses"
-                      (onChange)="filterRole($event.value)"
-                      placeholder="Select Role"
-                      [showClear]="true"
-                    >
+                <p-columnFilter field="status" matchMode="equals" [showMenu]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filterRole($event.value)"
+                      placeholder="Select Role" [showClear]="true">
                       <ng-template let-option pTemplate="item">
-                        <span
-                          [class]="'customer-badge status-' + option.value"
-                          >{{ option.label }}</span
-                        >
+                        <span [class]="'customer-badge status-' + option.value">{{ option.label }}</span>
                       </ng-template>
                     </p-dropdown>
                   </ng-template>
@@ -147,19 +109,13 @@
                 </td>
                 <td>
                   <span>
-                    <p-inputSwitch
-                      [(ngModel)]="user.activeStatus"
-                      (ngModelChange)="toggleActiveStatus(user)"
-                    >
+                    <p-inputSwitch [(ngModel)]="user.activeStatus" (ngModelChange)="toggleActiveStatus(user)">
                     </p-inputSwitch>
                   </span>
                 </td>
                 <td>
                   <span class="action-col">
-                    <i
-                      class="pi pi-trash"
-                      (click)="OnDeleteRecord(user._id)"
-                    ></i>
+                    <i class="pi pi-trash" (click)="OnDeleteRecord(user._id)"></i>
                   </span>
                 </td>
               </tr>
@@ -183,12 +139,7 @@
   <ng-template #template>
     <div class="modal-header">
       <h4 class="modal-title pull-left">Add New User</h4>
-      <button
-        type="button"
-        class="btn-close close pull-right"
-        aria-label="Close"
-        (click)="modalRef?.hide()"
-      >
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
         <span aria-hidden="true" class="visually-hidden">&times;</span>
       </button>
     </div>
@@ -197,10 +148,7 @@
         <div class="avatar-upload">
           <div class="avatar-edit">
             <div class="avatar-preview">
-              <div
-                id="imagePreview"
-                [style.backgroundImage]="'url(' + imageUrl + ')'"
-              ></div>
+              <div id="imagePreview" [style.backgroundImage]="'url(' + imageUrl + ')'"></div>
             </div>
           </div>
         </div>
@@ -210,17 +158,9 @@
               <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-6">
                   <label>User Name</label>
-                  <input
-                    type="text"
-                    formControlName="fullName"
-                    class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.fullName.errors }"
-                    placeholder="UserName"
-                  />
-                  <div
-                    *ngIf="submitted && f.fullName.errors"
-                    class="invalid-feedback"
-                  >
+                  <input type="text" formControlName="fullName" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.fullName.errors }" placeholder="UserName" />
+                  <div *ngIf="submitted && f.fullName.errors" class="invalid-feedback">
                     <div *ngIf="f.fullName.errors.required">
                       username is required
                     </div>
@@ -228,17 +168,9 @@
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-6">
                   <label>Email</label>
-                  <input
-                    type="text"
-                    formControlName="email"
-                    class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
-                    placeholder="Email"
-                  />
-                  <div
-                    *ngIf="submitted && f.email.errors"
-                    class="invalid-feedback"
-                  >
+                  <input type="text" formControlName="email" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.email.errors }" placeholder="Email" />
+                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                     <div *ngIf="f.email.errors.required">email is required</div>
                   </div>
                 </div>
@@ -251,17 +183,9 @@
               <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-6">
                   <label>Password</label>
-                  <input
-                    type="password"
-                    formControlName="password"
-                    class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
-                    placeholder="Password"
-                  />
-                  <div
-                    *ngIf="submitted && f.password.errors"
-                    class="invalid-feedback"
-                  >
+                  <input type="password" formControlName="password" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Password" />
+                  <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                     <div *ngIf="f.password.errors.required">
                       password is required
                     </div>
@@ -269,19 +193,10 @@
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-6">
                   <label>Confirm Password</label>
-                  <input
-                    type="password"
-                    formControlName="cpassword"
-                    class="form-control"
-                    [ngClass]="{
+                  <input type="password" formControlName="cpassword" class="form-control" [ngClass]="{
                       'is-invalid': submitted && f.cpassword.errors
-                    }"
-                    placeholder="Confirm Password"
-                  />
-                  <div
-                    *ngIf="submitted && f.cpassword.errors"
-                    class="invalid-feedback"
-                  >
+                    }" placeholder="Confirm Password" />
+                  <div *ngIf="submitted && f.cpassword.errors" class="invalid-feedback">
                     <div *ngIf="f.cpassword.errors.required">
                       Confirm password is required
                     </div>
@@ -297,71 +212,88 @@
           <div class="form-group">
             <div class="container">
               <div class="row">
-                <div class="col-sm-12 col-md-6 col-lg-6 multiSelect">
+                <div class="col-sm-12 col-md-12 col-lg-12 multiSelect">
                   <label class="d-block">User Role</label>
-                  <p-dropdown
-                    [options]="userRole"
-                    [(ngModel)]="selectedRole"
-                    placeholder="Select a User Role"
-                    optionLabel="name"
-                    [showClear]="true"
-                    [style]="{ width: '100%' }"
-                    (onChange)="($event.value)"
-                    formControlName="role"
-                    [ngClass]="{
+                  <p-dropdown [options]="userRole" [(ngModel)]="selectedRole" placeholder="Select a User Role"
+                    optionLabel="name" [showClear]="true" [style]="{ width: '100%' }" (onChange)="($event.value)"
+                    formControlName="role" [ngClass]="{
                       'is-invalid': submitted && f.role.errors
-                    }"
-                  ></p-dropdown>
-                  <div
-                    *ngIf="submitted && f.role.errors"
-                    class="invalid-feedback"
-                  >
+                    }"></p-dropdown>
+                  <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
                     <div *ngIf="f.role.errors.required">
                       UserRole is required
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-12 col-md-6 col-lg-6">
+                <!-- <div class="col-sm-12 col-md-6 col-lg-6">
                   <label>Selected Location</label>
-                  <input
-                    type="text"
-                    formControlName="location"
-                    class="form-control"
-                    [ngClass]="{
+                  <input type="text" formControlName="location" class="form-control" [ngClass]="{
                       'is-invalid': submitted && f.location.errors
-                    }"
-                    placeholder="Enter Your Location "
-                  />
-                  <div
-                    *ngIf="submitted && f.location.errors"
-                    class="invalid-feedback"
-                  >
+                    }" placeholder="Enter Your Location " />
+                  <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
                     <div *ngIf="f.location.errors.required">
                       location is required
+                    </div>
+                  </div>
+                </div> -->
+
+              </div>
+
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row mx-0" style="flex:1;" formGroupName="location">
+              <div class="col-md-4">
+                <div class="input-group">
+                  <p-dropdown [options]="countries" formControlName="country" class="w-100"
+                    [(ngModel)]="selectedCountry" optionLabel="name" placeholder="Country" [ngClass]="{
+            'is-invalid': submitted && f2.country?.errors
+          }" #country (onChange)="onCountryChange(country.value)"></p-dropdown>
+
+                  <div *ngIf="submitted && f2.country?.errors" class="invalid-feedback">
+                    <div *ngIf="f2.country.errors?.required" class="errorMsg">
+                      country is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <p-dropdown [options]="states" formControlName="state" class="w-100" [(ngModel)]="selectedState"
+                    optionLabel="name" placeholder="State" [ngClass]="{
+            'is-invalid': submitted && f?.state?.errors
+          }" #state (onChange)="onStateChange(state.value)"></p-dropdown>
+
+                  <div *ngIf="submitted && f?.state?.errors" class="invalid-feedback">
+                    <div *ngIf="f.state?.errors?.required" class="errorMsg">
+                      state is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <p-dropdown [options]="cities" formControlName="city" class="w-100" [(ngModel)]="selectedCity"
+                    optionLabel="name" placeholder="City" [ngClass]="{
+            'is-invalid': submitted && f.city?.errors
+          }" #city (onChange)="onCityChange(city.value)"></p-dropdown>
+
+                  <div *ngIf="submitted && f?.city?.errors" class="invalid-feedback">
+                    <div *ngIf="f.city?.errors?.required" class="errorMsg">
+                      city is required
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
           <div class="form-group mx-2">
             <label>User Profile</label>
-            <input
-              type="file"
-              formControlName="ProfileImage"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.ProfileImage.errors }"
-              id="imageUpload"
-              accept=".png, .jpg, .jpeg"
-              #fileInput
-              (change)="uploadFile($event)"
-            />
+            <input type="file" formControlName="ProfileImage" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.ProfileImage.errors }" id="imageUpload"
+              accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)" />
 
-            <div
-              *ngIf="submitted && f.ProfileImage.errors"
-              class="invalid-feedback"
-            >
+            <div *ngIf="submitted && f.ProfileImage.errors" class="invalid-feedback">
               <div *ngIf="f.ProfileImage.errors.required">
                 User Profile Image Required
               </div>
@@ -369,12 +301,8 @@
           </div>
 
           <div class="form-group my-2">
-            <button
-              type="submit"
-              [disabled]="isLoading"
-              (click)="(toggleLoading)"
-              class="btn app-btn-primary w-100 theme-btn mx-auto"
-            >
+            <button type="submit" [disabled]="isLoading" (click)="(toggleLoading)"
+              class="btn app-btn-primary w-100 theme-btn mx-auto">
               <div *ngIf="isLoading" class="spinner-border" role="status">
                 <span class="sr-only">Loading...</span>
               </div>
@@ -385,13 +313,7 @@
       </div>
     </div>
   </ng-template>
-  <p-confirmDialog
-    appendTo="body"
-    header="Confirmation"
-    key="deleteAlert"
-    [style]="{ width: '30vw' }"
-    [baseZIndex]="10000"
-    styleClass="dialog-filters"
-  ></p-confirmDialog>
+  <p-confirmDialog appendTo="body" header="Confirmation" key="deleteAlert" [style]="{ width: '30vw' }"
+    [baseZIndex]="10000" styleClass="dialog-filters"></p-confirmDialog>
   <p-toast></p-toast>
 </div>
